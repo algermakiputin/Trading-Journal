@@ -1,8 +1,13 @@
 import React from "react";
 import { Col, Form, Table, Button, Modal } from "react-bootstrap";
+import axios from "axios";
+
+const base_url = "http://localhost:8000/";
 
 class TradeForm extends React.Component {
 
+    
+    
     constructor(props) {
 
         super(props)
@@ -15,17 +20,25 @@ class TradeForm extends React.Component {
             net: "",
             show: false
         }
-
+     
     }
 
     handleFormSubmit() {
 
-        console.log(this.state);
+        axios.post('/api/transactions/store', this.state)
+                .then( res => {
+                    console.log( res.data )
+                })
+                .catch( err => {
+                    console.log( err)
+                })
+
     }
 
     handleModal() {
 
         this.setState({ show: !this.state.show})
+ 
     }
 
     render() {

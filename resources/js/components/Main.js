@@ -20,6 +20,7 @@ function Main() {
                 </BrowserRouter>
             <Sidebar />
         </div>
+        
     );
 }
 

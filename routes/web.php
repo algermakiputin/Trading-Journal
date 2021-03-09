@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\TransactionsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 }); 
+
+Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
+Route::post('api/transactions/store', [TransactionsController::class, 'store']);

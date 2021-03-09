@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 class TransactionsController extends Controller
 {
@@ -25,7 +26,21 @@ class TransactionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $transaction = Transaction::create([
+            'date' => $request->date,
+            'stock_code' => $request->stock_code,
+            'price' => $request->price,
+            'shares' => $request->shares,
+            'fees' => $request->fees,
+            'net' => $request->net,
+        ]);
+
+        if ( $transaction )
+            echo 1;
+        else 
+            echo 0;
+
+        return;
     }
 
     /**
@@ -60,5 +75,10 @@ class TransactionsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function fetch_all() {
+
+        return null;
     }
 }
