@@ -20,9 +20,10 @@ class CreateTransactionsTable extends Migration
             $table->string('date');
             $table->string('stock_code');
             $table->string('price');
-            $table->string('shares');
+            $table->unsignedInteger('shares');
             $table->string('fees');
             $table->string('net');
+            $table->unsignedInteger('trade_id');
             $table->timestamps();
 
         });

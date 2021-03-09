@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Models\Trade;
+use Illuminate\Support\Facades\DB;
 
 class TransactionsController extends Controller
 {
@@ -26,19 +28,36 @@ class TransactionsController extends Controller
      */
     public function store(Request $request)
     {
-        $transaction = Transaction::create([
-            'date' => $request->date,
-            'stock_code' => $request->stock_code,
-            'price' => $request->price,
-            'shares' => $request->shares,
-            'fees' => $request->fees,
-            'net' => $request->net,
-        ]);
 
-        if ( $transaction )
+        DB::beginTransaction();
+
+        try {
+
+            $trade = Trade::create([
+                'shares' => $request->shares,
+                'status' => 0,
+                'stock_code' => $request->stock_code,
+                'date' => $request->date
+            ]);
+
+            $transaction = Transaction::create([
+                'date' => $request->date,
+                'stock_code' => $request->stock_code,
+                'price' => $request->price,
+                'shares' => $request->shares,
+                'fees' => $request->fees,
+                'net' => $request->net,
+                'trade_id' => $trade->id
+            ]);
+
+            DB::commit();
             echo 1;
-        else 
+
+        } catch ( \Exception $e ) {
+
+            DB::rollback();
             echo 0;
+        }
 
         return;
     }
