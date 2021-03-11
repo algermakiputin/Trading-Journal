@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Form, Table, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios"; 
-import Transactions from '../classes/Transactions'
+import Transactions from '../classes/Transactions';
 
 const base_url = "http://localhost:8000/";
 
@@ -24,7 +24,8 @@ class TradeForm extends React.Component {
             net:0,
             fees: 0
         }
- 
+
+        this.baseState = this.state;
          
     }
 
@@ -33,16 +34,17 @@ class TradeForm extends React.Component {
         if ( this.state.date == "" || this.state.stock_code == "" || this.state.price == "" || this.state.shares == "") {
             console.log(this.state)
             return this.setState({error_show: true})
-        }
-            
-        else 
+        } 
+        else {
             this.setState({ error_show: false})
-
-         
+        } 
             
         axios.post('/api/transactions/store', this.state)
                 .then( res => {
-                    console.log( res.data )
+                    
+                    if ( res.data == 1) {
+                        this.setState( this.baseState );
+                    }
                 })
                 .catch( err => {
                     console.log( err)
@@ -56,19 +58,53 @@ class TradeForm extends React.Component {
  
     }
 
-    net_calculator(event) {
+    net_calculator_price_handle(event) {
          
-        let shares = event.target.value
-        this.setState({shares: shares}) 
+        let price = event.target.value;
+        let shares = this.state.shares;
 
-        let fee = Transactions.buy( this.state.price, shares ); 
-        let total = (this.state.price * shares) + fee; 
+        let fee = Transactions.buy( price, shares ); 
+        let total = Number(( price * shares) + fee).toFixed(2); 
+
+        fee = Number(this.num_nan( fee )).toFixed(2);
+        total = Number(this.num_nan ( total )).toFixed(2);
         
         this.setState({ net: total, fees: fee});
 
     }
 
-    alert() {
+    net_calculator_shares_handle(event) {
+         
+        let shares = event.target.value;
+        let price = this.state.price;
+        let fee = Transactions.buy( price, shares ); 
+        let total = Number(( price * shares) + fee).toFixed(2); 
+
+        fee = Number(this.num_nan( fee )).toFixed(2);
+        total = Number(this.num_nan ( total )).toFixed(2);
+        
+        this.setState({ net: total, fees: fee});
+ 
+    }
+
+    num_nan( number ) {
+
+        return isNaN(number) ? 0 : number;
+    }
+
+    alert_danger() {
+
+        if ( this.state.error_show ) { 
+
+            return ( 
+                <Alert variant="danger">
+                    Empty fields are required    
+                </Alert>
+            )
+        }
+    }
+
+    alert_success() {
 
         if ( this.state.error_show ) { 
 
@@ -81,7 +117,7 @@ class TradeForm extends React.Component {
     }
 
     render() { 
-
+  
         return (
 
             <div>
@@ -97,7 +133,7 @@ class TradeForm extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         
-                        { this.alert() }
+                        { this.alert_danger() }
 
                         <Form noValidate>
                             <Table bordered striped hover>
@@ -115,7 +151,7 @@ class TradeForm extends React.Component {
                                     <tr>
                                         <th>
                                             <Form.Control type="date" name="date" 
-                                            onChange={ event => this.setState({ date: event.target.value }) }
+                                            onChange={ event => this.setState({ date: event.target.value }) } 
                                             autoComplete="off"></Form.Control> 
                                         </th>
                                         <th>
@@ -126,13 +162,13 @@ class TradeForm extends React.Component {
                                         </th>
                                         <th>
                                             <Form.Control type="number" name="price" min="0"
-                                            onChange={ event => {this.setState({ price: event.target.value }); } }
+                                            onChange={ event => { this.setState({ price: event.target.value}); this.net_calculator_price_handle(event) } }
                                             autoComplete="off"
                                             required></Form.Control> 
                                         </th>
                                         <th>
                                             <Form.Control type="number" name="shares" min="0"
-                                            onChange={ event => {this.net_calculator(event)} } 
+                                            onChange={ event => { this.setState({ shares: event.target.value}); this.net_calculator_shares_handle(event) } } 
                                             autoComplete="off"
                                             required></Form.Control> 
                                         </th>

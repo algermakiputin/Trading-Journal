@@ -2317,6 +2317,17 @@ var Transactions = /*#__PURE__*/function () {
       // SCCP = ( TOTAL SHARES * PRICE ) * 0.01%
       // Sales Tax = ( TOTAL SHARES * PRICE ) * 0.006
     }
+  }, {
+    key: "buy_amount",
+    value: function buy_amount(shares, price, fees) {
+      return shares * price + fees;
+    }
+  }, {
+    key: "ave_price",
+    value: function ave_price(shares, price, fees) {
+      // Average Price = Net Amount / shares
+      var net = price * shares;
+    }
   }]);
 
   return Transactions;
@@ -2460,23 +2471,30 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
       show: false,
       error_show: false
     }, _defineProperty(_this$state, "net", 0), _defineProperty(_this$state, "fees", 0), _this$state);
+    _this.baseState = _this.state;
     return _this;
   }
 
   _createClass(TradeForm, [{
     key: "handleFormSubmit",
     value: function handleFormSubmit() {
+      var _this2 = this;
+
       if (this.state.date == "" || this.state.stock_code == "" || this.state.price == "" || this.state.shares == "") {
         console.log(this.state);
         return this.setState({
           error_show: true
         });
-      } else this.setState({
-        error_show: false
-      });
+      } else {
+        this.setState({
+          error_show: false
+        });
+      }
 
       axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/transactions/store', this.state).then(function (res) {
-        console.log(res.data);
+        if (res.data == 1) {
+          _this2.setState(_this2.baseState);
+        }
       })["catch"](function (err) {
         console.log(err);
       });
@@ -2489,22 +2507,51 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
-    key: "net_calculator",
-    value: function net_calculator(event) {
-      var shares = event.target.value;
-      this.setState({
-        shares: shares
-      });
-      var fee = _classes_Transactions__WEBPACK_IMPORTED_MODULE_2__.default.buy(this.state.price, shares);
-      var total = this.state.price * shares + fee;
+    key: "net_calculator_price_handle",
+    value: function net_calculator_price_handle(event) {
+      var price = event.target.value;
+      var shares = this.state.shares;
+      var fee = _classes_Transactions__WEBPACK_IMPORTED_MODULE_2__.default.buy(price, shares);
+      var total = Number(price * shares + fee).toFixed(2);
+      fee = Number(this.num_nan(fee)).toFixed(2);
+      total = Number(this.num_nan(total)).toFixed(2);
       this.setState({
         net: total,
         fees: fee
       });
     }
   }, {
-    key: "alert",
-    value: function alert() {
+    key: "net_calculator_shares_handle",
+    value: function net_calculator_shares_handle(event) {
+      var shares = event.target.value;
+      var price = this.state.price;
+      var fee = _classes_Transactions__WEBPACK_IMPORTED_MODULE_2__.default.buy(price, shares);
+      var total = Number(price * shares + fee).toFixed(2);
+      fee = Number(this.num_nan(fee)).toFixed(2);
+      total = Number(this.num_nan(total)).toFixed(2);
+      this.setState({
+        net: total,
+        fees: fee
+      });
+    }
+  }, {
+    key: "num_nan",
+    value: function num_nan(number) {
+      return isNaN(number) ? 0 : number;
+    }
+  }, {
+    key: "alert_danger",
+    value: function alert_danger() {
+      if (this.state.error_show) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default, {
+          variant: "danger",
+          children: "Empty fields are required"
+        });
+      }
+    }
+  }, {
+    key: "alert_success",
+    value: function alert_success() {
       if (this.state.error_show) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default, {
           variant: "danger",
@@ -2515,19 +2562,19 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, {
           onClick: function onClick() {
-            _this2.handleModal();
+            _this3.handleModal();
           },
           className: "btn btn-danger text-white",
           children: "New Trade"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, {
           show: this.state.show,
           onHide: function onHide() {
-            return _this2.handleModal(false);
+            return _this3.handleModal(false);
           },
           dialogClassName: "modal-lg",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Header, {
@@ -2536,7 +2583,7 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
               children: "New Trade"
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Body, {
-            children: [this.alert(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default, {
+            children: [this.alert_danger(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default, {
               noValidate: true,
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__.default, {
                 bordered: true,
@@ -2565,7 +2612,7 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
                         type: "date",
                         name: "date",
                         onChange: function onChange(event) {
-                          return _this2.setState({
+                          return _this3.setState({
                             date: event.target.value
                           });
                         },
@@ -2576,7 +2623,7 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
                         type: "text",
                         name: "stock_code",
                         onChange: function onChange(event) {
-                          return _this2.setState({
+                          return _this3.setState({
                             stock_code: event.target.value
                           });
                         },
@@ -2589,9 +2636,11 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
                         name: "price",
                         min: "0",
                         onChange: function onChange(event) {
-                          _this2.setState({
+                          _this3.setState({
                             price: event.target.value
                           });
+
+                          _this3.net_calculator_price_handle(event);
                         },
                         autoComplete: "off",
                         required: true
@@ -2602,7 +2651,11 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
                         name: "shares",
                         min: "0",
                         onChange: function onChange(event) {
-                          _this2.net_calculator(event);
+                          _this3.setState({
+                            shares: event.target.value
+                          });
+
+                          _this3.net_calculator_shares_handle(event);
                         },
                         autoComplete: "off",
                         required: true
@@ -2634,13 +2687,13 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, {
               variant: "secondary",
               onClick: function onClick() {
-                _this2.handleModal();
+                _this3.handleModal();
               },
               children: "Close"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, {
               variant: "primary",
               onClick: function onClick() {
-                _this2.handleFormSubmit();
+                _this3.handleFormSubmit();
               },
               children: "Submit"
             })]
@@ -2859,10 +2912,10 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
                         className: "card-title",
-                        children: "Rcent Trades"
+                        children: "Stock Position"
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
                         className: "card-subtitle",
-                        children: "Overview of latest trades"
+                        children: "Overview of my open trades"
                       })]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                       className: "ms-auto",
@@ -2889,185 +2942,26 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                   className: "table-responsive",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("table", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("table", {
                     className: "table v-middle",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("thead", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("thead", {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
-                        className: "bg-light",
+                        "class": "bg-light",
                         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
-                          className: "border-top-0",
-                          children: "Products"
+                          "class": "border-top-0",
+                          children: "Stock"
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
-                          className: "border-top-0",
-                          children: "License"
+                          "class": "border-top-0",
+                          children: "Ave. Price"
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
-                          className: "border-top-0",
-                          children: "Support Agent"
+                          "class": "border-top-0",
+                          children: "Shares"
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
-                          className: "border-top-0",
-                          children: "Technology"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
-                          className: "border-top-0",
-                          children: "Tickets"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
-                          className: "border-top-0",
-                          children: "Sales"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("th", {
-                          className: "border-top-0",
-                          children: "Earnings"
+                          "class": "border-top-0",
+                          children: "Total Cost"
                         })]
                       })
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tbody", {
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                            className: "d-flex align-items-center",
-                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                              className: "m-r-10",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                                className: "btn btn-circle d-flex btn-info text-white",
-                                children: "EA"
-                              })
-                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                              className: "",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-                                className: "m-b-0 font-16",
-                                children: "Elite Admin"
-                              })
-                            })]
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "Single Use"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "John Doe"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-                            className: "label label-danger",
-                            children: "Angular"
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "46"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "356"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
-                            className: "m-b-0",
-                            children: "$2850.06"
-                          })
-                        })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                            className: "d-flex align-items-center",
-                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                              className: "m-r-10",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                                className: "btn btn-circle d-flex btn-orange text-white",
-                                children: "MA"
-                              })
-                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                              className: "",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-                                className: "m-b-0 font-16",
-                                children: "Monster Admin"
-                              })
-                            })]
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "Single Use"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "Venessa Fern"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-                            className: "label label-info",
-                            children: "Vue Js"
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "46"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "356"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
-                            className: "m-b-0",
-                            children: "$2850.06"
-                          })
-                        })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                            className: "d-flex align-items-center",
-                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                              className: "m-r-10",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                                className: "btn btn-circle d-flex btn-success text-white",
-                                children: "MP"
-                              })
-                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                              className: "",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-                                className: "m-b-0 font-16",
-                                children: "Material Pro Admin"
-                              })
-                            })]
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "Single Use"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "John Doe"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-                            className: "label label-success",
-                            children: "Bootstrap"
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "46"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "356"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
-                            className: "m-b-0",
-                            children: "$2850.06"
-                          })
-                        })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("tr", {
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                            className: "d-flex align-items-center",
-                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                              className: "m-r-10",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                                className: "btn btn-circle d-flex btn-purple text-white",
-                                children: "AA"
-                              })
-                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                              className: "",
-                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
-                                className: "m-b-0 font-16",
-                                children: "Ample Admin"
-                              })
-                            })]
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "Single Use"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "John Doe"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
-                            className: "label label-purple",
-                            children: "React"
-                          })
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "46"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: "356"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("td", {
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
-                            className: "m-b-0",
-                            children: "$2850.06"
-                          })
-                        })]
-                      })]
-                    })]
+                    })
                   })
                 })]
               })

@@ -1,5 +1,5 @@
 import React from "react";
-import TradeForm from '../components/TradeForm';
+import TradeForm from '../components/TradeForm'; 
 
 class Dashboard extends React.Component {
 
@@ -82,8 +82,8 @@ class Dashboard extends React.Component {
                                 <div className="card-body"> 
                                     <div className="d-md-flex">
                                         <div>
-                                            <h4 className="card-title">Rcent Trades</h4>
-                                            <h5 className="card-subtitle">Overview of latest trades</h5>
+                                            <h4 className="card-title">Stock Position</h4>
+                                            <h5 className="card-subtitle">Overview of my open trades</h5>
                                         </div>
                                         <div className="ms-auto">
                                             <div className="dl">
@@ -98,109 +98,17 @@ class Dashboard extends React.Component {
                                     </div> 
                                 </div>
                                 <div className="table-responsive">
+                                     
                                     <table className="table v-middle">
                                         <thead>
-                                            <tr className="bg-light">
-                                                <th className="border-top-0">Products</th>
-                                                <th className="border-top-0">License</th>
-                                                <th className="border-top-0">Support Agent</th>
-                                                <th className="border-top-0">Technology</th>
-                                                <th className="border-top-0">Tickets</th>
-                                                <th className="border-top-0">Sales</th>
-                                                <th className="border-top-0">Earnings</th>
+                                            <tr class="bg-light">
+                                                <th class="border-top-0">Stock</th>
+                                                <th class="border-top-0">Ave. Price</th>
+                                                <th class="border-top-0">Shares</th>
+                                                <th class="border-top-0">Total Cost</th> 
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="m-r-10"><a
-                                                            className="btn btn-circle d-flex btn-info text-white">EA</a>
-                                                        </div>
-                                                        <div className="">
-                                                            <h4 className="m-b-0 font-16">Elite Admin</h4>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Single Use</td>
-                                                <td>John Doe</td>
-                                                <td>
-                                                    <label className="label label-danger">Angular</label>
-                                                </td>
-                                                <td>46</td>
-                                                <td>356</td>
-                                                <td>
-                                                    <h5 className="m-b-0">$2850.06</h5>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="m-r-10"><a
-                                                            className="btn btn-circle d-flex btn-orange text-white">MA</a>
-                                                        </div>
-                                                        <div className="">
-                                                            <h4 className="m-b-0 font-16">Monster Admin</h4>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Single Use</td>
-                                                <td>Venessa Fern</td>
-                                                <td>
-                                                    <label className="label label-info">Vue Js</label>
-                                                </td>
-                                                <td>46</td>
-                                                <td>356</td>
-                                                <td>
-                                                    <h5 className="m-b-0">$2850.06</h5>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="m-r-10"><a
-                                                            className="btn btn-circle d-flex btn-success text-white">MP</a>
-                                                        </div>
-                                                        <div className="">
-                                                            <h4 className="m-b-0 font-16">Material Pro Admin</h4>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Single Use</td>
-                                                <td>John Doe</td>
-                                                <td>
-                                                    <label className="label label-success">Bootstrap</label>
-                                                </td>
-                                                <td>46</td>
-                                                <td>356</td>
-                                                <td>
-                                                    <h5 className="m-b-0">$2850.06</h5>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div className="d-flex align-items-center">
-                                                        <div className="m-r-10"><a
-                                                            className="btn btn-circle d-flex btn-purple text-white">AA</a>
-                                                        </div>
-                                                        <div className="">
-                                                            <h4 className="m-b-0 font-16">Ample Admin</h4>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Single Use</td>
-                                                <td>John Doe</td>
-                                                <td>
-                                                    <label className="label label-purple">React</label>
-                                                </td>
-                                                <td>46</td>
-                                                <td>356</td>
-                                                <td>
-                                                    <h5 className="m-b-0">$2850.06</h5>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    </table> 
                                 </div>
                             </div>
                         </div>

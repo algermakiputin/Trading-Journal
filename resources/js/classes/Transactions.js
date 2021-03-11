@@ -13,9 +13,7 @@ class Transactions {
     // 3.044 rounded to hundredths is 3.04 (because the next digit, 4, is less than 5).
     // 3.046 rounded to hundredths is 3.05 (because the next digit, 6, is 5 or more).
     // 3.045 rounded to hundredths is 3.05 (because the next digit, 5, is 5 or more).
-
-    
-
+ 
     static buy( price = 0, shares = 0) {
 
         price = parseFloat(price);
@@ -46,6 +44,20 @@ class Transactions {
 
 
     }
+
+    static buy_amount(shares, price, fees) {
+
+        return ( shares * price ) + fees;
+    }
+
+    static ave_price( shares, price, fees ) {
+
+        // Average Price = Net Amount / shares
+        let net = price * shares;
+
+
+
+    } 
 
 }
 

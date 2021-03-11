@@ -11,4 +11,8 @@ class Trade extends Model
 
     protected $fillable = ['status', 'shares', 'stock_code', 'date'];
     
+    public function transactions() {
+
+        return $this->hasMany(Transaction::class, 'trade_id');
+    }
 }

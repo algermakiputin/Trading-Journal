@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\TransactionsController;
+use App\Http\Controllers\TradesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,4 @@ Route::get('/', function () {
 
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
+Route::get('positions', [ TradesController::class, 'positions']);

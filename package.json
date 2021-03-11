@@ -29,6 +29,9 @@
     "dependencies": {
         "@popperjs/core": "^2.9.0",
         "react-bootstrap": "^1.5.1",
-        "react-router-dom": "^5.2.0"
+        "react-data-table-component": "^6.11.7",
+        "react-number-format": "^4.4.4",
+        "react-router-dom": "^5.2.0",
+        "styled-components": "^5.2.1"
     }
 }
