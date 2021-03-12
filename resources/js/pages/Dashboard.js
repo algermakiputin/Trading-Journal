@@ -1,17 +1,47 @@
 import React from "react";
 import TradeForm from '../components/TradeForm'; 
+import Trades from '../model/Trades';
+
+var positions = [];
 
 class Dashboard extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)
+
+        this.state = {
+            positions: []
+        }
       
     } 
 
-    render() { 
+    test() {
 
+        Trades.position()
+            .then( res => {
+
+               var position = res.map(function(key) {
+
+                   return <tr>
+                       <td> {key.stock_code }</td>
+                       <td> {key.ave_price }</td>
+                       <td> {key.total_shares }</td>
+                       <td> {key.total_cost }</td>
+                   </tr>
+               })
+
+               this.setState({positions: position})
+
+                
+            })
+      
+    }
+    render() {       
+
+        this.test();
         return (
-            <div className="page-wrapper"> 
+            <div className="page-wrapper">  
+            
                 <div className="page-breadcrumb">
                     <div className="row align-items-center">
                         <div className="col-5">
@@ -101,13 +131,16 @@ class Dashboard extends React.Component {
                                      
                                     <table className="table v-middle">
                                         <thead>
-                                            <tr class="bg-light">
-                                                <th class="border-top-0">Stock</th>
-                                                <th class="border-top-0">Ave. Price</th>
-                                                <th class="border-top-0">Shares</th>
-                                                <th class="border-top-0">Total Cost</th> 
+                                            <tr className="bg-light">
+                                                <th className="border-top-0">Stock</th>
+                                                <th className="border-top-0">Ave. Price</th>
+                                                <th className="border-top-0">Shares</th>
+                                                <th className="border-top-0">Total Cost</th> 
                                             </tr>
                                         </thead>
+                                        <tbody> 
+                                            { this.state.positions }
+                                        </tbody>
                                     </table> 
                                 </div>
                             </div>
