@@ -9,9 +9,12 @@ class BankForm extends React.Component {
         this.state = {
             show: false,
             date: '',
-            action: '',
+            action: 'deposit',
             amount: 0,
+            alert_danger: false
         }
+
+        this.defaultState = this.state;
     }
 
     toggleModal() {
@@ -23,13 +26,36 @@ class BankForm extends React.Component {
  
         if ( this.state.date && this.state.action && this.state.amount ) {
 
+            this.setState({alert_danger:false})
+
             axios.post('api/bank/create', this.state)
                     .then( res => {
+                         
+                        if ( res.data == 1) {
+
+                            this.setState(this.defaultState);
+                        }
 
                     })
                     .catch ( err => {
                         console.log(err)
-                    })
+                    }) 
+                    
+        }else {
+
+            this.setState({alert_danger:true})
+        }
+    }
+
+    alert_danger() {
+
+        if ( this.state.alert_danger ) { 
+
+            return ( 
+                <Alert variant="danger">
+                    Empty fields are required    
+                </Alert>
+            )
         }
     }
  
@@ -37,9 +63,13 @@ class BankForm extends React.Component {
 
         return (
             <div> 
-                 <Button  onClick={ () => { this.toggleModal() }} className="btn btn-default" style={ {backgroundColor: '#4fc3f7', border: 'none'} }>
+                <button 
+                    onClick={ () => { this.toggleModal() }}
+                    class="btn btn-default"
+                    style={ {backgroundColor: '#4fc3f7'} }
+                    >
                     Deposit / Withdraw Funds
-                </Button>
+                </button> 
                 <Modal
                     show={this.state.show}
                     onHide={ ()=> { this.toggleModal(false)} }
@@ -48,6 +78,7 @@ class BankForm extends React.Component {
                         <Modal.Title>Withdraw / Deposit Funds</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        { this.alert_danger() }
                         <Form noValidate>
                             <Form.Group>
                                 <Form.Label>Date</Form.Label>
@@ -57,11 +88,9 @@ class BankForm extends React.Component {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Action</Form.Label>
-                                <Form.Control as="select"
-                                    onChange={ event=> { this.setState({action: event.target.value })} }
-                                    defaultValue="deposit"
+                                <Form.Control as="select"  
                                 >
-                                    <option value="deposit">Deposit</option>
+                                    <option value="deposit" selected>Deposit</option>
                                     <option value="withdraw">Withdraw</option>
                                 </Form.Control>
                             </Form.Group>

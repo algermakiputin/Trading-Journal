@@ -121,7 +121,7 @@ class TradeForm extends React.Component {
         return (
 
             <div>
-                <Button onClick={() => {this.handleModal()}} className="btn btn-success text-white">New Trade</Button> 
+                <Button onClick={() => {this.handleModal()}} className="btn btn-danger text-white">New Trade</Button> 
                
                 <Modal 
                     show={this.state.show} 

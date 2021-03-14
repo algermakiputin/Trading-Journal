@@ -1,4 +1,5 @@
 import React from "react";
+import profile_pict from '../profile.jpg';
 
 export default function Sidebar() {
     
@@ -8,30 +9,15 @@ export default function Sidebar() {
                 <nav className="sidebar-nav">
                     <ul id="sidebarnav"> 
                         <li> 
-                            <div className="user-profile d-flex no-block dropdown m-t-20">
-                                <div className="user-pic"><img src="../../assets/images/users/1.jpg" alt="users"
-                                        className="rounded-circle" width="40" /></div>
-                                <div className="user-content hide-menu m-l-10">
-                                    <a href="#" className="" id="Userdd" role="button"
+                        <div class="user-profile d-flex no-block dropdown m-t-20">
+                                <div class="user-pic"><img src={ profile_pict } alt="users"
+                                        class="rounded-circle" width="40" /></div>
+                                <div class="user-content hide-menu m-l-10">
+                                    <a href="#" class="" id="Userdd" role="button"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <h5 className="m-b-0 user-name font-medium">Steave Jobs <i
-                                                className="fa fa-angle-down"></i></h5>
-                                        <span className="op-5 user-email">varun@gmail.com</span>
-                                    </a>
-                                    <div className="dropdown-menu dropdown-menu-end" aria-labelledby="Userdd">
-                                        <a className="dropdown-item" href="#"><i
-                                                className="ti-user m-r-5 m-l-5"></i> My Profile</a>
-                                        <a className="dropdown-item" href="#"><i
-                                                className="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-                                        <a className="dropdown-item" href="#"><i
-                                                className="ti-email m-r-5 m-l-5"></i> Inbox</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#"><i
-                                                className="ti-settings m-r-5 m-l-5"></i> Account Setting</a>
-                                        <div className="dropdown-divider"></div>
-                                        <a className="dropdown-item" href="#"><i
-                                                className="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
-                                    </div>
+                                        <h5 class="m-b-0 user-name font-medium">Hero Trader </h5>
+                                        <span class="op-5 user-email">herotrader.net</span>
+                                    </a> 
                                 </div>
                             </div> 
                         </li>

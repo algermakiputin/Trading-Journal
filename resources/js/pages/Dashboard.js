@@ -2,6 +2,7 @@ import React from "react"
 import TradeForm from '../components/TradeForm'
 import Trades from '../model/Trades'
 import BankForm from '../components/BankForm'
+import EquityChart from '../components/EquityChart'
 
 var positions = [];
 
@@ -88,7 +89,9 @@ class Dashboard extends React.Component {
                                     </div>
                                     <div className="row"> 
                                         <div className="col-lg-12">
-                                            <div className="campaign ct-charts"></div>
+                                            <div className="campaign ct-charts">
+                                                <EquityChart />
+                                            </div>
                                         </div> 
                                     </div>
                                 </div>
@@ -165,8 +168,7 @@ class Dashboard extends React.Component {
                     </div>  
                 </div>
                 <footer className="footer text-center">
-                    All Rights Reserved by Xtreme Admin. Designed and Developed by <a
-                    href="https://www.wrappixel.com">WrapPixel</a>.
+                    Trading Journal PH
                 </footer> 
             </div>    
         )

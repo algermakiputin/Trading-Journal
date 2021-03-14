@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '../../css/app.css';
 import '../../dist/css/style.min.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from '../templates/Header';

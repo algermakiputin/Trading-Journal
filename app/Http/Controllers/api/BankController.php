@@ -12,11 +12,20 @@ class BankController extends Controller
 
     public function store(Request $request) {
   
-        return Bank::create([
+        $bank = Bank::create([
             'date' => $request->date,
             'amount' => $request->amount,
             'action' => $request->action
         ]);
+
+        if ( $bank ) {
+
+            echo 1;
+            return;
+        }
+
+        echo 0;
+        return;
         
     }
 }
