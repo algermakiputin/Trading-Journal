@@ -1,6 +1,7 @@
-import React from "react";
-import TradeForm from '../components/TradeForm'; 
-import Trades from '../model/Trades';
+import React from "react"
+import TradeForm from '../components/TradeForm'
+import Trades from '../model/Trades'
+import BankForm from '../components/BankForm'
 
 var positions = [];
 
@@ -12,33 +13,45 @@ class Dashboard extends React.Component {
         this.state = {
             positions: []
         }
+ 
+        this.open_positions()
       
     } 
 
-    test() {
+    open_positions() {
 
         Trades.position()
             .then( res => {
 
-               var position = res.map(function(key) {
+                var position;
+                 
+                if ( Object.keys(res).length ) {
+ 
+                    position = res.map(function(key) {
+ 
+                        return <tr>
+                            <td> {key.stock_code }</td>
+                            <td> {key.ave_price }</td>
+                            <td> {key.total_shares }</td>
+                            <td> {key.total_cost }</td>
+                        </tr>
+                    })
+                }else {
+                    
+                    position = <tr>
+                        <td colSpan="4">No Open Position. To add new trade, Click the New Trade button above.</td>
+                    </tr>
+                }
+ 
+  
+               this.setState({positions: position}) 
 
-                   return <tr>
-                       <td> {key.stock_code }</td>
-                       <td> {key.ave_price }</td>
-                       <td> {key.total_shares }</td>
-                       <td> {key.total_cost }</td>
-                   </tr>
-               })
-
-               this.setState({positions: position})
-
-                
             })
       
     }
+ 
     render() {       
 
-        this.test();
         return (
             <div className="page-wrapper">  
             
@@ -50,14 +63,14 @@ class Dashboard extends React.Component {
                                 <nav aria-label="breadcrumb">
                                     <ol className="breadcrumb">
                                         <li className="breadcrumb-item"><a href="#">Home</a></li>
-                                        <li className="breadcrumb-item active" aria-current="page">Library</li>
+                                        <li className="breadcrumb-item active" aria-current="page">Dashboard</li>
                                     </ol>
                                 </nav>
                             </div>
                         </div>
                         <div className="col-7">
                             <div className="text-end upgrade-btn"> 
-                                <TradeForm />
+                                <TradeForm /> 
                             </div>
                         </div>
                     </div>
@@ -70,7 +83,7 @@ class Dashboard extends React.Component {
                                     <div className="d-md-flex align-items-center">
                                         <div>
                                             <h4 className="card-title">Equity Curve</h4>
-                                            <h5 className="card-subtitle">Overview of Latest 12 Months</h5>
+                                            <h5 className="card-subtitle">Overview of Latest 12 Months </h5>
                                         </div> 
                                     </div>
                                     <div className="row"> 
@@ -84,23 +97,27 @@ class Dashboard extends React.Component {
                         <div className="col-md-4">
                             <div className="card">
                                 <div className="card-body">
-                                    <h4 className="card-title">Performance</h4>
+                                    <h4 className="card-title">Account Summary (PHP)</h4>
                                     <div className="feed-widget">
                                         <ul className="list-style-none feed-body m-0 p-b-20">
                                             <li className="feed-item">
-                                                <div className="feed-icon bg-info"><i className="far fa-bell"></i></div> Total Trades<span className="ms-auto font-13">28</span>
+                                                <div className="feed-icon bg-info"><i className="mdi mdi-chart-timeline"></i></div> Total Equity<span className="ms-auto font-13">125,000</span>
                                             </li>
                                             <li className="feed-item">
-                                                <div className="feed-icon bg-success"><i className="ti-server"></i></div> Net Gain Loss
-                                                <span className="ms-auto font-13">208,000</span>
+                                                <div className="feed-icon bg-success"><i className="mdi mdi-chart-pie"></i></div> Available Cash
+                                                <span className="ms-auto font-13">100,000</span>
                                             </li>
                                             <li className="feed-item">
-                                                <div className="feed-icon bg-warning"><i className="ti-shopping-cart"></i></div>Accuracy<span className="ms-auto font-13">25%</span>
-                                            </li>
-                                            <li className="feed-item">
-                                                <div className="feed-icon bg-danger"><i className="ti-user"></i></div>Edge Ratio<span className="ms-auto font-13 ">0.80</span>
-                                            </li>
+                                                <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">25,000 <small>25%</small></span>
+                                            </li>  
                                         </ul>
+                                        <hr></hr>
+                                        <div>
+                                            <BankForm /> 
+                                        </div>
+                                    </div>
+                                    <div> 
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -145,130 +162,8 @@ class Dashboard extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div> 
-                    <div className="row"> 
-                        <div className="col-lg-6">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h4 className="card-title">Recent Comments</h4>
-                                </div>
-                                <div className="comment-widgets scrollable"> 
-                                    <div className="d-flex flex-row comment-row m-t-0">
-                                        <div className="p-2"><img src="../../assets/images/users/1.jpg" alt="user" width="50"
-                                            className="rounded-circle"/>
-                                            <div className="comment-text w-100">
-                                                <h6 className="font-medium">James Anderson</h6>
-                                                <span className="m-b-15 d-block">Lorem Ipsum is simply dummy text of the printing
-                                                and type setting industry. </span>
-                                                <div className="comment-footer">
-                                                    <span className="text-muted float-end">April 14, 2021</span> <span
-                                                    className="label label-rounded label-primary">Pending</span> <span
-                                                    className="action-icons">
-                                                    <a href="#"><i className="ti-pencil-alt"></i></a>
-                                                    <a href="#"><i className="ti-check"></i></a>
-                                                    <a href="#"><i className="ti-heart"></i></a>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    <div className="d-flex flex-row comment-row">
-                                        <div className="p-2"><img src="../../assets/images/users/4.jpg" alt="user" width="50"
-                                            className="rounded-circle" /></div>
-                                            <div className="comment-text active w-100">
-                                                <h6 className="font-medium">Michael Jorden</h6>
-                                                <span className="m-b-15 d-block">Lorem Ipsum is simply dummy text of the printing
-                                                and type setting industry. </span>
-                                                <div className="comment-footer ">
-                                                    <span className="text-muted float-end">April 14, 2021</span>
-                                                    <span className="label label-success label-rounded">Approved</span>
-                                                    <span className="action-icons active">
-                                                        <a href="#"><i className="ti-pencil-alt"></i></a>
-                                                        <a href="#"><i className="icon-close"></i></a>
-                                                        <a href="#"><i className="ti-heart text-danger"></i></a>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div> 
-                                        <div className="d-flex flex-row comment-row">
-                                            <div className="p-2"><img src="../../assets/images/users/5.jpg" alt="user" width="50"
-                                                className="rounded-circle" /></div>
-                                                <div className="comment-text w-100">
-                                                    <h6 className="font-medium">Johnathan Doeting</h6>
-                                                    <span className="m-b-15 d-block">Lorem Ipsum is simply dummy text of the printing
-                                                    and type setting industry. </span>
-                                                    <div className="comment-footer">
-                                                        <span className="text-muted float-end">April 14, 2021</span>
-                                                        <span className="label label-rounded label-danger">Rejected</span>
-                                                        <span className="action-icons">
-                                                            <a href="#"><i className="ti-pencil-alt"></i></a>
-                                                            <a href="#"><i className="ti-check"></i></a>
-                                                            <a href="#"><i className="ti-heart"></i></a>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                                <div className="col-lg-6">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <h4 className="card-title">Temp Guide</h4>
-                                            <div className="d-flex align-items-center flex-row m-t-30">
-                                                <div className="display-5 text-info"><i className="wi wi-day-showers"></i>
-                                                    <span>73<sup>°</sup></span></div>
-                                                    <div className="m-l-10">
-                                                        <h3 className="m-b-0">Saturday</h3><small>Ahmedabad, India</small>
-                                                    </div>
-                                                </div>
-                                                <table className="table no-border mini-table m-t-20">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td className="text-muted">Wind</td>
-                                                            <td className="font-medium">ESE 17 mph</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-muted">Humidity</td>
-                                                            <td className="font-medium">83%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-muted">Pressure</td>
-                                                            <td className="font-medium">28.56 in</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-muted">Cloud Cover</td>
-                                                            <td className="font-medium">78%</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <ul className="row list-style-none text-center m-t-30">
-                                                    <li className="col-3">
-                                                        <h4 className="text-info"><i className="wi wi-day-sunny"></i></h4>
-                                                        <span className="d-block text-muted">09:30</span>
-                                                        <h3 className="m-t-5">70<sup>°</sup></h3>
-                                                    </li>
-                                                    <li className="col-3">
-                                                        <h4 className="text-info"><i className="wi wi-day-cloudy"></i></h4>
-                                                        <span className="d-block text-muted">11:30</span>
-                                                        <h3 className="m-t-5">72<sup>°</sup></h3>
-                                                    </li>
-                                                    <li className="col-3">
-                                                        <h4 className="text-info"><i className="wi wi-day-hail"></i></h4>
-                                                        <span className="d-block text-muted">13:30</span>
-                                                        <h3 className="m-t-5">75<sup>°</sup></h3>
-                                                    </li>
-                                                    <li className="col-3">
-                                                        <h4 className="text-info"><i className="wi wi-day-sprinkle"></i></h4>
-                                                        <span className="d-block text-muted">15:30</span>
-                                                        <h3 className="m-t-5">76<sup>°</sup></h3>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                            </div> 
-                        </div>
+                    </div>  
+                </div>
                 <footer className="footer text-center">
                     All Rights Reserved by Xtreme Admin. Designed and Developed by <a
                     href="https://www.wrappixel.com">WrapPixel</a>.

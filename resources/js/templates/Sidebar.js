@@ -37,23 +37,17 @@ export default function Sidebar() {
                         </li>
                     
                         <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="index.html" aria-expanded="false"><i className="mdi mdi-view-dashboard"></i><span
+                                href="#" aria-expanded="false"><i className="mdi mdi-view-dashboard"></i><span
                                     className="hide-menu">Dashboard</span></a></li>
                         <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="pages-profile.html" aria-expanded="false"><i
-                                    className="mdi mdi-account-network"></i><span className="hide-menu">Profile</span></a></li>
+                                href="#" aria-expanded="false"><i
+                                    className="mdi mdi-chart-bar"></i><span className="hide-menu">Analytics</span></a></li>
                         <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="table-basic.html" aria-expanded="false"><i className="mdi mdi-border-all"></i><span
-                                    className="hide-menu">Table</span></a></li>
+                                href="#" aria-expanded="false"><i className="mdi mdi-history"></i><span
+                                    className="hide-menu">Trade Logs</span></a></li>
                         <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="icon-material.html" aria-expanded="false"><i className="mdi mdi-face"></i><span
-                                    className="hide-menu">Icon</span></a></li>
-                        <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="starter-kit.html" aria-expanded="false"><i className="mdi mdi-file"></i><span
-                                    className="hide-menu">Blank</span></a></li>
-                        <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="error-404.html" aria-expanded="false"><i className="mdi mdi-alert-outline"></i><span
-                                    className="hide-menu">404</span></a></li>
+                                href="#" aria-expanded="false"><i className="mdi mdi-logout"></i><span
+                                    className="hide-menu">Logout</span></a></li> 
                      
                     </ul>
 

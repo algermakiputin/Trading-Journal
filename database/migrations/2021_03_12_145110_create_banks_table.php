@@ -4,29 +4,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransactionsTable extends Migration
+class CreateBanksTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
-            
+        Schema::create('banks', function (Blueprint $table) {
             $table->id();
             $table->string('date');
-            $table->string('stock_code');
-            $table->string('type');
-            $table->string('price');
-            $table->unsignedInteger('shares');
-            $table->string('fees');
-            $table->string('net');
-            $table->unsignedInteger('trade_id');
+            $table->string('action');
+            $table->string('amount');
             $table->timestamps();
-
         });
     }
 
@@ -37,6 +29,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('banks');
     }
 }

@@ -37,7 +37,8 @@ class TransactionsController extends Controller
                 'shares' => $request->shares,
                 'status' => 0,
                 'stock_code' => $request->stock_code,
-                'date' => $request->date
+                'date' => $request->date,
+                'gain_loss' => 0
             ]);
 
             $transaction = Transaction::create([
@@ -47,7 +48,8 @@ class TransactionsController extends Controller
                 'shares' => $request->shares,
                 'fees' => $request->fees,
                 'net' => $request->net,
-                'trade_id' => $trade->id
+                'trade_id' => $trade->id,
+                'type' => 'long'
             ]);
 
             DB::commit();

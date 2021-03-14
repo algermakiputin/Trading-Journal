@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Form, Table, Button, Modal, Alert } from "react-bootstrap";
+import { Form, Table, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios"; 
 import Transactions from '../classes/Transactions';
 
@@ -121,8 +121,8 @@ class TradeForm extends React.Component {
         return (
 
             <div>
-                <Button onClick={() => {this.handleModal()}} className="btn btn-danger text-white">New Trade</Button> 
-    
+                <Button onClick={() => {this.handleModal()}} className="btn btn-success text-white">New Trade</Button> 
+               
                 <Modal 
                     show={this.state.show} 
                     onHide={() => this.handleModal(false) } 
@@ -133,8 +133,7 @@ class TradeForm extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         
-                        { this.alert_danger() }
-
+                        { this.alert_danger() } 
                         <Form noValidate>
                             <Table bordered striped hover>
                                 <thead>
