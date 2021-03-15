@@ -25,7 +25,7 @@ class TradesController extends Controller
             $position[] = $this->calculate_position($trade);
         }
 
-        return $position;
+        return (array) $position;
 
     }
 

@@ -1,61 +1,23 @@
 import React from "react"
-import TradeForm from '../components/TradeForm'
-import Trades from '../model/Trades'
-import BankForm from '../components/BankForm'
-import EquityChart from '../components/EquityChart'
+import TradeForm from '../components/forms/TradeForm'
+import BankForm from '../components/forms/BankForm'
+import EquityChart from '../components/chart/EquityChart'  
+import PositionsTable from '../components/positions_table/PositionsTable' 
 
 var positions = [];
 
 class Dashboard extends React.Component {
 
     constructor(props) {
-        super(props)
-
-        this.state = {
-            positions: []
-        }
- 
-        this.open_positions()
-      
-    } 
-
-    open_positions() {
-
-        Trades.position()
-            .then( res => {
-
-                var position;
-                 
-                if ( Object.keys(res).length ) {
- 
-                    position = res.map(function(key) {
- 
-                        return <tr>
-                            <td> {key.stock_code }</td>
-                            <td> {key.ave_price }</td>
-                            <td> {key.total_shares }</td>
-                            <td> {key.total_cost }</td>
-                        </tr>
-                    })
-                }else {
-                    
-                    position = <tr>
-                        <td colSpan="4">No Open Position. To add new trade, Click the New Trade button above.</td>
-                    </tr>
-                }
- 
-  
-               this.setState({positions: position}) 
-
-            })
-      
-    }
+        super(props) 
+    
+    }  
  
     render() {       
 
         return (
-            <div className="page-wrapper">  
             
+            <div className="page-wrapper">   
                 <div className="page-breadcrumb">
                     <div className="row align-items-center">
                         <div className="col-5">
@@ -84,7 +46,7 @@ class Dashboard extends React.Component {
                                     <div className="d-md-flex align-items-center">
                                         <div>
                                             <h4 className="card-title">Equity Curve</h4>
-                                            <h5 className="card-subtitle">Overview of Latest 12 Months </h5>
+                                            <h5 className="card-subtitle">Overview of the last 12 Months </h5>
                                         </div> 
                                     </div>
                                     <div className="row"> 
@@ -116,7 +78,7 @@ class Dashboard extends React.Component {
                                         </ul>
                                         <hr></hr>
                                         <div>
-                                            <BankForm /> 
+                                            <BankForm />  
                                         </div>
                                     </div>
                                     <div> 
@@ -134,34 +96,12 @@ class Dashboard extends React.Component {
                                         <div>
                                             <h4 className="card-title">Stock Position</h4>
                                             <h5 className="card-subtitle">Overview of my open trades</h5>
-                                        </div>
-                                        <div className="ms-auto">
-                                            <div className="dl">
-                                                <select className="form-select shadow-none">
-                                                    <option value="0">Monthly</option>
-                                                    <option value="1">Daily</option>
-                                                    <option value="2">Weekly</option>
-                                                    <option value="3">Yearly</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        </div> 
                                     </div> 
                                 </div>
                                 <div className="table-responsive">
                                      
-                                    <table className="table v-middle">
-                                        <thead>
-                                            <tr className="bg-light">
-                                                <th className="border-top-0">Stock</th>
-                                                <th className="border-top-0">Ave. Price</th>
-                                                <th className="border-top-0">Shares</th>
-                                                <th className="border-top-0">Total Cost</th> 
-                                            </tr>
-                                        </thead>
-                                        <tbody> 
-                                            { this.state.positions }
-                                        </tbody>
-                                    </table> 
+                                    <PositionsTable />
                                 </div>
                             </div>
                         </div>

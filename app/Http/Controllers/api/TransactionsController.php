@@ -58,6 +58,7 @@ class TransactionsController extends Controller
         } catch ( \Exception $e ) {
 
             DB::rollback();
+            throw $e;
             echo 0;
         }
 

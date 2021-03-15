@@ -9,12 +9,25 @@ class EquityChart extends React.Component {
         var data = {
             labels: ['January', 'May', 'August', 'December'],
             series: [
-                [100000,200000,400000,500000,600000]
-            ]
+                [
+                    {meta:'100', value:100},
+                    {meta:'200', value:200},
+                    {meta:'300', value:300},
+                    {meta:'500', value:500}
+                ]
+            ] 
         };
 
         var options = {
-            fullWidth: true
+            fullWidth: true,
+            height:240,
+            low:0,
+            showArea: true,
+            scaleMinSpace: 20,
+            stretch:true,
+            chartPadding: { 
+            }
+
         };
 
         var type = 'Line'

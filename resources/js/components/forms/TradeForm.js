@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Table, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios"; 
-import Transactions from '../classes/Transactions';
+import Transactions from '../../classes/Transactions'; 
+import UserContext from '../../UserContext'
 
-const base_url = "http://localhost:8000/";
 
 class TradeForm extends React.Component {
 
@@ -26,10 +26,11 @@ class TradeForm extends React.Component {
         }
 
         this.baseState = this.state;
-         
+ 
     }
 
     handleFormSubmit() {
+
 
         if ( this.state.date == "" || this.state.stock_code == "" || this.state.price == "" || this.state.shares == "") {
             console.log(this.state)
@@ -43,8 +44,11 @@ class TradeForm extends React.Component {
                 .then( res => {
                     
                     if ( res.data == 1) {
-                        this.setState( this.baseState );
+                       
+                        this.setState( this.baseState ); 
                     }
+
+                    return res
                 })
                 .catch( err => {
                     console.log( err)
