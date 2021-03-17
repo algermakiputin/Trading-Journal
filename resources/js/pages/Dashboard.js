@@ -1,8 +1,10 @@
 import React from "react"
-import TradeForm from '../components/TradeForm'
+import TradeForm from '../components/forms/TradeForm'
 import Trades from '../model/Trades'
-import BankForm from '../components/BankForm'
-import EquityChart from '../components/EquityChart'
+import BankForm from '../components/forms/BankForm'
+import SellForm from '../components/forms/SellForm'
+import EquityChart from '../components/charts/EquityChart'
+
 
 var positions = [];
 
@@ -12,44 +14,57 @@ class Dashboard extends React.Component {
         super(props)
 
         this.state = {
-            positions: []
+            positions: [],
+            showSellModal: false
         }
         
         this.open_positions = this.open_positions.bind(this);
+        this.handleSellModal = this.handleSellModal.bind(this);
         this.open_positions()
         
-
     } 
 
-    open_positions() {
+    async open_positions() {
 
-        Trades.position()
+        await Trades.position()
             .then( res => {
-
-                var position;
-                 
-                if ( Object.keys(res).length ) {
- 
-                    position = res.map(function(key) {
- 
-                        return <tr>
-                            <td> {key.stock_code }</td>
-                            <td> {key.ave_price }</td>
-                            <td> {key.total_shares }</td>
-                            <td> {key.total_cost }</td>
-                        </tr>
-                    })
-                }else {
-                    
-                    position = <tr>
-                        <td colSpan="4">No Open Position. To add new trade, Click the New Trade button above.</td>
-                    </tr>
-                } 
   
-               this.setState({positions: position}) 
+               this.setState({positions: res}) 
 
             })
       
+    }
+
+    handleSellModal() {
+
+        this.setState({showSellModal: !this.state.showSellModal})
+    }
+
+    portfolioList() {
+ 
+        const openTrades = this.state.positions;
+        const positionsList = openTrades.map( (trade, index) => {
+            return <tr key={trade.stock_code + index }>
+                <td> {trade.stock_code }</td>
+                <td> {trade.ave_price }</td>
+                <td> {trade.total_shares }</td>
+                <td> {trade.total_cost }</td>
+                <td> 
+                    <div className="dropdown show">
+                    <i className="mdi mdi-wrench dropdown-toggle" href="#" role="button" id="portfolioActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </i> 
+                        <div className="dropdown-menu" aria-labelledby="portfolioActions">
+                            <a onClick={this.handleSellModal} className="dropdown-item" href="#">Sell</a> 
+                        </div>
+                    </div>    
+                </td>
+            </tr>
+        })
+
+        return ( 
+            <tbody>{ positionsList }</tbody>
+        )
+ 
     }
  
     render() {       
@@ -72,7 +87,10 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="col-7">
                             <div className="text-end upgrade-btn"> 
-                                <TradeForm positions={ this.open_positions } /> 
+                                <TradeForm 
+                                    positions={ this.open_positions } 
+                                    listPositions = { this.portfolioList }
+                                /> 
                             </div>
                         </div>
                     </div>
@@ -89,10 +107,8 @@ class Dashboard extends React.Component {
                                         </div> 
                                     </div>
                                     <div className="row"> 
-                                        <div className="col-lg-12">
-                                            <div className="campaign ct-charts">
-                                                <EquityChart />
-                                            </div>
+                                        <div className="col-lg-12"> 
+                                            <EquityChart /> 
                                         </div> 
                                     </div>
                                 </div>
@@ -138,12 +154,12 @@ class Dashboard extends React.Component {
                                         </div>
                                         <div className="ms-auto">
                                             <div className="dl">
-                                                <select className="form-select shadow-none">
+                                                {/* <select className="form-select shadow-none">
                                                     <option value="0">Monthly</option>
                                                     <option value="1">Daily</option>
                                                     <option value="2">Weekly</option>
                                                     <option value="3">Yearly</option>
-                                                </select>
+                                                </select> */}
                                             </div>
                                         </div>
                                     </div> 
@@ -157,12 +173,15 @@ class Dashboard extends React.Component {
                                                 <th className="border-top-0">Ave. Price</th>
                                                 <th className="border-top-0">Shares</th>
                                                 <th className="border-top-0">Total Cost</th> 
+                                                <th width="100"></th>
                                             </tr>
-                                        </thead>
-                                        <tbody> 
-                                            { this.state.positions }
-                                        </tbody>
+                                        </thead> 
+                                        { this.portfolioList() } 
                                     </table> 
+                                    <SellForm 
+                                        show={this.state.showSellModal }  
+                                        handleModal= { this.handleSellModal }
+                                        />
                                 </div>
                             </div>
                         </div>

@@ -88,9 +88,9 @@ class BankForm extends React.Component {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Action</Form.Label>
-                                <Form.Control as="select"  
+                                <Form.Control as="select"  defaultValue="deposit"
                                 >
-                                    <option value="deposit" selected>Deposit</option>
+                                    <option value="deposit">Deposit</option>
                                     <option value="withdraw">Withdraw</option>
                                 </Form.Control>
                             </Form.Group>

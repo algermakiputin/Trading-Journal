@@ -14,6 +14,7 @@ class TradesController extends Controller
         $position = [];
         $trades = DB::table('trades')
                         ->where('trades.status', 0)
+                        ->orderBy('trades.id', 'DESC')
                         ->leftJoin('transactions', 'tradeS.id', '=', 'transactions.trade_id')
                         ->get();
         
@@ -48,6 +49,7 @@ class TradesController extends Controller
         $ave_price = 0;
         $total_cost = 0;
         $total_shares = 0; 
+        $currency = config('app.currency');
 
         foreach ( $trades as $trade ) {
 
@@ -58,8 +60,8 @@ class TradesController extends Controller
         $ave_price = number_format( ($total_cost / $total_shares), 2 );
 
         return array(
-            'ave_price' => $ave_price,
-            'total_cost' => $total_cost,
+            'ave_price' => $currency . $ave_price,
+            'total_cost' => $currency . number_format($total_cost, 2),
             'total_shares' => $total_shares,
             'stock_code' => $trades[0]->stock_code
         );

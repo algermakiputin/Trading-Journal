@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Table, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios"; 
-import Transactions from '../classes/Transactions';
+import Transactions from '../../classes/Transactions';
 
 const base_url = "http://localhost:8000/";
 
@@ -44,6 +44,7 @@ class TradeForm extends React.Component {
                     if ( res.data == 1) {
                         this.setState( this.baseState );
                         this.props.positions();
+                        this.props.listPositions();
                     }
                 })
                 .catch( err => {

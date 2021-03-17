@@ -1,5 +1,6 @@
 import React from 'react'; 
 import ChartistGraph from 'react-chartist';
+import Chartist from 'chartist';
 
 class EquityChart extends React.Component {
 
@@ -14,15 +15,19 @@ class EquityChart extends React.Component {
         };
 
         var options = {
-            fullWidth: true
+            lineSmooth: Chartist.Interpolation.none(),
+            fullWidth: true,
+            height:240, 
+            showArea: true,
+            showPoint: false
         };
 
         var type = 'Line'
 
         return (
-            <div>
-            <ChartistGraph data={data} options={options} type={type} />
-            </div>
+             
+                <ChartistGraph className="campaign ct-charts" data={data} options={options} type={type} />
+             
         )
     }
 
