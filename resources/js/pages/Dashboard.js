@@ -14,9 +14,11 @@ class Dashboard extends React.Component {
         this.state = {
             positions: []
         }
- 
+        
+        this.open_positions = this.open_positions.bind(this);
         this.open_positions()
-      
+        
+
     } 
 
     open_positions() {
@@ -42,8 +44,7 @@ class Dashboard extends React.Component {
                     position = <tr>
                         <td colSpan="4">No Open Position. To add new trade, Click the New Trade button above.</td>
                     </tr>
-                }
- 
+                } 
   
                this.setState({positions: position}) 
 
@@ -71,7 +72,7 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="col-7">
                             <div className="text-end upgrade-btn"> 
-                                <TradeForm /> 
+                                <TradeForm positions={ this.open_positions } /> 
                             </div>
                         </div>
                     </div>

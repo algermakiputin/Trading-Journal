@@ -2455,7 +2455,7 @@ var BankForm = /*#__PURE__*/function (_React$Component) {
           onClick: function onClick() {
             _this3.toggleModal();
           },
-          "class": "btn btn-default",
+          className: "btn btn-default",
           style: {
             backgroundColor: '#4fc3f7'
           },
@@ -2776,6 +2776,8 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
       axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/transactions/store', this.state).then(function (res) {
         if (res.data == 1) {
           _this2.setState(_this2.baseState);
+
+          _this2.props.positions();
         }
       })["catch"](function (err) {
         console.log(err);
@@ -3098,6 +3100,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       positions: []
     };
+    _this.open_positions = _this.open_positions.bind(_assertThisInitialized(_this));
 
     _this.open_positions();
 
@@ -3178,7 +3181,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
               className: "col-7",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
                 className: "text-end upgrade-btn",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_TradeForm__WEBPACK_IMPORTED_MODULE_1__.default, {})
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_TradeForm__WEBPACK_IMPORTED_MODULE_1__.default, {
+                  positions: this.open_positions
+                })
               })
             })]
           })
@@ -3428,30 +3433,30 @@ function Sidebar() {
           id: "sidebarnav",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-              "class": "user-profile d-flex no-block dropdown m-t-20",
+              className: "user-profile d-flex no-block dropdown m-t-20",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                "class": "user-pic",
+                className: "user-pic",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
                   src: _profile_jpg__WEBPACK_IMPORTED_MODULE_1__.default,
                   alt: "users",
-                  "class": "rounded-circle",
+                  className: "rounded-circle",
                   width: "40"
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                "class": "user-content hide-menu m-l-10",
+                className: "user-content hide-menu m-l-10",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("a", {
                   href: "#",
-                  "class": "",
+                  className: "",
                   id: "Userdd",
                   role: "button",
                   "data-bs-toggle": "dropdown",
                   "aria-haspopup": "true",
                   "aria-expanded": "false",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
-                    "class": "m-b-0 user-name font-medium",
+                    className: "m-b-0 user-name font-medium",
                     children: "Hero Trader "
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                    "class": "op-5 user-email",
+                    className: "op-5 user-email",
                     children: "herotrader.net"
                   })]
                 })

@@ -65,7 +65,7 @@ class BankForm extends React.Component {
             <div> 
                 <button 
                     onClick={ () => { this.toggleModal() }}
-                    class="btn btn-default"
+                    className="btn btn-default"
                     style={ {backgroundColor: '#4fc3f7'} }
                     >
                     Deposit / Withdraw Funds

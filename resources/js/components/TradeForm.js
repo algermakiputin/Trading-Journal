@@ -40,16 +40,16 @@ class TradeForm extends React.Component {
         } 
             
         axios.post('/api/transactions/store', this.state)
-                .then( res => {
-                    
+                .then( res => { 
                     if ( res.data == 1) {
                         this.setState( this.baseState );
+                        this.props.positions();
                     }
                 })
                 .catch( err => {
                     console.log( err)
-                })
-
+                }) 
+                
     }
 
     handleModal() {
