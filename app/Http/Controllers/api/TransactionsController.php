@@ -64,6 +64,34 @@ class TransactionsController extends Controller
         return;
     }
 
+    public function sell(Request $request) {
+
+        DB::beginTransaction();
+
+        
+        try {
+
+            $transaction = Transaction::create([
+                'date' => $request->date,
+                'stock_code' => $request->stock_code,
+                'price' => $request->price,
+                'shares' => $request->shares,
+                'fees' => $request->fees,
+                'net' => $request->net,
+                'trade_id' => 1,
+                'type' => 'sell'
+            ]);
+
+            DB::commit();
+
+        }catch (\Exception $e) {
+            
+            print_r($e);
+            DB::rollback();
+            echo 0;
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -102,4 +130,6 @@ class TransactionsController extends Controller
 
         return null;
     }
+
+    
 }

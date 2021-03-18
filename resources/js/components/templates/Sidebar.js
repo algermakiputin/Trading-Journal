@@ -1,5 +1,5 @@
 import React from "react";
-import profile_pict from '../profile.jpg';
+import profile_pict from '../../profile.jpg';
 
 export default function Sidebar() {
     

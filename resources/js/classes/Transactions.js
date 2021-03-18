@@ -33,7 +33,7 @@ class Transactions {
 
     }
 
-    static sell() {
+    static sell( price = 0, shares = 0) {
 
         // SELLING CALCULATION
         // Commission = ( TOTAL SHARE * PRICE ) * .25%
@@ -41,6 +41,15 @@ class Transactions {
         // PSE Trans Fee = ( TOTAL SHARE * PRICE ) * .005%
         // SCCP = ( TOTAL SHARES * PRICE ) * 0.01%
         // Sales Tax = ( TOTAL SHARES * PRICE ) * 0.006
+
+        var commission = ( shares * price ) * commission_per;
+        var vat = commission * vat_per;
+        var trans_fee = ( shares * price ) * trans_fee_per;
+        var sccp = ( shares * price ) * sccp_per;
+        var sales_tax = ( shares * price ) * 0.006;
+
+        return ( commission + vat + trans_fee + sccp + sales_tax);
+
 
 
     }

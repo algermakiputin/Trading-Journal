@@ -2,8 +2,7 @@ import React from "react";
 import { Form, Table, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios"; 
 import Transactions from '../../classes/Transactions';
-
-const base_url = "http://localhost:8000/";
+ 
 
 class TradeForm extends React.Component {
 
@@ -130,7 +129,7 @@ class TradeForm extends React.Component {
                     dialogClassName="modal-lg"   
                 >
                     <Modal.Header closeButton>
-                    <Modal.Title>New Trade</Modal.Title>
+                    <Modal.Title>Buy Transaction</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         

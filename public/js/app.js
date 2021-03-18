@@ -2321,12 +2321,21 @@ var Transactions = /*#__PURE__*/function () {
     }
   }, {
     key: "sell",
-    value: function sell() {// SELLING CALCULATION
+    value: function sell() {
+      var price = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var shares = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      // SELLING CALCULATION
       // Commission = ( TOTAL SHARE * PRICE ) * .25%
       // VAT = Commission * 12%
       // PSE Trans Fee = ( TOTAL SHARE * PRICE ) * .005%
       // SCCP = ( TOTAL SHARES * PRICE ) * 0.01%
       // Sales Tax = ( TOTAL SHARES * PRICE ) * 0.006
+      var commission = shares * price * commission_per;
+      var vat = commission * vat_per;
+      var trans_fee = shares * price * trans_fee_per;
+      var sccp = shares * price * sccp_per;
+      var sales_tax = shares * price * 0.006;
+      return commission + vat + trans_fee + sccp + sales_tax;
     }
   }, {
     key: "buy_amount",
@@ -2365,9 +2374,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dist_css_style_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../dist/css/style.min.css */ "./resources/dist/css/style.min.css");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _templates_Header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../templates/Header */ "./resources/js/templates/Header.js");
-/* harmony import */ var _templates_Sidebar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/Sidebar */ "./resources/js/templates/Sidebar.js");
-/* harmony import */ var _pages_Dashboard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pages/Dashboard */ "./resources/js/pages/Dashboard.js");
+/* harmony import */ var _templates_Header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./templates/Header */ "./resources/js/components/templates/Header.js");
+/* harmony import */ var _templates_Sidebar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./templates/Sidebar */ "./resources/js/components/templates/Sidebar.js");
+/* harmony import */ var _pages_Dashboard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Dashboard */ "./resources/js/components/pages/Dashboard.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -2706,11 +2715,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Form.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Table.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Form.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var _classes_Transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../classes/Transactions */ "./resources/js/classes/Transactions.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2738,55 +2749,179 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var SellForm = /*#__PURE__*/function (_React$Component) {
   _inherits(SellForm, _React$Component);
 
   var _super = _createSuper(SellForm);
 
   function SellForm(props) {
+    var _this;
+
     _classCallCheck(this, SellForm);
 
-    return _super.call(this, props);
+    _this = _super.call(this, props);
+    _this.state = {
+      shares: 0,
+      price: 0,
+      stock_code: '',
+      date: '',
+      net: 0,
+      fees: 0
+    };
+    return _this;
   }
 
   _createClass(SellForm, [{
+    key: "formSubmitHandle",
+    value: function formSubmitHandle() {
+      if (this.state.shares && this.state.price && this.state.date) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/transactions/sell', {
+          shares: this.state.shares,
+          price: this.state.price,
+          stock_code: this.props.trade.stock_code,
+          date: this.state.date,
+          net: this.state.net,
+          fees: this.state.fees
+        }).then(function (res) {
+          console.log(res);
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      } else {
+        alert('not valid');
+      }
+    }
+  }, {
+    key: "netCalculatorPriceHandle",
+    value: function netCalculatorPriceHandle(event) {
+      var price = event.target.value;
+      var shares = this.state.shares;
+      var fees = _classes_Transactions__WEBPACK_IMPORTED_MODULE_1__.default.sell(price, shares);
+      var net = price * shares - fees;
+      this.setState({
+        fees: fees,
+        net: net
+      });
+    }
+  }, {
+    key: "netCalculatorSharesHandle",
+    value: function netCalculatorSharesHandle(event) {
+      var shares = event.target.value;
+      var price = this.state.price;
+      var fees = _classes_Transactions__WEBPACK_IMPORTED_MODULE_1__.default.sell(price, shares);
+      var net = price * shares - fees;
+      this.setState({
+        fees: fees,
+        net: net
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.default, {
-          dialogClassName: "modal-lg",
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default, {
           show: this.props.show,
           onHide: function onHide() {
-            return _this.props.handleModal();
+            return _this2.props.closeHandle();
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.default.Header, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default.Header, {
             closeButton: true,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.default.Title, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default.Title, {
               children: "Sell Transaction"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.default.Body, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default.Body, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, {
               noValidate: true,
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default, {
-                bordered: true,
-                striped: true,
-                hover: true,
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("thead", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("tbody", {})]
-              })
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Group, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Label, {
+                  children: "Date"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Control, {
+                  type: "date",
+                  autoComplete: "off",
+                  onChange: function onChange(event) {
+                    _this2.setState({
+                      date: event.target.value
+                    });
+                  }
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Group, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Label, {
+                  children: "Stock Code"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Control, {
+                  type: "text",
+                  autoComplete: "off",
+                  name: "stock_code",
+                  readOnly: true,
+                  defaultValue: this.props.trade.stock_code
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Group, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Label, {
+                  children: "Shares"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Control, {
+                  type: "text",
+                  name: "shares",
+                  defaultValue: this.props.trade.total_shares,
+                  onChange: function onChange(event) {
+                    _this2.setState({
+                      shares: event.target.value
+                    });
+
+                    _this2.netCalculatorSharesHandle(event);
+                  }
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Group, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Label, {
+                  children: "Price"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Control, {
+                  type: "text",
+                  autoComplete: "off",
+                  defaultValue: this.props.trade.price,
+                  onChange: function onChange(event) {
+                    _this2.setState({
+                      price: event.target.value
+                    });
+
+                    _this2.netCalculatorPriceHandle(event);
+                  }
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Group, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("table", {
+                  width: "100%",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("thead", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                        children: "Fees"
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                        children: "Net"
+                      })]
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                        children: this.state.fees
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                        children: this.state.net
+                      })]
+                    })
+                  })]
+                })
+              })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.default.Footer, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default.Footer, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, {
               variant: "secondary",
               onClick: function onClick() {
-                _this.props.handleModal();
+                _this2.props.closeHandle();
               },
               children: "Close"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, {
               variant: "primary",
               onClick: function onClick() {
-                _this.props.handleModal();
+                _this2.formSubmitHandle();
               },
               children: "Submit"
             })]
@@ -2854,7 +2989,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var base_url = "http://localhost:8000/";
 
 var TradeForm = /*#__PURE__*/function (_React$Component) {
   _inherits(TradeForm, _React$Component);
@@ -2992,7 +3126,7 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Header, {
             closeButton: true,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Title, {
-              children: "New Trade"
+              children: "Buy Transaction"
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Body, {
             children: [this.alert_danger(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default, {
@@ -3122,54 +3256,10 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/model/Trades.js":
-/*!**************************************!*\
-  !*** ./resources/js/model/Trades.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var Trades = /*#__PURE__*/function () {
-  function Trades() {
-    _classCallCheck(this, Trades);
-  }
-
-  _createClass(Trades, null, [{
-    key: "position",
-    value: function position() {
-      return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/positions').then(function (res) {
-        return res.data;
-      })["catch"](function (err) {
-        console.log(err);
-      });
-    }
-  }]);
-
-  return Trades;
-}();
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Trades);
-
-/***/ }),
-
-/***/ "./resources/js/pages/Dashboard.js":
-/*!*****************************************!*\
-  !*** ./resources/js/pages/Dashboard.js ***!
-  \*****************************************/
+/***/ "./resources/js/components/pages/Dashboard.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/pages/Dashboard.js ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3180,11 +3270,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _components_forms_TradeForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/forms/TradeForm */ "./resources/js/components/forms/TradeForm.js");
-/* harmony import */ var _model_Trades__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../model/Trades */ "./resources/js/model/Trades.js");
-/* harmony import */ var _components_forms_BankForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/forms/BankForm */ "./resources/js/components/forms/BankForm.js");
-/* harmony import */ var _components_forms_SellForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/forms/SellForm */ "./resources/js/components/forms/SellForm.js");
-/* harmony import */ var _components_charts_EquityChart__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/charts/EquityChart */ "./resources/js/components/charts/EquityChart.js");
+/* harmony import */ var _forms_TradeForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../forms/TradeForm */ "./resources/js/components/forms/TradeForm.js");
+/* harmony import */ var _model_Trades__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../model/Trades */ "./resources/js/model/Trades.js");
+/* harmony import */ var _forms_BankForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../forms/BankForm */ "./resources/js/components/forms/BankForm.js");
+/* harmony import */ var _forms_SellForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../forms/SellForm */ "./resources/js/components/forms/SellForm.js");
+/* harmony import */ var _charts_EquityChart__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../charts/EquityChart */ "./resources/js/components/charts/EquityChart.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3237,10 +3327,12 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     _this = _super.call(this, props);
     _this.state = {
       positions: [],
-      showSellModal: false
+      showSellModal: false,
+      toSell: []
     };
     _this.open_positions = _this.open_positions.bind(_assertThisInitialized(_this));
     _this.handleSellModal = _this.handleSellModal.bind(_assertThisInitialized(_this));
+    _this.closeSellModal = _this.closeSellModal.bind(_assertThisInitialized(_this));
 
     _this.open_positions();
 
@@ -3280,7 +3372,17 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     }()
   }, {
     key: "handleSellModal",
-    value: function handleSellModal() {
+    value: function handleSellModal(trade) {
+      this.setState({
+        toSell: trade
+      });
+      this.setState({
+        showSellModal: !this.state.showSellModal
+      });
+    }
+  }, {
+    key: "closeSellModal",
+    value: function closeSellModal() {
       this.setState({
         showSellModal: !this.state.showSellModal
       });
@@ -3316,7 +3418,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                 className: "dropdown-menu",
                 "aria-labelledby": "portfolioActions",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
-                  onClick: _this3.handleSellModal,
+                  onClick: function onClick() {
+                    return _this3.handleSellModal(trade);
+                  },
                   className: "dropdown-item",
                   href: "#",
                   children: "Sell"
@@ -3368,7 +3472,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
               className: "col-7",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
                 className: "text-end upgrade-btn",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_forms_TradeForm__WEBPACK_IMPORTED_MODULE_2__.default, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_forms_TradeForm__WEBPACK_IMPORTED_MODULE_2__.default, {
                   positions: this.open_positions,
                   listPositions: this.portfolioList
                 })
@@ -3400,7 +3504,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                     className: "row",
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
                       className: "col-lg-12",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_charts_EquityChart__WEBPACK_IMPORTED_MODULE_6__.default, {})
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_charts_EquityChart__WEBPACK_IMPORTED_MODULE_6__.default, {})
                     })
                   })]
                 })
@@ -3455,7 +3559,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                         })]
                       })]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_forms_BankForm__WEBPACK_IMPORTED_MODULE_4__.default, {})
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_forms_BankForm__WEBPACK_IMPORTED_MODULE_4__.default, {})
                     })]
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {})]
                 })
@@ -3510,9 +3614,11 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                         })]
                       })
                     }), this.portfolioList()]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_forms_SellForm__WEBPACK_IMPORTED_MODULE_5__.default, {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_forms_SellForm__WEBPACK_IMPORTED_MODULE_5__.default, {
                     show: this.state.showSellModal,
-                    handleModal: this.handleSellModal
+                    handleModal: this.handleSellModal,
+                    trade: this.state.toSell,
+                    closeHandle: this.closeSellModal
                   })]
                 })]
               })
@@ -3533,10 +3639,10 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/templates/Header.js":
-/*!******************************************!*\
-  !*** ./resources/js/templates/Header.js ***!
-  \******************************************/
+/***/ "./resources/js/components/templates/Header.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/templates/Header.js ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3575,10 +3681,10 @@ function Header() {
 
 /***/ }),
 
-/***/ "./resources/js/templates/Sidebar.js":
-/*!*******************************************!*\
-  !*** ./resources/js/templates/Sidebar.js ***!
-  \*******************************************/
+/***/ "./resources/js/components/templates/Sidebar.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/templates/Sidebar.js ***!
+  \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3587,7 +3693,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Sidebar)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _profile_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../profile.jpg */ "./resources/js/profile.jpg");
+/* harmony import */ var _profile_jpg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../profile.jpg */ "./resources/js/profile.jpg");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -3692,6 +3798,50 @@ function Sidebar() {
     })
   });
 }
+
+/***/ }),
+
+/***/ "./resources/js/model/Trades.js":
+/*!**************************************!*\
+  !*** ./resources/js/model/Trades.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Trades = /*#__PURE__*/function () {
+  function Trades() {
+    _classCallCheck(this, Trades);
+  }
+
+  _createClass(Trades, null, [{
+    key: "position",
+    value: function position() {
+      return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/positions').then(function (res) {
+        return res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  }]);
+
+  return Trades;
+}();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Trades);
 
 /***/ }),
 

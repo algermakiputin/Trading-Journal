@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
+Route::post('api/transactions/sell', [TransactionsController::class, 'sell']);
 Route::get('positions', [ TradesController::class, 'positions']);
 
 Route::post('api/bank/create', [BankController::class, 'store']);

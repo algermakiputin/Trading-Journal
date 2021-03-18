@@ -1,9 +1,9 @@
 import React from "react"
-import TradeForm from '../components/forms/TradeForm'
-import Trades from '../model/Trades'
-import BankForm from '../components/forms/BankForm'
-import SellForm from '../components/forms/SellForm'
-import EquityChart from '../components/charts/EquityChart'
+import TradeForm from '../forms/TradeForm'
+import Trades from '../../model/Trades'
+import BankForm from '../forms/BankForm'
+import SellForm from '../forms/SellForm'
+import EquityChart from '../charts/EquityChart'
 
 
 var positions = [];
@@ -15,11 +15,13 @@ class Dashboard extends React.Component {
 
         this.state = {
             positions: [],
-            showSellModal: false
+            showSellModal: false,
+            toSell: []
         }
         
         this.open_positions = this.open_positions.bind(this);
         this.handleSellModal = this.handleSellModal.bind(this);
+        this.closeSellModal = this.closeSellModal.bind(this);
         this.open_positions()
         
     } 
@@ -35,7 +37,13 @@ class Dashboard extends React.Component {
       
     }
 
-    handleSellModal() {
+    handleSellModal(trade) {
+
+        this.setState({toSell: trade})
+        this.setState({showSellModal: !this.state.showSellModal})
+    }
+
+    closeSellModal() {
 
         this.setState({showSellModal: !this.state.showSellModal})
     }
@@ -54,7 +62,7 @@ class Dashboard extends React.Component {
                     <i className="mdi mdi-wrench dropdown-toggle" href="#" role="button" id="portfolioActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     </i> 
                         <div className="dropdown-menu" aria-labelledby="portfolioActions">
-                            <a onClick={this.handleSellModal} className="dropdown-item" href="#">Sell</a> 
+                            <a onClick={ () => this.handleSellModal(trade) } className="dropdown-item" href="#">Sell</a> 
                         </div>
                     </div>    
                 </td>
@@ -181,6 +189,8 @@ class Dashboard extends React.Component {
                                     <SellForm 
                                         show={this.state.showSellModal }  
                                         handleModal= { this.handleSellModal }
+                                        trade= {this.state.toSell}
+                                        closeHandle = { this.closeSellModal }
                                         />
                                 </div>
                             </div>

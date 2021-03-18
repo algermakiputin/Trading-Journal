@@ -32,6 +32,7 @@
         "react-bootstrap": "^1.5.1",
         "react-chartist": "^0.14.4",
         "react-data-table-component": "^6.11.7",
+        "react-datepicker": "^3.6.0",
         "react-number-format": "^4.4.4",
         "react-router-dom": "^5.2.0",
         "styled-components": "^5.2.1"

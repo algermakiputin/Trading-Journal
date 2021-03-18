@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import '../../css/app.css';
 import '../../dist/css/style.min.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Header from '../templates/Header';
-import Sidebar from '../templates/Sidebar';
-import Dashboard from '../pages/Dashboard';
+import Header from './templates/Header';
+import Sidebar from './templates/Sidebar';
+import Dashboard from './pages/Dashboard';
 
 function Main() {
     return (

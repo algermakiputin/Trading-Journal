@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class TradesController extends Controller
 {
     
+    // Get all positions and display to datatable
     public function positions(Trade $trade) {
 
         $position = [];
@@ -30,6 +31,7 @@ class TradesController extends Controller
 
     }
 
+    // Group all trades with the same stock code
     public function group_trades( $trades ) {
 
         $data = [];
@@ -42,6 +44,8 @@ class TradesController extends Controller
         return $data;
     }
 
+
+    // This will return the net of the position
     public function calculate_position( $trades ) {
 
         $row = [];
