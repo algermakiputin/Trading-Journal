@@ -3393,43 +3393,54 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       var _this3 = this;
 
       var openTrades = this.state.positions;
-      var positionsList = openTrades.map(function (trade, index) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("tr", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
-            children: [" ", trade.stock_code]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
-            children: [" ", trade.ave_price]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
-            children: [" ", trade.total_shares]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
-            children: [" ", trade.total_cost]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-              className: "dropdown show",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("i", {
-                className: "mdi mdi-wrench dropdown-toggle",
-                href: "#",
-                role: "button",
-                id: "portfolioActions",
-                "data-toggle": "dropdown",
-                "aria-haspopup": "true",
-                "aria-expanded": "false"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-                className: "dropdown-menu",
-                "aria-labelledby": "portfolioActions",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
-                  onClick: function onClick() {
-                    return _this3.handleSellModal(trade);
-                  },
-                  className: "dropdown-item",
-                  href: "#",
-                  children: "Sell"
-                })
-              })]
-            })
-          })]
-        }, trade.stock_code + index);
+
+      var positionsList = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("tr", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+          colSpan: "5",
+          children: "No data available"
+        })
       });
+
+      if (Object.keys(this.state.positions).length) {
+        positionsList = openTrades.map(function (trade, index) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("tr", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
+              children: [" ", trade.stock_code]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
+              children: [" ", trade.ave_price]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
+              children: [" ", trade.total_shares]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
+              children: [" ", trade.total_cost]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "dropdown show",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("i", {
+                  className: "mdi mdi-wrench dropdown-toggle",
+                  href: "#",
+                  role: "button",
+                  id: "portfolioActions",
+                  "data-toggle": "dropdown",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "dropdown-menu",
+                  "aria-labelledby": "portfolioActions",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
+                    onClick: function onClick() {
+                      return _this3.handleSellModal(trade);
+                    },
+                    className: "dropdown-item",
+                    href: "#",
+                    children: "Sell"
+                  })
+                })]
+              })
+            })]
+          }, trade.stock_code + index);
+        });
+      }
+
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("tbody", {
         children: positionsList
       });

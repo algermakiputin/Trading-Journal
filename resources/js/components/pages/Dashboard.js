@@ -51,23 +51,32 @@ class Dashboard extends React.Component {
     portfolioList() {
  
         const openTrades = this.state.positions;
-        const positionsList = openTrades.map( (trade, index) => {
-            return <tr key={trade.stock_code + index }>
-                <td> {trade.stock_code }</td>
-                <td> {trade.ave_price }</td>
-                <td> {trade.total_shares }</td>
-                <td> {trade.total_cost }</td>
-                <td> 
-                    <div className="dropdown show">
-                    <i className="mdi mdi-wrench dropdown-toggle" href="#" role="button" id="portfolioActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    </i> 
-                        <div className="dropdown-menu" aria-labelledby="portfolioActions">
-                            <a onClick={ () => this.handleSellModal(trade) } className="dropdown-item" href="#">Sell</a> 
-                        </div>
-                    </div>    
-                </td>
-            </tr>
-        })
+        let positionsList = <tr>
+            <td colSpan="5">No data available</td>
+        </tr>
+
+        if ( Object.keys(this.state.positions).length ) {
+
+            positionsList = openTrades.map( (trade, index) => {
+                return <tr key={trade.stock_code + index }>
+                    <td> {trade.stock_code }</td>
+                    <td> {trade.ave_price }</td>
+                    <td> {trade.total_shares }</td>
+                    <td> {trade.total_cost }</td>
+                    <td> 
+                        <div className="dropdown show">
+                        <i className="mdi mdi-wrench dropdown-toggle" href="#" role="button" id="portfolioActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </i> 
+                            <div className="dropdown-menu" aria-labelledby="portfolioActions">
+                                <a onClick={ () => this.handleSellModal(trade) } className="dropdown-item" href="#">Sell</a> 
+                            </div>
+                        </div>    
+                    </td>
+                </tr>
+            })
+        } 
+
+        
 
         return ( 
             <tbody>{ positionsList }</tbody>
