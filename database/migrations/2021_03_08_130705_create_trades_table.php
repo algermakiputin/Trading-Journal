@@ -21,6 +21,8 @@ class CreateTradesTable extends Migration
             $table->string('stock_code');
             $table->string('gain_loss');
             $table->string('date');
+            $table->integer('sold');
+            $table->string('purchase_price');
         });
     }
 

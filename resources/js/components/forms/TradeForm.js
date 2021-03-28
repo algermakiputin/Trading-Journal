@@ -14,8 +14,8 @@ class TradeForm extends React.Component {
         this.state = {
             date: "",
             stock_code: "",
-            price: "",
-            shares: "",
+            price: 0,
+            shares: 0,
             fees: 0.00,
             net: 0.00,
             show: false,

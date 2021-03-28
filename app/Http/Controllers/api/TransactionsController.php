@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Trade;
 use Illuminate\Support\Facades\DB;
+use App\Models\Bank;
 
 class TransactionsController extends Controller
 {
@@ -30,7 +31,7 @@ class TransactionsController extends Controller
     {
 
         DB::beginTransaction();
-
+        
         try {
 
             $trade = Trade::create([
@@ -176,6 +177,7 @@ class TransactionsController extends Controller
 
         return null;
     }
+ 
 
     
 }

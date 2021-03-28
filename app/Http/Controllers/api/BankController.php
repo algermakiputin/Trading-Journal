@@ -9,7 +9,6 @@ use App\Models\Bank;
 class BankController extends Controller
 {
     //
-
     public function store(Request $request) {
   
         $bank = Bank::create([
@@ -27,5 +26,11 @@ class BankController extends Controller
         echo 0;
         return;
         
+    }
+
+    public function getTotalDeposits($from, $to) {
+
+        return Bank::whereBetween('date', [$from, $to])
+                    ->sum('amount');
     }
 }

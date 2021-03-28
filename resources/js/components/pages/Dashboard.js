@@ -1,10 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
 import TradeForm from '../forms/TradeForm'
-import Trades from '../../model/Trades'
-import BankForm from '../forms/BankForm'
+import Trades from '../../model/Trades' 
 import SellForm from '../forms/SellForm'
 import EquityChart from '../charts/EquityChart'
-
+import AccountSummary from '../cards/AccountSummary' 
 
 var positions = [];
 
@@ -27,6 +26,7 @@ class Dashboard extends React.Component {
     } 
 
     async open_positions() {
+        
 
         await Trades.position()
             .then( res => {
@@ -75,9 +75,7 @@ class Dashboard extends React.Component {
                 </tr>
             })
         } 
-
-        
-
+ 
         return ( 
             <tbody>{ positionsList }</tbody>
         )
@@ -88,7 +86,7 @@ class Dashboard extends React.Component {
 
         return (
             <div className="page-wrapper">  
-            
+             
                 <div className="page-breadcrumb">
                     <div className="row align-items-center">
                         <div className="col-5">
@@ -132,32 +130,7 @@ class Dashboard extends React.Component {
                             </div>
                         </div>
                         <div className="col-md-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h4 className="card-title">Account Summary (PHP)</h4>
-                                    <div className="feed-widget">
-                                        <ul className="list-style-none feed-body m-0 p-b-20">
-                                            <li className="feed-item">
-                                                <div className="feed-icon bg-info"><i className="mdi mdi-chart-timeline"></i></div> Total Equity<span className="ms-auto font-13">125,000</span>
-                                            </li>
-                                            <li className="feed-item">
-                                                <div className="feed-icon bg-success"><i className="mdi mdi-chart-pie"></i></div> Available Cash
-                                                <span className="ms-auto font-13">100,000</span>
-                                            </li>
-                                            <li className="feed-item">
-                                                <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">25,000 <small>25%</small></span>
-                                            </li>  
-                                        </ul>
-                                        <hr></hr>
-                                        <div>
-                                            <BankForm /> 
-                                        </div>
-                                    </div>
-                                    <div> 
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                            <AccountSummary />
                         </div>
                     </div> 
                     <div className="row"> 

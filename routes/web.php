@@ -20,9 +20,11 @@ Route::get('/', function () {
     return view('welcome');
 }); 
 
+Route::get('test', [TransactionsController::class, 'test']);
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
 Route::post('api/transactions/sell', [TransactionsController::class, 'sell']);
 Route::get('positions', [ TradesController::class, 'positions']);
 
 Route::post('api/bank/create', [BankController::class, 'store']);
+Route::get('api/bank/getTotalDeposits', [BankController::class, 'getTotalDeposits']);
