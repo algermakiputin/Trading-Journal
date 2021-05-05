@@ -3,6 +3,8 @@ import TradeForm from '../components/forms/TradeForm'
 import BankForm from '../components/forms/BankForm'
 import EquityChart from '../components/chart/EquityChart'  
 import PositionsTable from '../components/positions_table/PositionsTable' 
+import { Button, Modal } from "react-bootstrap";
+import axios from "axios"; 
 
 var positions = [];
 
@@ -10,11 +12,41 @@ class Dashboard extends React.Component {
 
     constructor(props) {
         super(props) 
-    
-    }  
- 
-    render() {       
+        this.state = {
+            totalEquity:0,
+            availableCash:0,
+            show: false
+        }
 
+        this.setEquity()
+        this.handleModal = this.handleModal.bind(this)
+        this.setEquity = this.setEquity.bind(this)
+    }  
+
+    async setEquity() {
+
+        await axios.get('get_equities')
+                .then( res => { 
+                    if ( res.data ) {
+
+                        return this.setState({
+                            totalEquity: res.data.total_equity,
+                            availableCash: res.data.remaining_cash
+                         })
+                    }
+                })
+                .catch( err => {
+                    console.log(err)
+                })
+    }
+
+    handleModal() {
+
+        this.setState({ show: !this.state.show})
+ 
+    }
+ 
+    render() {      
         return (
             
             <div className="page-wrapper">   
@@ -33,7 +65,19 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="col-7">
                             <div className="text-end upgrade-btn"> 
-                                <TradeForm /> 
+                                <Button onClick={() => {this.handleModal()}} className="btn btn-danger text-white">New Trade</Button> 
+               
+                                <Modal 
+                                    show={this.state.show} 
+                                    onHide={() => this.handleModal(false) } 
+                                    dialogClassName="modal-xl"   
+                                >
+                                    <TradeForm
+                                        availableCash={this.state.availableCash}
+                                        totalEquity={this.state.totalEquity}
+                                        handleModal={this.handleModal}
+                                    /> 
+                                </Modal>
                             </div>
                         </div>
                     </div>
@@ -66,19 +110,21 @@ class Dashboard extends React.Component {
                                     <div className="feed-widget">
                                         <ul className="list-style-none feed-body m-0 p-b-20">
                                             <li className="feed-item">
-                                                <div className="feed-icon bg-info"><i className="mdi mdi-chart-timeline"></i></div> Total Equity<span className="ms-auto font-13">125,000</span>
+                                                <div className="feed-icon bg-info"><i className="mdi mdi-chart-timeline"></i></div> Total Equity<span className="ms-auto font-13">{ this.state.totalEquity }</span>
                                             </li>
                                             <li className="feed-item">
                                                 <div className="feed-icon bg-success"><i className="mdi mdi-chart-pie"></i></div> Available Cash
-                                                <span className="ms-auto font-13">100,000</span>
-                                            </li>
+                                                <span className="ms-auto font-13">{ this.state.availableCash }</span>
+                                            </li>  
                                             <li className="feed-item">
                                                 <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">25,000 <small>25%</small></span>
                                             </li>  
                                         </ul>
                                         <hr></hr>
                                         <div>
-                                            <BankForm />  
+                                            <BankForm
+                                                setEquity={this.setEquity}
+                                            />  
                                         </div>
                                     </div>
                                     <div> 
@@ -99,8 +145,7 @@ class Dashboard extends React.Component {
                                         </div> 
                                     </div> 
                                 </div>
-                                <div className="table-responsive">
-                                     
+                                <div className="table-responsive"> 
                                     <PositionsTable />
                                 </div>
                             </div>

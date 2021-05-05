@@ -34,7 +34,7 @@ class EquityChart extends React.Component {
 
         return (
             <div>
-            <ChartistGraph data={data} options={options} type={type} />
+                <ChartistGraph data={data} options={options} type={type} />
             </div>
         )
     }

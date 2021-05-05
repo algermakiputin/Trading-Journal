@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import '../../css/app.css';
+import ReactDOM from 'react-dom'; 
 import '../../dist/css/style.min.css';
+import '../../css/app.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from '../templates/Header';
 import Sidebar from '../templates/Sidebar';

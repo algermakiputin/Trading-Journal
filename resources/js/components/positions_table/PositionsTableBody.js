@@ -1,5 +1,4 @@
-import React from 'react'; 
-import axios from 'axios';
+import React from 'react';  
 import UserContext from '../../UserContext';
 
 class PositionsTableBody extends React.Component {
@@ -10,12 +9,14 @@ class PositionsTableBody extends React.Component {
          
     } 
 
-    render() {
-  
+    renderData() {
+
         return (
+
             <UserContext.Consumer>
                 {
-                    ({state, load_positions}) => (
+                    ({state}) => (
+                  
                         <tbody>
                             { state.positions }
                         </tbody>
@@ -24,6 +25,11 @@ class PositionsTableBody extends React.Component {
                 } 
             </UserContext.Consumer>
         )
+    }
+
+    render() {
+  
+        return this.renderData()
     }
 
 }

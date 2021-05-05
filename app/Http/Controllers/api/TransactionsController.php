@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Trade;
+use App\Models\Equity;
 use Illuminate\Support\Facades\DB;
 
 class TransactionsController extends Controller
@@ -29,27 +30,38 @@ class TransactionsController extends Controller
     public function store(Request $request)
     {
 
-        DB::beginTransaction();
+        DB::beginTransaction(); 
 
         try {
 
+            $remainingCash = $request['availableCash'] - $request['data']['net'];
+            $totalEquity = $request['totalEquity'];
+
             $trade = Trade::create([
-                'shares' => $request->shares,
+                'shares' => $request['data']['shares'],
                 'status' => 0,
-                'stock_code' => $request->stock_code,
-                'date' => $request->date,
+                'stock_code' => $request['data']['stock_code'],
+                'date' => $request['data']['date'],
                 'gain_loss' => 0
             ]);
 
-            $transaction = Transaction::create([
-                'date' => $request->date,
-                'stock_code' => $request->stock_code,
-                'price' => $request->price,
-                'shares' => $request->shares,
-                'fees' => $request->fees,
-                'net' => $request->net,
+            Transaction::create([
+                'date' => $request['data']['date'],
+                'stock_code' => $request['data']['stock_code'],
+                'price' => $request['data']['price'],
+                'shares' => $request['data']['shares'],
+                'fees' => $request['data']['fees'],
+                'net' => $request['data']['net'],
                 'trade_id' => $trade->id,
                 'type' => 'long'
+            ]);
+
+            Equity::create([
+                'date' => $request['data']['date'],
+                'total_equity' => $totalEquity,
+                'remaining_cash' => $remainingCash,
+                'action' => 'buy',
+                'action_reference_id' => $trade->id
             ]);
 
             DB::commit();

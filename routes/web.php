@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\TransactionsController;
 use App\Http\Controllers\TradesController;
 use App\Http\Controllers\api\BankController;
+use App\Http\Controllers\EquitiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,4 @@ Route::post('api/transactions/store', [TransactionsController::class, 'store']);
 Route::get('positions', [ TradesController::class, 'positions']);
 
 Route::post('api/bank/create', [BankController::class, 'store']);
+Route::get('get_equities', [EquitiesController::class, 'getEquities']);
