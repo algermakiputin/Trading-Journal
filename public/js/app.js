@@ -2201,24 +2201,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./resources/js/UserContext.js":
-/*!*************************************!*\
-  !*** ./resources/js/UserContext.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var UserContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext('');
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UserContext);
-
-/***/ }),
-
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -2377,26 +2359,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var _dist_css_style_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../dist/css/style.min.css */ "./resources/dist/css/style.min.css");
-/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../css/app.css */ "./resources/css/app.css");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _templates_Header__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/Header */ "./resources/js/templates/Header.js");
-/* harmony import */ var _templates_Sidebar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../templates/Sidebar */ "./resources/js/templates/Sidebar.js");
-/* harmony import */ var _pages_Dashboard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/Dashboard */ "./resources/js/pages/Dashboard.js");
-/* harmony import */ var _UserContext__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../UserContext */ "./resources/js/UserContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _dist_css_style_min_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../dist/css/style.min.css */ "./resources/dist/css/style.min.css");
+/* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../css/app.css */ "./resources/css/app.css");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _templates_Header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../templates/Header */ "./resources/js/templates/Header.js");
+/* harmony import */ var _templates_Sidebar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../templates/Sidebar */ "./resources/js/templates/Sidebar.js");
+/* harmony import */ var _pages_Dashboard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pages/Dashboard */ "./resources/js/pages/Dashboard.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2429,122 +2402,47 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var Main = /*#__PURE__*/function (_React$Component) {
   _inherits(Main, _React$Component);
 
   var _super = _createSuper(Main);
 
   function Main(props) {
-    var _this;
-
     _classCallCheck(this, Main);
 
-    _this = _super.call(this, props);
-    _this.state = {
-      fname: 'Alger',
-      lname: 'Makiputin',
-      positions: null
-    };
-    _this.load_positions = _this.load_positions.bind(_assertThisInitialized(_this));
-
-    _this.load_positions();
-
-    return _this;
+    return _super.call(this, props);
   }
 
   _createClass(Main, [{
-    key: "load_positions",
-    value: function () {
-      var _load_positions = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var res, position;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return axios.get('/positions');
-
-              case 2:
-                res = _context.sent;
-
-                if (Object.keys(res.data).length) {
-                  position = res.data.map(function (key) {
-                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("tr", {
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("td", {
-                        children: [" ", key.stock_code]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("td", {
-                        children: [" ", key.ave_price]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("td", {
-                        children: [" ", key.total_shares]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("td", {
-                        children: [" ", key.total_cost]
-                      })]
-                    }, Math.random());
-                  });
-                } else {
-                  position = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("tr", {
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("td", {
-                      colSpan: "4",
-                      children: "No Open Position. To add new trade, Click the New Trade button above."
-                    })
-                  });
-                }
-
-                this.setState({
-                  positions: position
-                });
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function load_positions() {
-        return _load_positions.apply(this, arguments);
-      }
-
-      return load_positions;
-    }()
-  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_UserContext__WEBPACK_IMPORTED_MODULE_8__.default.Provider, {
-        value: {
-          state: this.state,
-          load_positions: this.load_positions
-        },
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
-          id: "main-wrapper",
-          "data-layout": "vertical",
-          "data-navbarbg": "skin5",
-          "data-sidebartype": "full",
-          "data-sidebar-position": "absolute",
-          "data-header-position": "absolute",
-          "data-boxed-layout": "full",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_templates_Header__WEBPACK_IMPORTED_MODULE_5__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.BrowserRouter, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Switch, {
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_11__.Route, {
-                path: "/",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_pages_Dashboard__WEBPACK_IMPORTED_MODULE_7__.default, {})
-              })
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        id: "main-wrapper",
+        "data-layout": "vertical",
+        "data-navbarbg": "skin5",
+        "data-sidebartype": "full",
+        "data-sidebar-position": "absolute",
+        "data-header-position": "absolute",
+        "data-boxed-layout": "full",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_templates_Header__WEBPACK_IMPORTED_MODULE_4__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.BrowserRouter, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Switch, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+              path: "/",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_pages_Dashboard__WEBPACK_IMPORTED_MODULE_6__.default, {})
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_templates_Sidebar__WEBPACK_IMPORTED_MODULE_6__.default, {})]
-        })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_templates_Sidebar__WEBPACK_IMPORTED_MODULE_5__.default, {})]
       });
     }
   }]);
 
   return Main;
-}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Main);
 
 if (document.getElementById('example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_2__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(Main, {}), document.getElementById('example'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(Main, {}), document.getElementById('example'));
 }
 
 /***/ }),
@@ -2658,13 +2556,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Alert.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Form.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Form.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_number_format__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-number-format */ "./node_modules/react-number-format/dist/react-number-format.es.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2693,6 +2592,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var BankForm = /*#__PURE__*/function (_React$Component) {
   _inherits(BankForm, _React$Component);
 
@@ -2708,7 +2608,7 @@ var BankForm = /*#__PURE__*/function (_React$Component) {
       show: false,
       date: '',
       action: 'deposit',
-      amount: 0,
+      amount: null,
       alert_danger: false
     };
     _this.defaultState = _this.state;
@@ -2750,7 +2650,7 @@ var BankForm = /*#__PURE__*/function (_React$Component) {
     key: "alert_danger",
     value: function alert_danger() {
       if (this.state.alert_danger) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__.default, {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default, {
           variant: "danger",
           children: "Empty fields are required"
         });
@@ -2761,8 +2661,8 @@ var BankForm = /*#__PURE__*/function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
           onClick: function onClick() {
             _this3.toggleModal();
           },
@@ -2771,23 +2671,23 @@ var BankForm = /*#__PURE__*/function (_React$Component) {
             backgroundColor: '#4fc3f7'
           },
           children: "Deposit / Withdraw Funds"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, {
           show: this.state.show,
           onHide: function onHide() {
             _this3.toggleModal(false);
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default.Header, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Header, {
             closeButton: true,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default.Title, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Title, {
               children: "Withdraw / Deposit Funds"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default.Body, {
-            children: [this.alert_danger(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Body, {
+            children: [this.alert_danger(), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, {
               noValidate: true,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Group, {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Label, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Group, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Label, {
                   children: "Date"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Control, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Control, {
                   type: "date",
                   onChange: function onChange(event) {
                     _this3.setState({
@@ -2795,41 +2695,43 @@ var BankForm = /*#__PURE__*/function (_React$Component) {
                     });
                   }
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Group, {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Label, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Group, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Label, {
                   children: "Action"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Control, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Control, {
                   as: "select",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                  defaultValue: "deposit",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
                     value: "deposit",
-                    selected: true,
                     children: "Deposit"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
                     value: "withdraw",
                     children: "Withdraw"
                   })]
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Group, {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Label, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Group, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Label, {
                   children: "Amount"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Control, {
-                  type: "text",
-                  onChange: function onChange(event) {
-                    _this3.setState({
-                      amount: event.target.value
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_2__.default, {
+                  thousandSeparator: true,
+                  value: this.state.amount,
+                  onValueChange: function onValueChange(values) {
+                    return _this3.setState({
+                      amount: values.value
                     });
-                  }
+                  },
+                  className: "form-control"
                 })]
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.default.Footer, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Footer, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default, {
               variant: "secondary",
               onClick: function onClick() {
                 _this3.toggleModal();
               },
               children: "Close"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default, {
               variant: "primary",
               onClick: function onClick() {
                 _this3.handleFormSubmit();
@@ -2869,7 +2771,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _classes_Transactions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../classes/Transactions */ "./resources/js/classes/Transactions.js");
-/* harmony import */ var _UserContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../UserContext */ "./resources/js/UserContext.js");
+/* harmony import */ var react_number_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-number-format */ "./node_modules/react-number-format/dist/react-number-format.es.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -2935,53 +2837,45 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
       console.log(this.props);
     }
   }, {
-    key: "reloadPositions",
-    value: function reloadPositions() {
-      {
-        /*#__PURE__*/
-        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_UserContext__WEBPACK_IMPORTED_MODULE_3__.default.Consumer, {
-          children: function children(_ref) {
-            var state = _ref.state,
-                load_positions = _ref.load_positions;
-            return load_positions();
-          }
-        });
-      }
-    }
-  }, {
     key: "handleFormSubmit",
     value: function handleFormSubmit() {
       var _this2 = this;
 
-      if (this.state.date == "" || this.state.stock_code == "" || this.state.price == "" || this.state.shares == "") {
-        return this.setState({
-          error_show: true
-        });
-      } else {
-        this.setState({
-          error_show: false
-        });
-      }
-
+      this.validateForm();
       if (this.state.net > this.props.availableCash) return alert("Not enough available cash");
       axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/transactions/store', {
         data: this.state,
         availableCash: this.props.availableCash,
         totalEquity: this.props.totalEquity
       }).then(function (res) {
-        if (res.data == 1) {
-          _this2.setState(_this2.baseState);
+        _this2.setState(_this2.baseState);
 
-          _this2.reloadPositions();
-        }
+        _this2.props.load_positions();
+
+        _this2.props.reloadEquity();
+
+        _this2.props.handleModal();
       })["catch"](function (err) {
         console.log(err);
       });
     }
   }, {
+    key: "validateForm",
+    value: function validateForm() {
+      if (this.state.date == "" || this.state.stock_code == "" || this.state.price == "" || this.state.shares == "") {
+        return this.setState({
+          error_show: true
+        });
+      }
+
+      return this.setState({
+        error_show: false
+      });
+    }
+  }, {
     key: "net_calculator_price_handle",
-    value: function net_calculator_price_handle(event) {
-      var price = event.target.value;
+    value: function net_calculator_price_handle(value) {
+      var price = value;
       var shares = this.state.shares;
       var fee = _classes_Transactions__WEBPACK_IMPORTED_MODULE_2__.default.buy(price, shares);
       var total = Number(price * shares + fee).toFixed(2);
@@ -3068,7 +2962,7 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("tbody", {
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("tr", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Control, {
                       type: "date",
                       name: "date",
@@ -3077,9 +2971,10 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
                           date: event.target.value
                         });
                       },
+                      value: this.state.date,
                       autoComplete: "off"
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Control, {
                       type: "text",
                       name: "stock_code",
@@ -3089,24 +2984,24 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
                         });
                       },
                       required: true,
+                      value: this.state.stock_code,
                       autoComplete: "off"
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Control, {
-                      type: "number",
-                      name: "price",
-                      min: "0",
-                      onChange: function onChange(event) {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_3__.default, {
+                      thousandSeparator: true,
+                      defaultValue: null,
+                      value: this.state.price,
+                      onValueChange: function onValueChange(values) {
                         _this3.setState({
-                          price: event.target.value
+                          price: values.value
                         });
 
-                        _this3.net_calculator_price_handle(event);
+                        _this3.net_calculator_price_handle(values.value);
                       },
-                      autoComplete: "off",
-                      required: true
+                      className: "form-control"
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Control, {
                       type: "number",
                       name: "shares",
@@ -3118,26 +3013,25 @@ var TradeForm = /*#__PURE__*/function (_React$Component) {
 
                         _this3.net_calculator_shares_handle(event);
                       },
+                      value: this.state.shares,
                       autoComplete: "off",
                       required: true
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Control, {
-                      type: "text",
-                      name: "fees",
-                      readOnly: true,
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_3__.default, {
+                      thousandSeparator: true,
+                      defaultValue: null,
                       value: this.state.fees,
-                      autoComplete: "off",
-                      required: true
-                    })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default.Control, {
-                      type: "text",
-                      name: "net",
                       readOnly: true,
+                      className: "form-control"
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_3__.default, {
+                      thousandSeparator: true,
+                      defaultValue: null,
                       value: this.state.net,
-                      autoComplete: "off",
-                      required: true
+                      readOnly: true,
+                      className: "form-control"
                     })
                   })]
                 })
@@ -3182,154 +3076,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _PositionsTableBody__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PositionsTableBody */ "./resources/js/components/positions_table/PositionsTableBody.js");
-/* harmony import */ var _PositionsTableHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PositionsTableHeader */ "./resources/js/components/positions_table/PositionsTableHeader.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-
-
-
-var PositionsTable = /*#__PURE__*/function (_React$Component) {
-  _inherits(PositionsTable, _React$Component);
-
-  var _super = _createSuper(PositionsTable);
-
-  function PositionsTable(props) {
-    _classCallCheck(this, PositionsTable);
-
-    return _super.call(this, props);
-  }
-
-  _createClass(PositionsTable, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("table", {
-        className: "table v-middle",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_PositionsTableHeader__WEBPACK_IMPORTED_MODULE_2__.default, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_PositionsTableBody__WEBPACK_IMPORTED_MODULE_1__.default, {})]
-      });
-    }
-  }]);
-
-  return PositionsTable;
-}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PositionsTable);
-
-/***/ }),
-
-/***/ "./resources/js/components/positions_table/PositionsTableBody.js":
-/*!***********************************************************************!*\
-  !*** ./resources/js/components/positions_table/PositionsTableBody.js ***!
-  \***********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _UserContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../UserContext */ "./resources/js/UserContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-
-var PositionsTableBody = /*#__PURE__*/function (_React$Component) {
-  _inherits(PositionsTableBody, _React$Component);
-
-  var _super = _createSuper(PositionsTableBody);
-
-  function PositionsTableBody(props) {
-    _classCallCheck(this, PositionsTableBody);
-
-    return _super.call(this, props);
-  }
-
-  _createClass(PositionsTableBody, [{
-    key: "renderData",
-    value: function renderData() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_UserContext__WEBPACK_IMPORTED_MODULE_1__.default.Consumer, {
-        children: function children(_ref) {
-          var state = _ref.state;
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("tbody", {
-            children: state.positions
-          });
-        }
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return this.renderData();
-    }
-  }]);
-
-  return PositionsTableBody;
-}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PositionsTableBody);
-
-/***/ }),
-
-/***/ "./resources/js/components/positions_table/PositionsTableHeader.js":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/positions_table/PositionsTableHeader.js ***!
-  \*************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3357,45 +3103,50 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var PositionsTableHeader = /*#__PURE__*/function (_React$Component) {
-  _inherits(PositionsTableHeader, _React$Component);
+var PositionsTable = /*#__PURE__*/function (_React$Component) {
+  _inherits(PositionsTable, _React$Component);
 
-  var _super = _createSuper(PositionsTableHeader);
+  var _super = _createSuper(PositionsTable);
 
-  function PositionsTableHeader() {
-    _classCallCheck(this, PositionsTableHeader);
+  function PositionsTable(props) {
+    _classCallCheck(this, PositionsTable);
 
-    return _super.apply(this, arguments);
+    return _super.call(this, props);
   }
 
-  _createClass(PositionsTableHeader, [{
+  _createClass(PositionsTable, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("thead", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", {
-          className: "bg-light",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-            className: "border-top-0",
-            children: "Stock"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-            className: "border-top-0",
-            children: "Ave. Price"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-            className: "border-top-0",
-            children: "Shares"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-            className: "border-top-0",
-            children: "Total Cost"
-          })]
-        })
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("table", {
+        className: "table v-middle",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("thead", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", {
+            className: "bg-light",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
+              className: "border-top-0",
+              children: "Stock"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
+              className: "border-top-0",
+              children: "Ave. Price"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
+              className: "border-top-0",
+              children: "Shares"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
+              className: "border-top-0",
+              children: "Total Cost"
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("tbody", {
+          children: this.props.positions
+        })]
       });
     }
   }]);
 
-  return PositionsTableHeader;
+  return PositionsTable;
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PositionsTableHeader);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PositionsTable);
 
 /***/ }),
 
@@ -3417,11 +3168,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_forms_BankForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/forms/BankForm */ "./resources/js/components/forms/BankForm.js");
 /* harmony import */ var _components_chart_EquityChart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/chart/EquityChart */ "./resources/js/components/chart/EquityChart.js");
 /* harmony import */ var _components_positions_table_PositionsTable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/positions_table/PositionsTable */ "./resources/js/components/positions_table/PositionsTable.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Modal.js");
+/* harmony import */ var react_number_format__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-number-format */ "./node_modules/react-number-format/dist/react-number-format.es.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
@@ -3459,6 +3211,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var positions = [];
 
 var Dashboard = /*#__PURE__*/function (_React$Component) {
@@ -3475,12 +3228,17 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       totalEquity: 0,
       availableCash: 0,
-      show: false
+      show: false,
+      positions: null
     };
 
     _this.setEquity();
 
+    _this.load_positions();
+
     _this.handleModal = _this.handleModal.bind(_assertThisInitialized(_this));
+    _this.setEquity = _this.setEquity.bind(_assertThisInitialized(_this));
+    _this.load_positions = _this.load_positions.bind(_assertThisInitialized(_this));
     _this.setEquity = _this.setEquity.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -3496,7 +3254,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_6___default().get('get_equities').then(function (res) {
+                return axios__WEBPACK_IMPORTED_MODULE_7___default().get('get_equities').then(function (res) {
                   if (res.data) {
                     return _this2.setState({
                       totalEquity: res.data.total_equity,
@@ -3529,34 +3287,100 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "load_positions",
+    value: function () {
+      var _load_positions = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var res, position;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_7___default().get('/positions');
+
+              case 2:
+                res = _context2.sent;
+
+                if (Object.keys(res.data).length) {
+                  position = res.data.map(function (key) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("tr", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("td", {
+                        children: [" ", key.stock_code]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("td", {
+                        children: [" ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_6__.default, {
+                          thousandSeparator: true,
+                          displayType: "text",
+                          value: key.ave_price,
+                          prefix: '₱'
+                        })]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("td", {
+                        children: [" ", key.total_shares]
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("td", {
+                        children: [" ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_6__.default, {
+                          thousandSeparator: true,
+                          displayType: "text",
+                          value: key.total_cost,
+                          prefix: '₱'
+                        }), " "]
+                      })]
+                    }, Math.random());
+                  });
+                } else {
+                  position = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("tr", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("td", {
+                      colSpan: "4",
+                      children: "No Open Position. To add new trade, Click the New Trade button above."
+                    })
+                  });
+                }
+
+                this.setState({
+                  positions: position
+                });
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function load_positions() {
+        return _load_positions.apply(this, arguments);
+      }
+
+      return load_positions;
+    }()
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
         className: "page-wrapper",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
           className: "page-breadcrumb",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
             className: "row align-items-center",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
               className: "col-5",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h4", {
                 className: "page-title",
                 children: "Dashboard"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "d-flex align-items-center",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("nav", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("nav", {
                   "aria-label": "breadcrumb",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("ol", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("ol", {
                     className: "breadcrumb",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("li", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("li", {
                       className: "breadcrumb-item",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
                         href: "#",
                         children: "Home"
                       })
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("li", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("li", {
                       className: "breadcrumb-item active",
                       "aria-current": "page",
                       children: "Dashboard"
@@ -3564,150 +3388,164 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                   })
                 })
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
               className: "col-7",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "text-end upgrade-btn",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__.default, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__.default, {
                   onClick: function onClick() {
                     _this3.handleModal();
                   },
                   className: "btn btn-danger text-white",
                   children: "New Trade"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__.default, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_10__.default, {
                   show: this.state.show,
                   onHide: function onHide() {
                     return _this3.handleModal(false);
                   },
                   dialogClassName: "modal-xl",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_forms_TradeForm__WEBPACK_IMPORTED_MODULE_2__.default, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_forms_TradeForm__WEBPACK_IMPORTED_MODULE_2__.default, {
                     availableCash: this.state.availableCash,
                     totalEquity: this.state.totalEquity,
-                    handleModal: this.handleModal
+                    handleModal: this.handleModal,
+                    load_positions: this.load_positions,
+                    reloadEquity: this.setEquity
                   })
                 })]
               })
             })]
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
           className: "container-fluid",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
             className: "row",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
               className: "col-md-8",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "card",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                   className: "card-body",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                     className: "d-md-flex align-items-center",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h4", {
                         className: "card-title",
                         children: "Equity Curve"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h5", {
                         className: "card-subtitle",
                         children: "Overview of the last 12 Months "
                       })]
                     })
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                     className: "row",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                       className: "col-lg-12",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                         className: "campaign ct-charts",
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_chart_EquityChart__WEBPACK_IMPORTED_MODULE_4__.default, {})
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_chart_EquityChart__WEBPACK_IMPORTED_MODULE_4__.default, {})
                       })
                     })
                   })]
                 })
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
               className: "col-md-4",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                 className: "card",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                   className: "card-body",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h4", {
                     className: "card-title",
                     children: "Account Summary (PHP)"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                     className: "feed-widget",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("ul", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("ul", {
                       className: "list-style-none feed-body m-0 p-b-20",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("li", {
                         className: "feed-item",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                           className: "feed-icon bg-info",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("i", {
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("i", {
                             className: "mdi mdi-chart-timeline"
                           })
-                        }), " Total Equity", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                        }), " Total Equity", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                           className: "ms-auto font-13",
-                          children: this.state.totalEquity
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_6__.default, {
+                            thousandSeparator: true,
+                            displayType: "text",
+                            value: this.state.totalEquity,
+                            prefix: '₱'
+                          })
                         })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("li", {
                         className: "feed-item",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                           className: "feed-icon bg-success",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("i", {
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("i", {
                             className: "mdi mdi-chart-pie"
                           })
-                        }), " Available Cash", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                        }), " Available Cash", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
                           className: "ms-auto font-13",
-                          children: this.state.availableCash
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_6__.default, {
+                            thousandSeparator: true,
+                            displayType: "text",
+                            value: this.state.availableCash,
+                            prefix: '₱'
+                          })
                         })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("li", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("li", {
                         className: "feed-item",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                           className: "feed-icon bg-warning",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("i", {
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("i", {
                             className: "mdi mdi-chart-line"
                           })
-                        }), "Gain / Loss", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+                        }), "Gain / Loss", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
                           className: "ms-auto font-13",
-                          children: ["25,000 ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("small", {
+                          children: ["25,000 ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("small", {
                             children: "25%"
                           })]
                         })]
                       })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_forms_BankForm__WEBPACK_IMPORTED_MODULE_3__.default, {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_forms_BankForm__WEBPACK_IMPORTED_MODULE_3__.default, {
                         setEquity: this.setEquity
                       })
                     })]
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {})]
+                  })]
                 })
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
             className: "row",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
               className: "col-12",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                 className: "card",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                   className: "card-body",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                     className: "d-md-flex",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h4", {
                         className: "card-title",
                         children: "Stock Position"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h5", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("h5", {
                         className: "card-subtitle",
                         children: "Overview of my open trades"
                       })]
                     })
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                   className: "table-responsive",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_positions_table_PositionsTable__WEBPACK_IMPORTED_MODULE_5__.default, {})
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_positions_table_PositionsTable__WEBPACK_IMPORTED_MODULE_5__.default, {
+                    positions: this.state.positions
+                  })
                 })]
               })
             })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("footer", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("footer", {
           className: "footer text-center",
           children: "Trading Journal PH"
         })]
@@ -12924,7 +12762,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".user-name {\n    margin-bottom: 0;\n}\n\n.user-content {\n    margin-left: 10px;\n} \n  \ntable.table-fit {\n    width: auto !important;\n    table-layout: auto !important;\n}\ntable.table-fit thead th, table.table-fit tfoot th {\n    width: auto !important;\n}\ntable.table-fit tbody td, table.table-fit tfoot td {\n    width: auto !important;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".user-name {\n    margin-bottom: 0;\n}\n\n.user-content {\n    margin-left: 10px;\n} \n\ntable {\n    table-layout: auto!important;\n}\n  \ntd, th {\n    width: auto!important;\n    max-width:100%;\n    white-space:nowrap;\n    \n}\n\nth input,\ntd input {\n    min-width: 0;\n    width:auto;\n    display: inline;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -75433,6 +75271,1402 @@ function polyfill(Component) {
 }
 
 
+
+
+/***/ }),
+
+/***/ "./node_modules/react-number-format/dist/react-number-format.es.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/react-number-format/dist/react-number-format.es.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/**
+ * react-number-format - 4.5.5
+ * Author : Sudhanshu Yadav
+ * Copyright (c) 2016, 2021 to Sudhanshu Yadav, released under the MIT license.
+ * https://github.com/s-yadav/react-number-format
+ */
+
+
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+var ReactPropTypesSecret_1 = ReactPropTypesSecret;
+
+function emptyFunction() {}
+function emptyFunctionWithReset() {}
+emptyFunctionWithReset.resetWarningCache = emptyFunction;
+
+var factoryWithThrowingShims = function() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret_1) {
+      // It is still safe when called from React.
+      return;
+    }
+    var err = new Error(
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+    err.name = 'Invariant Violation';
+    throw err;
+  }  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  }  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  var ReactPropTypes = {
+    array: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
+
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    elementType: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim,
+    exact: getShim,
+
+    checkPropTypes: emptyFunctionWithReset,
+    resetWarningCache: emptyFunction
+  };
+
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+var propTypes = createCommonjsModule(function (module) {
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+{
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = factoryWithThrowingShims();
+}
+});
+
+//     
+
+                                                               
+
+// basic noop function
+function noop() {}
+function returnTrue() {
+  return true;
+}
+
+function charIsNumber(char         ) {
+  return !!(char || '').match(/\d/);
+}
+
+function isNil(val     ) {
+  return val === null || val === undefined;
+}
+
+function escapeRegExp(str        ) {
+  return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+}
+
+function getThousandsGroupRegex(thousandsGroupStyle        ) {
+  switch (thousandsGroupStyle) {
+    case 'lakh':
+      return /(\d+?)(?=(\d\d)+(\d)(?!\d))(\.\d+)?/g;
+    case 'wan':
+      return /(\d)(?=(\d{4})+(?!\d))/g;
+    case 'thousand':
+    default:
+      return /(\d)(?=(\d{3})+(?!\d))/g;
+  }
+}
+
+function applyThousandSeparator(
+  str        ,
+  thousandSeparator        ,
+  thousandsGroupStyle        
+) {
+  var thousandsGroupRegex = getThousandsGroupRegex(thousandsGroupStyle);
+  var index = str.search(/[1-9]/);
+  index = index === -1 ? str.length : index;
+  return (
+    str.substring(0, index) +
+    str.substring(index, str.length).replace(thousandsGroupRegex, '$1' + thousandSeparator)
+  );
+}
+
+//spilt a float number into different parts beforeDecimal, afterDecimal, and negation
+function splitDecimal(numStr        , allowNegative) {
+  if ( allowNegative === void 0 ) allowNegative          = true;
+
+  var hasNagation = numStr[0] === '-';
+  var addNegation = hasNagation && allowNegative;
+  numStr = numStr.replace('-', '');
+
+  var parts = numStr.split('.');
+  var beforeDecimal = parts[0];
+  var afterDecimal = parts[1] || '';
+
+  return {
+    beforeDecimal: beforeDecimal,
+    afterDecimal: afterDecimal,
+    hasNagation: hasNagation,
+    addNegation: addNegation,
+  };
+}
+
+function fixLeadingZero(numStr         ) {
+  if (!numStr) { return numStr; }
+  var isNegative = numStr[0] === '-';
+  if (isNegative) { numStr = numStr.substring(1, numStr.length); }
+  var parts = numStr.split('.');
+  var beforeDecimal = parts[0].replace(/^0+/, '') || '0';
+  var afterDecimal = parts[1] || '';
+
+  return ("" + (isNegative ? '-' : '') + beforeDecimal + (afterDecimal ? ("." + afterDecimal) : ''));
+}
+
+/**
+ * limit decimal numbers to given scale
+ * Not used .fixedTo because that will break with big numbers
+ */
+function limitToScale(numStr        , scale        , fixedDecimalScale         ) {
+  var str = '';
+  var filler = fixedDecimalScale ? '0' : '';
+  for (var i = 0; i <= scale - 1; i++) {
+    str += numStr[i] || filler;
+  }
+  return str;
+}
+
+function repeat(str, count) {
+  return Array(count + 1).join(str)
+}
+
+function toNumericString(num) {  
+  num += ''; // typecast number to string
+
+  // store the sign and remove it from the number.
+  var sign = num[0] === '-' ? '-' : '';
+  if (sign) { num = num.substring(1); }
+
+  // split the number into cofficient and exponent
+  var ref = num.split(/[eE]/g);
+  var coefficient = ref[0];
+  var exponent = ref[1];
+
+  // covert exponent to number;
+  exponent = Number(exponent);
+
+  // if there is no exponent part or its 0, return the coffiecient with sign
+  if (!exponent) { return sign + coefficient; }
+
+  coefficient = coefficient.replace('.', '');
+
+  /**
+   * for scientific notation the current decimal index will be after first number (index 0)
+   * So effective decimal index will always be 1 + exponent value
+   */
+  var decimalIndex = 1 + exponent;
+
+  var coffiecientLn = coefficient.length;
+
+  if (decimalIndex < 0) {
+    // if decimal index is less then 0 add preceding 0s
+    // add 1 as join will have 
+    coefficient = '0.' + repeat('0', Math.abs(decimalIndex)) + coefficient;
+  } else if (decimalIndex >= coffiecientLn) {
+    // if decimal index is less then 0 add leading 0s
+    coefficient = coefficient + repeat('0', decimalIndex - coffiecientLn);
+  } else {
+    // else add decimal point at proper index
+    coefficient = (coefficient.substring(0, decimalIndex) || '0') + '.' + coefficient.substring(decimalIndex);
+  }
+
+  return sign + coefficient;
+}
+
+/**
+ * This method is required to round prop value to given scale.
+ * Not used .round or .fixedTo because that will break with big numbers
+ */
+function roundToPrecision(numStr        , scale        , fixedDecimalScale         ) {
+  //if number is empty don't do anything return empty string
+  if (['', '-'].indexOf(numStr) !== -1) { return numStr; }
+
+  var shoudHaveDecimalSeparator = numStr.indexOf('.') !== -1 && scale;
+  var ref = splitDecimal(numStr);
+  var beforeDecimal = ref.beforeDecimal;
+  var afterDecimal = ref.afterDecimal;
+  var hasNagation = ref.hasNagation;
+  var floatValue = parseFloat(("0." + (afterDecimal || '0')));
+  var floatValueStr =
+    afterDecimal.length <= scale ? toNumericString(floatValue) : floatValue.toFixed(scale);
+  var roundedDecimalParts = floatValueStr.split('.');
+  var intPart = beforeDecimal
+    .split('')
+    .reverse()
+    .reduce(function (roundedStr, current, idx) {
+      if (roundedStr.length > idx) {
+        return (
+          (Number(roundedStr[0]) + Number(current)).toString() +
+          roundedStr.substring(1, roundedStr.length)
+        );
+      }
+      return current + roundedStr;
+    }, roundedDecimalParts[0]);
+
+  var decimalPart = limitToScale(
+    roundedDecimalParts[1] || '',
+    Math.min(scale, afterDecimal.length),
+    fixedDecimalScale
+  );
+  var negation = hasNagation ? '-' : '';
+  var decimalSeparator = shoudHaveDecimalSeparator ? '.' : '';
+  return ("" + negation + intPart + decimalSeparator + decimalPart);
+}
+
+function omit(obj        , keyMaps        ) {
+  var filteredObj = {};
+  Object.keys(obj).forEach(function (key) {
+    if (!keyMaps[key]) { filteredObj[key] = obj[key]; }
+  });
+  return filteredObj;
+}
+
+/** set the caret positon in an input field **/
+function setCaretPosition(el                  , caretPos        ) {
+  el.value = el.value;
+  // ^ this is used to not only get 'focus', but
+  // to make sure we don't have it everything -selected-
+  // (it causes an issue in chrome, and having it doesn't hurt any other browser)
+  if (el !== null) {
+    if (el.createTextRange) {
+      var range = el.createTextRange();
+      range.move('character', caretPos);
+      range.select();
+      return true;
+    }
+    // (el.selectionStart === 0 added for Firefox bug)
+    if (el.selectionStart || el.selectionStart === 0) {
+      el.focus();
+      el.setSelectionRange(caretPos, caretPos);
+      return true;
+    }
+
+    // fail city, fortunately this never happens (as far as I've tested) :)
+    el.focus();
+    return false;
+  }
+}
+
+/**
+  Given previous value and newValue it returns the index
+  start - end to which values have changed.
+  This function makes assumption about only consecutive
+  characters are changed which is correct assumption for caret input.
+*/
+function findChangedIndex(prevValue        , newValue        ) {
+  var i = 0,
+    j = 0;
+  var prevLength = prevValue.length;
+  var newLength = newValue.length;
+  while (prevValue[i] === newValue[i] && i < prevLength) { i++; }
+
+  //check what has been changed from last
+  while (
+    prevValue[prevLength - 1 - j] === newValue[newLength - 1 - j] &&
+    newLength - j > i &&
+    prevLength - j > i
+  ) {
+    j++;
+  }
+
+  return { start: i, end: prevLength - j };
+}
+
+/*
+  Returns a number whose value is limited to the given range
+*/
+function clamp(num        , min        , max        ) {
+  return Math.min(Math.max(num, min), max);
+}
+
+function getCurrentCaretPosition(el                  ) {
+  /*Max of selectionStart and selectionEnd is taken for the patch of pixel and other mobile device caret bug*/
+  return Math.max(el.selectionStart, el.selectionEnd);
+}
+
+function addInputMode(format                                   ) {
+  return format || !(navigator.platform && /iPhone|iPod/.test(navigator.platform));
+}
+
+//     
+
+
+var propTypes$1 = {
+  thousandSeparator: propTypes.oneOfType([propTypes.string, propTypes.oneOf([true])]),
+  decimalSeparator: propTypes.string,
+  allowedDecimalSeparators: propTypes.arrayOf(propTypes.string),
+  thousandsGroupStyle: propTypes.oneOf(['thousand', 'lakh', 'wan']),
+  decimalScale: propTypes.number,
+  fixedDecimalScale: propTypes.bool,
+  displayType: propTypes.oneOf(['input', 'text']),
+  prefix: propTypes.string,
+  suffix: propTypes.string,
+  format: propTypes.oneOfType([
+    propTypes.string,
+    propTypes.func
+  ]),
+  removeFormatting: propTypes.func,
+  mask: propTypes.oneOfType([propTypes.string, propTypes.arrayOf(propTypes.string)]),
+  value: propTypes.oneOfType([
+    propTypes.number,
+    propTypes.string
+  ]),
+  defaultValue: propTypes.oneOfType([
+    propTypes.number,
+    propTypes.string
+  ]),
+  isNumericString: propTypes.bool,
+  customInput: propTypes.elementType,
+  allowNegative: propTypes.bool,
+  allowEmptyFormatting: propTypes.bool,
+  allowLeadingZeros: propTypes.bool,
+  onValueChange: propTypes.func,
+  onKeyDown: propTypes.func,
+  onMouseUp: propTypes.func,
+  onChange: propTypes.func,
+  onFocus: propTypes.func,
+  onBlur: propTypes.func,
+  type: propTypes.oneOf(['text', 'tel', 'password']),
+  isAllowed: propTypes.func,
+  renderText: propTypes.func,
+  getInputRef: propTypes.oneOfType([
+    propTypes.func, // for legacy refs
+    propTypes.shape({ current: propTypes.any })
+  ])
+};
+
+var defaultProps = {
+  displayType: 'input',
+  decimalSeparator: '.',
+  thousandsGroupStyle: 'thousand',
+  fixedDecimalScale: false,
+  prefix: '',
+  suffix: '',
+  allowNegative: true,
+  allowEmptyFormatting: false,
+  allowLeadingZeros: false,
+  isNumericString: false,
+  type: 'text',
+  onValueChange: noop,
+  onChange: noop,
+  onKeyDown: noop,
+  onMouseUp: noop,
+  onFocus: noop,
+  onBlur: noop,
+  isAllowed: returnTrue
+};
+var NumberFormat = /*@__PURE__*/(function (superclass) {
+  function NumberFormat(props        ) {
+    superclass.call(this, props);
+
+    var defaultValue = props.defaultValue;
+
+    //validate props
+    this.validateProps();
+
+    var formattedValue = this.formatValueProp(defaultValue);
+
+    this.state = {
+      value: formattedValue,
+      numAsString: this.removeFormatting(formattedValue),
+      mounted: false,
+    };
+
+    this.selectionBeforeInput = {
+      selectionStart: 0,
+      selectionEnd: 0
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+  }
+
+  if ( superclass ) NumberFormat.__proto__ = superclass;
+  NumberFormat.prototype = Object.create( superclass && superclass.prototype );
+  NumberFormat.prototype.constructor = NumberFormat;
+
+  NumberFormat.prototype.componentDidMount = function componentDidMount () {
+    // set mounted state
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({
+      mounted: true
+    });
+  };
+
+  NumberFormat.prototype.componentDidUpdate = function componentDidUpdate (prevProps        ) {
+    this.updateValueIfRequired(prevProps);
+  };
+
+  NumberFormat.prototype.componentWillUnmount = function componentWillUnmount () {
+    clearTimeout(this.focusTimeout);
+  };
+
+  NumberFormat.prototype.updateValueIfRequired = function updateValueIfRequired (prevProps        ) {
+    var ref = this;
+    var props = ref.props;
+    var state = ref.state;
+    var focusedElm = ref.focusedElm;
+    var stateValue = state.value;
+    var lastNumStr = state.numAsString; if ( lastNumStr === void 0 ) lastNumStr = '';
+
+    // If only state changed no need to do any thing
+    if(prevProps !== props) {
+      //validate props
+      this.validateProps();
+
+      var lastValueWithNewFormat = this.formatNumString(lastNumStr);
+
+      var formattedValue = isNil(props.value) ? lastValueWithNewFormat : this.formatValueProp();
+      var numAsString = this.removeFormatting(formattedValue);
+
+      var floatValue = parseFloat(numAsString);
+      var lastFloatValue = parseFloat(lastNumStr);
+
+      if (
+        //while typing set state only when float value changes
+        ((!isNaN(floatValue) || !isNaN(lastFloatValue)) && floatValue !== lastFloatValue) ||
+        //can also set state when float value is same and the format props changes
+        lastValueWithNewFormat !== stateValue ||
+        //set state always when not in focus and formatted value is changed
+        (focusedElm === null && formattedValue !== stateValue)
+      ) {
+        this.updateValue({ formattedValue: formattedValue, numAsString: numAsString, input: focusedElm });
+      }
+    }
+  };
+
+  /** Misc methods **/
+  NumberFormat.prototype.getFloatString = function getFloatString (num) {
+    if ( num === void 0 ) num         = '';
+
+    var ref = this.props;
+    var decimalScale = ref.decimalScale;
+    var ref$1 = this.getSeparators();
+    var decimalSeparator = ref$1.decimalSeparator;
+    var numRegex = this.getNumberRegex(true);
+
+    //remove negation for regex check
+    var hasNegation = num[0] === '-';
+    if(hasNegation) { num = num.replace('-', ''); }
+
+    //if decimal scale is zero remove decimal and number after decimalSeparator
+    if (decimalSeparator && decimalScale === 0) {
+      num = num.split(decimalSeparator)[0];
+    }
+
+    num  = (num.match(numRegex) || []).join('').replace(decimalSeparator, '.');
+
+    //remove extra decimals
+    var firstDecimalIndex = num.indexOf('.');
+
+    if (firstDecimalIndex !== -1) {
+      num = (num.substring(0, firstDecimalIndex)) + "." + (num.substring(firstDecimalIndex + 1, num.length).replace(new RegExp(escapeRegExp(decimalSeparator), 'g'), ''));
+    }
+
+    //add negation back
+    if(hasNegation) { num = '-' + num; }
+
+    return num;
+  };
+
+  //returned regex assumes decimalSeparator is as per prop
+  NumberFormat.prototype.getNumberRegex = function getNumberRegex (g         , ignoreDecimalSeparator          ) {
+    var ref = this.props;
+    var format = ref.format;
+    var decimalScale = ref.decimalScale;
+    var ref$1 = this.getSeparators();
+    var decimalSeparator = ref$1.decimalSeparator;
+    return new RegExp('\\d' + (decimalSeparator && decimalScale !== 0 && !ignoreDecimalSeparator && !format ? '|' + escapeRegExp(decimalSeparator) : ''), g ? 'g' : undefined);
+  };
+
+  NumberFormat.prototype.getSeparators = function getSeparators () {
+    var ref = this.props;
+    var decimalSeparator = ref.decimalSeparator;
+    var ref$1 = this.props;
+    var thousandSeparator = ref$1.thousandSeparator;
+    var allowedDecimalSeparators = ref$1.allowedDecimalSeparators;
+
+    if (thousandSeparator === true) {
+      thousandSeparator = ',';
+    }
+    if (!allowedDecimalSeparators) {
+      allowedDecimalSeparators = [decimalSeparator, '.'];
+    }
+
+    return {
+      decimalSeparator: decimalSeparator,
+      thousandSeparator: thousandSeparator,
+      allowedDecimalSeparators: allowedDecimalSeparators,
+    }
+  };
+
+  NumberFormat.prototype.getMaskAtIndex = function getMaskAtIndex (index        ) {
+    var ref = this.props;
+    var mask = ref.mask; if ( mask === void 0 ) mask = ' ';
+    if (typeof mask === 'string') {
+      return mask;
+    }
+
+    return mask[index] || ' ';
+  };
+
+  NumberFormat.prototype.getValueObject = function getValueObject (formattedValue        , numAsString        ) {
+    var floatValue = parseFloat(numAsString);
+
+    return {
+      formattedValue: formattedValue,
+      value: numAsString,
+      floatValue: isNaN(floatValue) ? undefined : floatValue
+    };
+
+  };
+
+  NumberFormat.prototype.validateProps = function validateProps () {
+    var ref = this.props;
+    var mask = ref.mask;
+
+    //validate decimalSeparator and thousandSeparator
+    var ref$1 = this.getSeparators();
+    var decimalSeparator = ref$1.decimalSeparator;
+    var thousandSeparator = ref$1.thousandSeparator;
+
+    if (decimalSeparator === thousandSeparator) {
+      throw new Error(("\n          Decimal separator can't be same as thousand separator.\n          thousandSeparator: " + thousandSeparator + " (thousandSeparator = {true} is same as thousandSeparator = \",\")\n          decimalSeparator: " + decimalSeparator + " (default value for decimalSeparator is .)\n       "));
+    }
+
+    //validate mask
+    if (mask) {
+      var maskAsStr = mask === 'string' ? mask : mask.toString();
+      if (maskAsStr.match(/\d/g)) {
+        throw new Error(("\n          Mask " + mask + " should not contain numeric character;\n        "))
+      }
+    }
+
+  };
+  /** Misc methods end **/
+
+  /** caret specific methods **/
+  NumberFormat.prototype.setPatchedCaretPosition = function setPatchedCaretPosition (el                  , caretPos        , currentValue        ) {
+    /* setting caret position within timeout of 0ms is required for mobile chrome,
+    otherwise browser resets the caret position after we set it
+    We are also setting it without timeout so that in normal browser we don't see the flickering */
+    setCaretPosition(el, caretPos);
+    setTimeout(function () {
+      if(el.value === currentValue) { setCaretPosition(el, caretPos); }
+    }, 0);
+  };
+
+  /* This keeps the caret within typing area so people can't type in between prefix or suffix */
+  NumberFormat.prototype.correctCaretPosition = function correctCaretPosition (value        , caretPos        , direction         ) {
+    var ref = this.props;
+    var prefix = ref.prefix;
+    var suffix = ref.suffix;
+    var format = ref.format;
+
+    //if value is empty return 0
+    if (value === '') { return 0; }
+
+    //caret position should be between 0 and value length
+    caretPos = clamp(caretPos, 0, value.length);
+
+    //in case of format as number limit between prefix and suffix
+    if (!format) {
+      var hasNegation = value[0] === '-';
+      return clamp(caretPos, prefix.length + (hasNegation ? 1 : 0), value.length - suffix.length);
+    }
+
+    //in case if custom format method don't do anything
+    if (typeof format === 'function') { return caretPos; }
+
+    /* in case format is string find the closest # position from the caret position */
+
+    //in case the caretPos have input value on it don't do anything
+    if (format[caretPos] === '#' && charIsNumber(value[caretPos])) { return caretPos; }
+
+    //if caretPos is just after input value don't do anything
+    if (format[caretPos - 1] === '#' && charIsNumber(value[caretPos - 1])) { return caretPos; }
+
+    //find the nearest caret position
+    var firstHashPosition = format.indexOf('#');
+    var lastHashPosition = format.lastIndexOf('#');
+
+    //limit the cursor between the first # position and the last # position
+    caretPos = clamp(caretPos, firstHashPosition, lastHashPosition + 1);
+
+    var nextPos = format.substring(caretPos, format.length).indexOf('#');
+    var caretLeftBound = caretPos;
+    var caretRightBound = caretPos + (nextPos === -1 ? 0 : nextPos);
+
+    //get the position where the last number is present
+    while (caretLeftBound > firstHashPosition && (format[caretLeftBound] !== '#' || !charIsNumber(value[caretLeftBound]))) {
+      caretLeftBound -= 1;
+    }
+
+    var goToLeft = !charIsNumber(value[caretRightBound])
+    || (direction === 'left' && caretPos !== firstHashPosition)
+    || (caretPos - caretLeftBound < caretRightBound - caretPos);
+
+    if (goToLeft) {
+      //check if number should be taken after the bound or after it
+      //if number preceding a valid number keep it after
+      return charIsNumber(value[caretLeftBound]) ? caretLeftBound + 1 : caretLeftBound;
+    }
+
+    return caretRightBound;
+  };
+
+  NumberFormat.prototype.getCaretPosition = function getCaretPosition (inputValue        , formattedValue        , caretPos        ) {
+    var ref = this.props;
+    var format = ref.format;
+    var stateValue = this.state.value;
+    var numRegex = this.getNumberRegex(true);
+    var inputNumber = (inputValue.match(numRegex) || []).join('');
+    var formattedNumber = (formattedValue.match(numRegex) || []).join('');
+    var j, i;
+
+    j = 0;
+
+    for(i=0; i<caretPos; i++){
+      var currentInputChar = inputValue[i] || '';
+      var currentFormatChar = formattedValue[j] || '';
+      //no need to increase new cursor position if formatted value does not have those characters
+      //case inputValue = 1a23 and formattedValue =  123
+      if(!currentInputChar.match(numRegex) && currentInputChar !== currentFormatChar) { continue; }
+
+      //When we are striping out leading zeros maintain the new cursor position
+      //Case inputValue = 00023 and formattedValue = 23;
+      if (currentInputChar === '0' && currentFormatChar.match(numRegex) && currentFormatChar !== '0' && inputNumber.length !== formattedNumber.length) { continue; }
+
+      //we are not using currentFormatChar because j can change here
+      while(currentInputChar !== formattedValue[j] && j < formattedValue.length) { j++; }
+      j++;
+    }
+
+    if ((typeof format === 'string' && !stateValue)) {
+      //set it to the maximum value so it goes after the last number
+      j = formattedValue.length;
+    }
+
+    //correct caret position if its outside of editable area
+    j = this.correctCaretPosition(formattedValue, j);
+
+    return j;
+  };
+  /** caret specific methods ends **/
+
+
+  /** methods to remove formattting **/
+  NumberFormat.prototype.removePrefixAndSuffix = function removePrefixAndSuffix (val        ) {
+    var ref = this.props;
+    var format = ref.format;
+    var prefix = ref.prefix;
+    var suffix = ref.suffix;
+
+    //remove prefix and suffix
+    if (!format && val) {
+      var isNegative = val[0] === '-';
+
+      //remove negation sign
+      if (isNegative) { val = val.substring(1, val.length); }
+
+      //remove prefix
+      val = prefix && val.indexOf(prefix) === 0 ? val.substring(prefix.length, val.length) : val;
+
+      //remove suffix
+      var suffixLastIndex = val.lastIndexOf(suffix);
+      val = suffix && suffixLastIndex !== -1 && suffixLastIndex === val.length - suffix.length ? val.substring(0, suffixLastIndex) : val;
+
+      //add negation sign back
+      if (isNegative) { val = '-' + val; }
+    }
+
+    return val;
+  };
+
+  NumberFormat.prototype.removePatternFormatting = function removePatternFormatting (val        ) {
+    var ref = this.props;
+    var format = ref.format;
+    var formatArray = format.split('#').filter(function (str) { return str !== ''; });
+    var start = 0;
+    var numStr = '';
+
+    for (var i=0, ln=formatArray.length; i <= ln; i++) {
+      var part = formatArray[i] || '';
+
+      //if i is the last fragment take the index of end of the value
+      //For case like +1 (911) 911 91 91 having pattern +1 (###) ### ## ##
+      var index = i === ln ? val.length : val.indexOf(part, start);
+
+      /* in any case if we don't find the pattern part in the value assume the val as numeric string
+      This will be also in case if user has started typing, in any other case it will not be -1
+      unless wrong prop value is provided */
+      if (index === -1) {
+        numStr = val;
+        break;
+      } else {
+        numStr += val.substring(start, index);
+        start = index + part.length;
+      }
+    }
+
+    return (numStr.match(/\d/g) || []).join('');
+  };
+
+  NumberFormat.prototype.removeFormatting = function removeFormatting (val        ) {
+    var ref = this.props;
+    var format = ref.format;
+    var removeFormatting = ref.removeFormatting;
+    if (!val) { return val; }
+
+    if (!format) {
+      val = this.removePrefixAndSuffix(val);
+      val = this.getFloatString(val);
+    } else if (typeof format === 'string') {
+      val = this.removePatternFormatting(val);
+    } else if (typeof removeFormatting === 'function') { //condition need to be handled if format method is provide,
+      val = removeFormatting(val);
+    } else {
+      val = (val.match(/\d/g) || []).join('');
+    }
+    return val;
+  };
+  /** methods to remove formattting end **/
+
+
+  /*** format specific methods start ***/
+  /**
+   * Format when # based string is provided
+   * @param  {string} numStr Numeric String
+   * @return {string}        formatted Value
+   */
+  NumberFormat.prototype.formatWithPattern = function formatWithPattern (numStr        ) {
+    var ref = this.props;
+    var format = ref.format;
+    var hashCount = 0;
+    var formattedNumberAry = format.split('');
+    for (var i = 0, ln = format.length; i < ln; i++) {
+      if (format[i] === '#') {
+        formattedNumberAry[i] = numStr[hashCount] || this.getMaskAtIndex(hashCount);
+        hashCount += 1;
+      }
+    }
+    return formattedNumberAry.join('');
+  };
+  /**
+   * @param  {string} numStr Numeric string/floatString] It always have decimalSeparator as .
+   * @return {string} formatted Value
+   */
+  NumberFormat.prototype.formatAsNumber = function formatAsNumber (numStr        ) {
+    var ref = this.props;
+    var decimalScale = ref.decimalScale;
+    var fixedDecimalScale = ref.fixedDecimalScale;
+    var prefix = ref.prefix;
+    var suffix = ref.suffix;
+    var allowNegative = ref.allowNegative;
+    var thousandsGroupStyle = ref.thousandsGroupStyle;
+    var ref$1 = this.getSeparators();
+    var thousandSeparator = ref$1.thousandSeparator;
+    var decimalSeparator = ref$1.decimalSeparator;
+
+    var hasDecimalSeparator = numStr.indexOf('.') !== -1 || (decimalScale && fixedDecimalScale);
+    var ref$2 = splitDecimal(numStr, allowNegative);
+    var beforeDecimal = ref$2.beforeDecimal;
+    var afterDecimal = ref$2.afterDecimal;
+    var addNegation = ref$2.addNegation; // eslint-disable-line prefer-const
+
+    //apply decimal precision if its defined
+    if (decimalScale !== undefined) { afterDecimal = limitToScale(afterDecimal, decimalScale, fixedDecimalScale); }
+
+    if(thousandSeparator) {
+      beforeDecimal = applyThousandSeparator(beforeDecimal, thousandSeparator, thousandsGroupStyle);
+    }
+
+    //add prefix and suffix
+    if(prefix) { beforeDecimal = prefix + beforeDecimal; }
+    if(suffix) { afterDecimal = afterDecimal + suffix; }
+
+    //restore negation sign
+    if (addNegation) { beforeDecimal = '-' + beforeDecimal; }
+
+    numStr = beforeDecimal + (hasDecimalSeparator && decimalSeparator ||  '') + afterDecimal;
+
+    return numStr;
+  };
+
+  NumberFormat.prototype.formatNumString = function formatNumString (numStr) {
+    if ( numStr === void 0 ) numStr         = '';
+
+    var ref = this.props;
+    var format = ref.format;
+    var allowEmptyFormatting = ref.allowEmptyFormatting;
+    var formattedValue = numStr;
+
+    if (numStr === '' && !allowEmptyFormatting) {
+      formattedValue = '';
+    } else if (numStr === '-' && !format) {
+      formattedValue = '-';
+    } else if (typeof format === 'string') {
+      formattedValue = this.formatWithPattern(formattedValue);
+    } else if (typeof format === 'function') {
+      formattedValue = format(formattedValue);
+    } else {
+      formattedValue = this.formatAsNumber(formattedValue);
+    }
+
+    return formattedValue;
+  };
+
+  NumberFormat.prototype.formatValueProp = function formatValueProp (defaultValue               ) {
+    var ref = this.props;
+    var format = ref.format;
+    var decimalScale = ref.decimalScale;
+    var fixedDecimalScale = ref.fixedDecimalScale;
+    var allowEmptyFormatting = ref.allowEmptyFormatting;
+    var ref$1 = this.props;
+    var value = ref$1.value;
+    var isNumericString = ref$1.isNumericString;
+
+    // if value is undefined or null, use defaultValue instead
+    value = isNil(value) ? defaultValue : value;
+
+    var isNonNumericFalsy = !value && value !== 0;
+
+    if (isNonNumericFalsy && allowEmptyFormatting) {
+      value = '';
+    }
+
+    // if value is not defined return empty string
+    if (isNonNumericFalsy && !allowEmptyFormatting) { return ''; }
+
+    if (typeof value === 'number') {
+      value = toNumericString(value);
+      isNumericString = true;
+    }
+
+    //change infinity value to empty string
+    if (value === 'Infinity' && isNumericString) {
+      value = '';
+    }
+
+    //round the number based on decimalScale
+    //format only if non formatted value is provided
+    if (isNumericString && !format && typeof decimalScale === 'number') {
+      value = roundToPrecision(value, decimalScale, fixedDecimalScale);
+    }
+
+    var formattedValue = isNumericString ? this.formatNumString(value) : this.formatInput(value);
+
+    return formattedValue;
+  };
+
+  NumberFormat.prototype.formatNegation = function formatNegation (value) {
+    if ( value === void 0 ) value         = '';
+
+    var ref = this.props;
+    var allowNegative = ref.allowNegative;
+    var negationRegex = new RegExp('(-)');
+    var doubleNegationRegex = new RegExp('(-)(.)*(-)');
+
+    // Check number has '-' value
+    var hasNegation = negationRegex.test(value);
+
+    // Check number has 2 or more '-' values
+    var removeNegation = doubleNegationRegex.test(value);
+
+    //remove negation
+    value = value.replace(/-/g, '');
+
+    if (hasNegation && !removeNegation && allowNegative) {
+      value = '-' + value;
+    }
+
+    return value;
+  };
+
+  NumberFormat.prototype.formatInput = function formatInput (value) {
+    if ( value === void 0 ) value         = '';
+
+    var ref = this.props;
+    var format = ref.format;
+
+    //format negation only if we are formatting as number
+    if (!format) {
+      value = this.removePrefixAndSuffix(value);
+      value = this.formatNegation(value);
+    }
+
+    //remove formatting from number
+    value = this.removeFormatting(value);
+
+    return this.formatNumString(value);
+  };
+
+  /*** format specific methods end ***/
+  NumberFormat.prototype.isCharacterAFormat = function isCharacterAFormat (caretPos        , value        ) {
+    var ref = this.props;
+    var format = ref.format;
+    var prefix = ref.prefix;
+    var suffix = ref.suffix;
+    var decimalScale = ref.decimalScale;
+    var fixedDecimalScale = ref.fixedDecimalScale;
+    var ref$1 = this.getSeparators();
+    var decimalSeparator = ref$1.decimalSeparator;
+
+    //check within format pattern
+    if (typeof format === 'string' && format[caretPos] !== '#') { return true; }
+
+    //check in number format
+    if (!format && (caretPos < prefix.length
+      || caretPos >= value.length - suffix.length
+      || (decimalScale && fixedDecimalScale && value[caretPos] === decimalSeparator))
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  NumberFormat.prototype.checkIfFormatGotDeleted = function checkIfFormatGotDeleted (start        , end        , value        ) {
+    for (var i = start; i < end; i++) {
+      if (this.isCharacterAFormat(i, value)) { return true; }
+    }
+    return false;
+  };
+
+  /**
+   * This will check if any formatting got removed by the delete or backspace and reset the value
+   * It will also work as fallback if android chome keyDown handler does not work
+   **/
+  NumberFormat.prototype.correctInputValue = function correctInputValue (caretPos        , lastValue        , value        ) {
+    var ref = this.props;
+    var format = ref.format;
+    var allowNegative = ref.allowNegative;
+    var prefix = ref.prefix;
+    var suffix = ref.suffix;
+    var decimalScale = ref.decimalScale;
+    var ref$1 = this.getSeparators();
+    var allowedDecimalSeparators = ref$1.allowedDecimalSeparators;
+    var decimalSeparator = ref$1.decimalSeparator;
+    var lastNumStr = this.state.numAsString || '';
+    var ref$2 = this.selectionBeforeInput;
+    var selectionStart = ref$2.selectionStart;
+    var selectionEnd = ref$2.selectionEnd;
+    var ref$3 = findChangedIndex(lastValue, value);
+    var start = ref$3.start;
+    var end = ref$3.end;
+
+    /** Check for any allowed decimal separator is added in the numeric format and replace it with decimal separator */
+    if (!format && start === end && allowedDecimalSeparators.indexOf(value[selectionStart]) !== -1  ) {
+      var separator = decimalScale === 0 ? '' : decimalSeparator;
+      return value.substr(0, selectionStart) + separator + value.substr(selectionStart + 1, value.length);
+    }
+
+
+    var leftBound = !!format ? 0 : prefix.length;
+    var rightBound = lastValue.length - (!!format ? 0 : suffix.length);
+
+    if (
+      // don't do anything if something got added
+      value.length > lastValue.length ||
+      // or if the new value is an empty string 
+      !value.length ||
+      // or if nothing has changed, in which case start will be same as end
+      start === end ||
+      // or in case if whole input is selected and new value is typed
+      (selectionStart === 0 && selectionEnd === lastValue.length) ||
+      // or in case if the whole content is replaced by browser, example (autocomplete)
+      (start === 0 && end === lastValue.length) ||
+      // or if charcters between prefix and suffix is selected. 
+      // For numeric inputs we apply the format so, prefix and suffix can be ignored
+      (selectionStart === leftBound && selectionEnd === rightBound)
+    ) {
+      return value;
+    }
+
+    //if format got deleted reset the value to last value
+    if (this.checkIfFormatGotDeleted(start, end, lastValue)) {
+      value = lastValue;
+    }
+
+    //for numbers check if beforeDecimal got deleted and there is nothing after decimal,
+    //clear all numbers in such case while keeping the - sign
+    if (!format) {
+      var numericString = this.removeFormatting(value);
+      var ref$4 = splitDecimal(numericString, allowNegative);
+      var beforeDecimal = ref$4.beforeDecimal;
+      var afterDecimal = ref$4.afterDecimal;
+      var addNegation = ref$4.addNegation; // eslint-disable-line prefer-const
+
+      //clear only if something got deleted
+      var isBeforeDecimalPoint = caretPos < value.indexOf(decimalSeparator) + 1;
+      if (numericString.length < lastNumStr.length && isBeforeDecimalPoint && beforeDecimal === '' && !parseFloat(afterDecimal)) {
+        return addNegation ? '-' : '';
+      }
+    }
+
+    return value;
+  };
+
+  /** Update value and caret position */
+  NumberFormat.prototype.updateValue = function updateValue (params   
+                             
+                          
+                         
+                              
+                       
+                                
+     
+  ) {
+    var formattedValue = params.formattedValue;
+    var input = params.input;
+    var setCaretPosition = params.setCaretPosition; if ( setCaretPosition === void 0 ) setCaretPosition = true;
+    var numAsString = params.numAsString;
+    var caretPos = params.caretPos;
+    var ref = this.props;
+    var onValueChange = ref.onValueChange;
+    var ref$1 = this.state;
+    var lastValue = ref$1.value;
+
+    if (input) {
+      //set caret position, and value imperatively when element is provided
+      if (setCaretPosition) {
+
+        //calculate caret position if not defined
+        if (!caretPos) {
+          var inputValue = params.inputValue || input.value;
+
+          var currentCaretPosition = getCurrentCaretPosition(input);
+
+          /**
+           * set the value imperatively, this is required for IE fix
+           * This is also required as if new caret position is beyond the previous value.
+           * Caret position will not be set correctly
+           */
+          input.value = formattedValue;
+
+          //get the caret position
+          caretPos = this.getCaretPosition(inputValue, formattedValue, currentCaretPosition);
+        }
+
+        //set caret position
+        this.setPatchedCaretPosition(input, caretPos, formattedValue);
+      } else {
+        /**
+         * if we are not setting caret position set the value imperatively.
+         * This is required on onBlur method
+         */
+        input.value = formattedValue;
+      }
+    }
+
+
+    //calculate numeric string if not passed
+    if (numAsString === undefined) {
+      numAsString = this.removeFormatting(formattedValue);
+    }
+
+    //update state if value is changed
+    if (formattedValue !== lastValue) {
+      this.setState({ value : formattedValue, numAsString: numAsString });
+
+      // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
+      onValueChange(this.getValueObject(formattedValue, numAsString));
+    }
+  };
+
+  NumberFormat.prototype.onChange = function onChange (e                     ) {
+    var el = e.target;
+    var inputValue = el.value;
+    var ref = this;
+    var state = ref.state;
+    var props = ref.props;
+    var isAllowed = props.isAllowed;
+    var lastValue = state.value || '';
+
+    var currentCaretPosition = getCurrentCaretPosition(el);
+
+    inputValue =  this.correctInputValue(currentCaretPosition, lastValue, inputValue);
+
+    var formattedValue = this.formatInput(inputValue) || '';
+    var numAsString = this.removeFormatting(formattedValue);
+
+    var valueObj = this.getValueObject(formattedValue, numAsString);
+    var isChangeAllowed = isAllowed(valueObj);
+
+    if (!isChangeAllowed) {
+      formattedValue = lastValue;
+    }
+
+    this.updateValue({ formattedValue: formattedValue, numAsString: numAsString, inputValue: inputValue, input: el });
+
+    if(isChangeAllowed) {
+      props.onChange(e);
+    }
+  };
+
+  NumberFormat.prototype.onBlur = function onBlur (e                     ) {
+    var ref = this;
+    var props = ref.props;
+    var state = ref.state;
+    var format = props.format;
+    var onBlur = props.onBlur;
+    var allowLeadingZeros = props.allowLeadingZeros;
+    var numAsString = state.numAsString;
+    var lastValue = state.value;
+    this.focusedElm = null;
+
+    clearTimeout(this.focusTimeout);
+
+
+    if (!format) {
+      // if the numAsString is not a valid number reset it to empty
+      if (isNaN(parseFloat(numAsString))) {
+        numAsString = '';
+      }
+
+      if (!allowLeadingZeros) {
+        numAsString = fixLeadingZero(numAsString);
+      }
+
+      var formattedValue = this.formatNumString(numAsString);
+
+      //change the state
+      if (formattedValue !== lastValue) {
+        // the event needs to be persisted because its properties can be accessed in an asynchronous way
+        this.updateValue({ formattedValue: formattedValue, numAsString: numAsString, input: e.target, setCaretPosition: false });
+        onBlur(e);
+        return;
+      }
+    }
+    onBlur(e);
+  };
+
+  NumberFormat.prototype.onKeyDown = function onKeyDown (e                             ) {
+    var el = e.target;
+    var key = e.key;
+    var selectionStart = el.selectionStart;
+    var selectionEnd = el.selectionEnd;
+    var value = el.value; if ( value === void 0 ) value = '';
+    var expectedCaretPosition;
+    var ref = this.props;
+    var decimalScale = ref.decimalScale;
+    var fixedDecimalScale = ref.fixedDecimalScale;
+    var prefix = ref.prefix;
+    var suffix = ref.suffix;
+    var format = ref.format;
+    var onKeyDown = ref.onKeyDown;
+    var ignoreDecimalSeparator = decimalScale !== undefined && fixedDecimalScale;
+    var numRegex = this.getNumberRegex(false, ignoreDecimalSeparator);
+    var negativeRegex = new RegExp('-');
+    var isPatternFormat = typeof format === 'string';
+
+    this.selectionBeforeInput = {
+      selectionStart: selectionStart,
+      selectionEnd: selectionEnd
+    };
+
+    //Handle backspace and delete against non numerical/decimal characters or arrow keys
+    if (key === 'ArrowLeft' || key === 'Backspace') {
+      expectedCaretPosition = selectionStart - 1;
+    } else if (key === 'ArrowRight') {
+      expectedCaretPosition = selectionStart + 1;
+    } else if (key === 'Delete') {
+      expectedCaretPosition = selectionStart;
+    }
+
+    //if expectedCaretPosition is not set it means we don't want to Handle keyDown
+    //also if multiple characters are selected don't handle
+    if (expectedCaretPosition === undefined || selectionStart !== selectionEnd) {
+      onKeyDown(e);
+      return;
+    }
+
+    var newCaretPosition = expectedCaretPosition;
+    var leftBound = isPatternFormat ? format.indexOf('#') : prefix.length;
+    var rightBound = isPatternFormat ? format.lastIndexOf('#') + 1 : value.length - suffix.length;
+
+    if (key === 'ArrowLeft' || key === 'ArrowRight') {
+      var direction = key === 'ArrowLeft' ? 'left' : 'right';
+      newCaretPosition = this.correctCaretPosition(value, expectedCaretPosition, direction);
+    } else if (key === 'Delete' && !numRegex.test(value[expectedCaretPosition]) && !negativeRegex.test(value[expectedCaretPosition])) {
+      while (!numRegex.test(value[newCaretPosition]) && newCaretPosition < rightBound) { newCaretPosition++; }
+    } else if (key === 'Backspace' && !numRegex.test(value[expectedCaretPosition])) {
+      /* NOTE: This is special case when backspace is pressed on a
+      negative value while the cursor position is after prefix. We can't handle it on onChange because
+      we will not have any information of keyPress
+      */
+      if (selectionStart <= leftBound + 1 && value[0] === '-' && typeof format === 'undefined') {
+        var newValue = value.substring(1);
+        this.updateValue({formattedValue: newValue, caretPos: newCaretPosition, input: el});
+      } else if (!negativeRegex.test(value[expectedCaretPosition])) {
+        while (!numRegex.test(value[newCaretPosition - 1]) && newCaretPosition > leftBound){ newCaretPosition--; }
+        newCaretPosition = this.correctCaretPosition(value, newCaretPosition, 'left');
+      }
+    }
+
+
+    if (newCaretPosition !== expectedCaretPosition || expectedCaretPosition < leftBound || expectedCaretPosition > rightBound) {
+      e.preventDefault();
+      this.setPatchedCaretPosition(el, newCaretPosition, value);
+    }
+
+    /* NOTE: this is just required for unit test as we need to get the newCaretPosition,
+            Remove this when you find different solution */
+    if (e.isUnitTestRun) {
+      this.setPatchedCaretPosition(el, newCaretPosition, value);
+    }
+
+
+    onKeyDown(e);
+
+  };
+
+  /** required to handle the caret position when click anywhere within the input **/
+  NumberFormat.prototype.onMouseUp = function onMouseUp (e                          ) {
+    var el = e.target;
+
+    /**
+     * NOTE: we have to give default value for value as in case when custom input is provided
+     * value can come as undefined when nothing is provided on value prop.
+    */
+    var selectionStart = el.selectionStart;
+    var selectionEnd = el.selectionEnd;
+    var value = el.value; if ( value === void 0 ) value = '';
+
+    if (selectionStart === selectionEnd) {
+      var caretPosition = this.correctCaretPosition(value, selectionStart);
+      if (caretPosition !== selectionStart) {
+        this.setPatchedCaretPosition(el, caretPosition, value);
+      }
+    }
+
+    this.props.onMouseUp(e);
+  };
+
+  NumberFormat.prototype.onFocus = function onFocus (e                     ) {
+    var this$1 = this;
+
+    // Workaround Chrome and Safari bug https://bugs.chromium.org/p/chromium/issues/detail?id=779328
+    // (onFocus event target selectionStart is always 0 before setTimeout)
+    e.persist();
+
+    this.focusedElm = e.target;
+    this.focusTimeout = setTimeout(function () {
+      var el = e.target;
+      var selectionStart = el.selectionStart;
+      var selectionEnd = el.selectionEnd;
+      var value = el.value; if ( value === void 0 ) value = '';
+
+      var caretPosition = this$1.correctCaretPosition(value, selectionStart);
+
+      //setPatchedCaretPosition only when everything is not selected on focus (while tabbing into the field)
+      if (caretPosition !== selectionStart && !(selectionStart === 0 && selectionEnd === value.length)) {
+        this$1.setPatchedCaretPosition(el, caretPosition, value);
+      }
+
+      this$1.props.onFocus(e);
+    }, 0);
+  };
+
+  NumberFormat.prototype.render = function render () {
+    var ref = this.props;
+    var type = ref.type;
+    var displayType = ref.displayType;
+    var customInput = ref.customInput;
+    var renderText = ref.renderText;
+    var getInputRef = ref.getInputRef;
+    var format = ref.format;
+    var ref$1 = this.state;
+    var value = ref$1.value;
+    var mounted = ref$1.mounted;
+
+    var otherProps = omit(this.props, propTypes$1);
+
+    // add input mode on element based on format prop and device once the component is mounted 
+    var inputMode = mounted && addInputMode(format) ? 'numeric' : undefined;
+
+    var inputProps = Object.assign({ inputMode: inputMode }, otherProps, {
+      type: type,
+      value: value,
+      onChange: this.onChange,
+      onKeyDown: this.onKeyDown,
+      onMouseUp: this.onMouseUp,
+      onFocus: this.onFocus,
+      onBlur: this.onBlur
+    });
+
+    if( displayType === 'text'){
+      return renderText ? (renderText(value, otherProps) || null) : react__WEBPACK_IMPORTED_MODULE_0__.createElement( 'span', Object.assign({}, otherProps, { ref: getInputRef }), value);
+    }
+
+    else if (customInput) {
+      var CustomInput = customInput;
+      return (
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement( CustomInput, Object.assign({},
+          inputProps, { ref: getInputRef }))
+      )
+    }
+
+    return (
+      react__WEBPACK_IMPORTED_MODULE_0__.createElement( 'input', Object.assign({},
+        inputProps, { ref: getInputRef }))
+    )
+  };
+
+  return NumberFormat;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component));
+
+NumberFormat.propTypes = propTypes$1;
+NumberFormat.defaultProps = defaultProps;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NumberFormat);
 
 
 /***/ }),

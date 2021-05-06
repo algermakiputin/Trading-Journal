@@ -1,6 +1,4 @@
-import React from 'react';
-import PositionsTableBody from './PositionsTableBody';
-import PositionsTableHeader from './PositionsTableHeader'
+import React from 'react'; 
 
 class PositionsTable extends React.Component {
 
@@ -15,8 +13,17 @@ class PositionsTable extends React.Component {
         return (
 
             <table className="table v-middle">
-                <PositionsTableHeader />
-                <PositionsTableBody />
+                <thead>
+                    <tr className="bg-light">
+                        <th className="border-top-0">Stock</th>
+                        <th className="border-top-0">Ave. Price</th>
+                        <th className="border-top-0">Shares</th>
+                        <th className="border-top-0">Total Cost</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    { this.props.positions }
+                </tbody>
             </table> 
         )
     }

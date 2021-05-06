@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Table, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios"; 
+import NumberFormat from 'react-number-format'
 
 class BankForm extends React.Component {
     
@@ -10,7 +11,7 @@ class BankForm extends React.Component {
             show: false,
             date: '',
             action: 'deposit',
-            amount: 0,
+            amount: null,
             alert_danger: false
         }
 
@@ -23,7 +24,7 @@ class BankForm extends React.Component {
     }
 
     handleFormSubmit() {
- 
+         
         if ( this.state.date && this.state.action && this.state.amount ) {
 
             this.setState({alert_danger:false})
@@ -89,17 +90,21 @@ class BankForm extends React.Component {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Action</Form.Label>
-                                <Form.Control as="select"  
+                                <Form.Control as="select" 
+                                    defaultValue="deposit" 
                                 >
-                                    <option value="deposit" selected>Deposit</option>
+                                    <option value="deposit">Deposit</option>
                                     <option value="withdraw">Withdraw</option>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Amount</Form.Label>
-                                <Form.Control type="text" 
-                                    onChange={ event=> { this.setState({amount: event.target.value })} }
-                                />
+                                <NumberFormat 
+                                    thousandSeparator={true} 
+                                    value={ this.state.amount }  
+                                    onValueChange={ (values) => this.setState({amount: values.value }) }
+                                    className='form-control'
+                                    /> 
                             </Form.Group>
                         </Form>
                     </Modal.Body>

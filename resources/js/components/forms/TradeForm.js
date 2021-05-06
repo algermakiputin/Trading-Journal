@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { Form, Table, Button, Modal, Alert } from "react-bootstrap";
-import axios from "axios"; 
-import Transactions from '../../classes/Transactions';  
-import UserContext from '../../UserContext';
+import React, { useContext } from "react"
+import { Form, Table, Button, Modal, Alert } from "react-bootstrap"
+import axios from "axios"
+import Transactions from '../../classes/Transactions'
+import NumberFormat from 'react-number-format'
 
 class TradeForm extends React.Component {
 
@@ -30,31 +30,13 @@ class TradeForm extends React.Component {
     componentDidMount() {
         console.log(this.props)
     }
-
-    reloadPositions() {
-
-        {
-            <UserContext.Consumer>
-                {
-                    ({state, load_positions}) =>  load_positions()
-
-                } 
-            </UserContext.Consumer>
-        }
-    }
-
-
-    handleFormSubmit() {
-
-
-        if ( this.state.date == "" || this.state.stock_code == "" || this.state.price == "" || this.state.shares == "") {
-      
-            return this.setState({error_show: true})
-        } 
-        else {
-            this.setState({ error_show: false})
-        } 
  
+
+
+    handleFormSubmit() { 
+        
+        this.validateForm()
+
         if ( this.state.net > this.props.availableCash ) 
             return alert("Not enough available cash")
             
@@ -64,13 +46,12 @@ class TradeForm extends React.Component {
                 totalEquity: this.props.totalEquity
             })
                 .then( res => {
-                    
-                    if ( res.data == 1) {
-                       
-                        this.setState( this.baseState );
-                        this.reloadPositions()
-                    } 
-                    
+                     
+                    this.setState( this.baseState )
+                    this.props.load_positions()
+                    this.props.reloadEquity()
+                    this.props.handleModal()
+                  
                 })
                 .catch( err => {
                     console.log( err)
@@ -78,9 +59,20 @@ class TradeForm extends React.Component {
 
     }
 
-    net_calculator_price_handle(event) {
+    validateForm() {
+
+        if ( this.state.date == "" || this.state.stock_code == "" || this.state.price == "" || this.state.shares == "") {
+
+            return this.setState({error_show: true})
+        } 
          
-        let price = event.target.value;
+        return this.setState({ error_show: false})
+        
+    }
+
+    net_calculator_price_handle(value) {
+         
+        let price = value;
         let shares = this.state.shares;
 
         let fee = Transactions.buy( price, shares ); 
@@ -162,41 +154,55 @@ class TradeForm extends React.Component {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>
+                                    <td>
+                                        
                                         <Form.Control type="date" name="date" 
                                         onChange={ event => this.setState({ date: event.target.value }) } 
+                                        value={ this.state.date }
                                         autoComplete="off"></Form.Control> 
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
                                         <Form.Control type="text" name="stock_code" 
                                         onChange={ event => this.setState({ stock_code: event.target.value }) }
                                         required
+                                        value={ this.state.stock_code }
                                         autoComplete="off"></Form.Control> 
-                                    </th>
-                                    <th>
-                                        <Form.Control type="number" name="price" min="0"
-                                        onChange={ event => { this.setState({ price: event.target.value}); this.net_calculator_price_handle(event) } }
-                                        autoComplete="off"
-                                        required></Form.Control> 
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
+                                        <NumberFormat 
+                                            thousandSeparator={true}
+                                            defaultValue={null} 
+                                            value={ this.state.price }  
+                                            onValueChange={ (values) => { this.setState({ price: values.value}); this.net_calculator_price_handle(values.value) } }
+                                            className='form-control'
+                                        /> 
+                   
+                                    </td>
+                                    <td>
                                         <Form.Control type="number" name="shares" min="0"
                                         onChange={ event => { this.setState({ shares: event.target.value}); this.net_calculator_shares_handle(event) } } 
+                                        value={ this.state.shares }
                                         autoComplete="off"
                                         required></Form.Control> 
-                                    </th>
-                                    <th>
-                                        <Form.Control type="text" name="fees" readOnly  
-                                        value= { this.state.fees }
-                                        autoComplete="off"
-                                        required></Form.Control> 
-                                    </th>
-                                    <th>
-                                        <Form.Control type="text" name="net" readOnly 
-                                        value= { this.state.net }
-                                        autoComplete="off"
-                                        required></Form.Control> 
-                                    </th>
+                                    </td>
+                                    <td>
+                                        <NumberFormat 
+                                            thousandSeparator={true}
+                                            defaultValue={null} 
+                                            value={ this.state.fees }  
+                                            readOnly={true}
+                                            className='form-control'
+                                        /> 
+                                    </td>
+                                    <td>
+                                        <NumberFormat 
+                                            thousandSeparator={true}
+                                            defaultValue={null} 
+                                            value={ this.state.net }  
+                                            readOnly={true}
+                                            className='form-control'
+                                        />  
+                                    </td>
                                 </tr>
                             </tbody>
                         </Table>

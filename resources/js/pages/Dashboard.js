@@ -3,7 +3,8 @@ import TradeForm from '../components/forms/TradeForm'
 import BankForm from '../components/forms/BankForm'
 import EquityChart from '../components/chart/EquityChart'  
 import PositionsTable from '../components/positions_table/PositionsTable' 
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap"
+import NumberFormat from 'react-number-format'
 import axios from "axios"; 
 
 var positions = [];
@@ -15,11 +16,15 @@ class Dashboard extends React.Component {
         this.state = {
             totalEquity:0,
             availableCash:0,
-            show: false
+            show: false,
+            positions:null
         }
 
         this.setEquity()
+        this.load_positions()
         this.handleModal = this.handleModal.bind(this)
+        this.setEquity = this.setEquity.bind(this)
+        this.load_positions = this.load_positions.bind(this)
         this.setEquity = this.setEquity.bind(this)
     }  
 
@@ -45,6 +50,32 @@ class Dashboard extends React.Component {
         this.setState({ show: !this.state.show})
  
     }
+
+    async load_positions() {
+        
+        const res = await axios.get('/positions');
+        let position;
+
+        if ( Object.keys(res.data).length ) {
+
+            position = res.data.map(function(key) {
+
+                return <tr key={Math.random()}>
+                    <td> {key.stock_code }</td>
+                    <td> <NumberFormat thousandSeparator={true} displayType='text' value={ key.ave_price } prefix={'₱'} /></td>
+                    <td> {key.total_shares }</td>
+                    <td> <NumberFormat thousandSeparator={true} displayType='text' value={ key.total_cost } prefix={'₱'} /> </td>
+                </tr>
+            })
+        }else {
+            
+            position = <tr>
+                <td colSpan="4">No Open Position. To add new trade, Click the New Trade button above.</td>
+            </tr>
+        }  
+        
+        this.setState({positions: position})
+    }  
  
     render() {      
         return (
@@ -76,6 +107,8 @@ class Dashboard extends React.Component {
                                         availableCash={this.state.availableCash}
                                         totalEquity={this.state.totalEquity}
                                         handleModal={this.handleModal}
+                                        load_positions={this.load_positions}
+                                        reloadEquity={this.setEquity}
                                     /> 
                                 </Modal>
                             </div>
@@ -110,11 +143,18 @@ class Dashboard extends React.Component {
                                     <div className="feed-widget">
                                         <ul className="list-style-none feed-body m-0 p-b-20">
                                             <li className="feed-item">
-                                                <div className="feed-icon bg-info"><i className="mdi mdi-chart-timeline"></i></div> Total Equity<span className="ms-auto font-13">{ this.state.totalEquity }</span>
+                                                <div className="feed-icon bg-info">
+                                                    <i className="mdi mdi-chart-timeline"></i>
+                                                </div> Total Equity
+                                                <span className="ms-auto font-13">
+                                                    <NumberFormat thousandSeparator={true} displayType='text' value={this.state.totalEquity} prefix={'₱'} />
+                                                </span>
                                             </li>
                                             <li className="feed-item">
                                                 <div className="feed-icon bg-success"><i className="mdi mdi-chart-pie"></i></div> Available Cash
-                                                <span className="ms-auto font-13">{ this.state.availableCash }</span>
+                                                <span className="ms-auto font-13">
+                                                    <NumberFormat thousandSeparator={true} displayType='text' value={ this.state.availableCash } prefix={'₱'} />
+                                                </span>
                                             </li>  
                                             <li className="feed-item">
                                                 <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">25,000 <small>25%</small></span>
@@ -126,10 +166,7 @@ class Dashboard extends React.Component {
                                                 setEquity={this.setEquity}
                                             />  
                                         </div>
-                                    </div>
-                                    <div> 
-                                        
-                                    </div>
+                                    </div> 
                                 </div>
                             </div>
                         </div>
@@ -146,7 +183,7 @@ class Dashboard extends React.Component {
                                     </div> 
                                 </div>
                                 <div className="table-responsive"> 
-                                    <PositionsTable />
+                                    <PositionsTable positions={this.state.positions} />
                                 </div>
                             </div>
                         </div>
