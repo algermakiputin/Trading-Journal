@@ -8,20 +8,6 @@
     margin-left: 10px;
 } 
 
-table {
-    table-layout: auto!important;
-}
-  
-td, th {
-    width: auto!important;
-    max-width:100%;
-    white-space:nowrap;
-    
-}
-
-th input,
-td input {
-    min-width: 0;
-    width:auto;
-    display: inline;
+#positions-table .dropdown-toggle:empty:after {
+    margin-left: 3px;
 }

@@ -5,7 +5,8 @@ import EquityChart from '../components/chart/EquityChart'
 import PositionsTable from '../components/positions_table/PositionsTable' 
 import { Button, Modal } from "react-bootstrap"
 import NumberFormat from 'react-number-format'
-import axios from "axios"; 
+import axios from "axios"
+import SellForm from '../components/forms/SellForm'
 
 var positions = [];
 
@@ -17,7 +18,9 @@ class Dashboard extends React.Component {
             totalEquity:0,
             availableCash:0,
             show: false,
-            positions:null
+            positions:null,
+            showSellModal: false,
+            toSell: []
         }
 
         this.setEquity()
@@ -26,7 +29,19 @@ class Dashboard extends React.Component {
         this.setEquity = this.setEquity.bind(this)
         this.load_positions = this.load_positions.bind(this)
         this.setEquity = this.setEquity.bind(this)
+        this.handleModal = this.handleModal.bind(this)
+        this.closeSellModal = this.closeSellModal.bind(this)
     }  
+
+    handleSellModal(trade) { 
+        this.setState({toSell: trade})
+        this.setState({showSellModal: !this.state.showSellModal})
+    }
+
+    closeSellModal() {
+
+        this.setState({showSellModal: !this.state.showSellModal})
+    }
 
     async setEquity() {
 
@@ -58,13 +73,21 @@ class Dashboard extends React.Component {
 
         if ( Object.keys(res.data).length ) {
 
-            position = res.data.map(function(key) {
-
-                return <tr key={Math.random()}>
-                    <td> {key.stock_code }</td>
-                    <td> <NumberFormat thousandSeparator={true} displayType='text' value={ key.ave_price } prefix={'₱'} /></td>
-                    <td> {key.total_shares }</td>
-                    <td> <NumberFormat thousandSeparator={true} displayType='text' value={ key.total_cost } prefix={'₱'} /> </td>
+            position = res.data.map( (trade, index) => {
+                return <tr key={trade.stock_code + index }>
+                    <td> {trade.stock_code }</td>
+                    <td> {trade.ave_price }</td>
+                    <td> {trade.total_shares }</td>
+                    <td> {trade.total_cost }</td>
+                    <td> 
+                        <div className="dropdown show">
+                        <i className="fa fa-cog dropdown-toggle" href="#" role="button" id="portfolioActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </i> 
+                            <div className="dropdown-menu" aria-labelledby="portfolioActions">
+                                <a onClick={ () => this.handleSellModal(trade) } className="dropdown-item" href="#">Sell</a> 
+                            </div>
+                        </div>    
+                    </td>
                 </tr>
             })
         }else {
@@ -179,14 +202,28 @@ class Dashboard extends React.Component {
                                 <div className="card-body"> 
                                     <div className="d-md-flex">
                                         <div>
-                                            <h4 className="card-title">Stock Position</h4>
-                                            <h5 className="card-subtitle">Overview of my open trades</h5>
-                                        </div> 
+                                        <h4 className="card-title">Stock Position</h4>
+                                        <h5 className="card-subtitle">Overview of my open trades</h5>
+                                        </div>
+                                       
                                     </div> 
+                                  
+                                   <PositionsTable positions={this.state.positions} />
+                                   <Modal     
+                                        show={ this.state.showSellModal } 
+                                        onHide={ () => this.closeSellModal() }
+                                        >
+                                            
+                                        <SellForm 
+                                            show={this.state.showSellModal }  
+                                            handleModal= { this.handleSellModal }
+                                            trade= {this.state.toSell}
+                                            closeHandle = { this.closeSellModal }
+                                            />
+                                    </Modal>
+                                   
                                 </div>
-                                <div className="table-responsive"> 
-                                    <PositionsTable positions={this.state.positions} />
-                                </div>
+                                
                             </div>
                         </div>
                     </div>  
