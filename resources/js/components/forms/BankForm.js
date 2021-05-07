@@ -29,7 +29,11 @@ class BankForm extends React.Component {
 
             this.setState({alert_danger:false})
 
-            axios.post('api/bank/create', this.state)
+            axios.post('api/bank/create', {
+                    data: this.state,
+                    totalEquity: this.props.totalEquity,
+                    availableCash: this.props.availableCash
+                })
                     .then( res => {
                          
                         if ( res.data == 1) {

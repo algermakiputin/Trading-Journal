@@ -2631,7 +2631,11 @@ var BankForm = /*#__PURE__*/function (_React$Component) {
         this.setState({
           alert_danger: false
         });
-        axios__WEBPACK_IMPORTED_MODULE_1___default().post('api/bank/create', this.state).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default().post('api/bank/create', {
+          data: this.state,
+          totalEquity: this.props.totalEquity,
+          availableCash: this.props.availableCash
+        }).then(function (res) {
           if (res.data == 1) {
             _this2.setState(_this2.defaultState);
 
@@ -3509,7 +3513,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                       })]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_components_forms_BankForm__WEBPACK_IMPORTED_MODULE_3__.default, {
-                        setEquity: this.setEquity
+                        setEquity: this.setEquity,
+                        availableCash: this.state.availableCash,
+                        totalEquity: this.state.totalEquity
                       })
                     })]
                   })]

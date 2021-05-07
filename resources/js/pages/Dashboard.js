@@ -164,6 +164,8 @@ class Dashboard extends React.Component {
                                         <div>
                                             <BankForm
                                                 setEquity={this.setEquity}
+                                                availableCash={this.state.availableCash}
+                                                totalEquity={this.state.totalEquity}
                                             />  
                                         </div>
                                     </div> 

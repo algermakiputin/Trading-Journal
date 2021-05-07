@@ -13,23 +13,29 @@ class BankController extends Controller
     //
 
     public function store(Request $request) {
-        
+   
+        $date = $request['data']['date'];
+        $amount = $request['data']['amount'];
+        $action = $request['data']['action'];
+        $totalEquity = $request['totalEquity'] + $amount;
+        $remainingCash = $request['availableCash'] + $amount;
+
         DB::beginTransaction();
 
         try { 
 
-            Bank::create([
-                'date' => $request->date,
-                'amount' => $request->amount,
-                'action' => $request->action
+            $bank = Bank::create([
+                'date' => $date,
+                'amount' => $amount,
+                'action' => $action
             ]);
-
+            
             Equity::create([
-                'date' => $request->date,
-                'total_equity' => $request->amount,
-                'remaining_cash' => $request->amount,
-                'action' => 'deposit',
-                'action_reference_id' => 1
+                'date' => $date,
+                'total_equity' => $totalEquity,
+                'remaining_cash' => $remainingCash,
+                'action' => $action,
+                'action_reference_id' => $bank->id
             ]);
 
             DB::commit();
