@@ -32,7 +32,8 @@ class TransactionsController extends Controller
                 'status' => 0,
                 'stock_code' => $request['data']['stock_code'],
                 'date' => $request['data']['date'],
-                'gain_loss' => 0
+                'purchase_price' => $request['data']['price'],
+                'sold' => 0
             ]);
 
             Transaction::create([
@@ -43,6 +44,7 @@ class TransactionsController extends Controller
                 'fees' => $request['data']['fees'],
                 'net' => $request['data']['net'],
                 'trade_id' => $trade->id,
+                'gain_loss_percentage' => 0,
                 'type' => 'long'
             ]);
 
@@ -113,8 +115,7 @@ class TransactionsController extends Controller
             $trade_position = Trade::where('id', $trade->id)
                             ->update([
                                 'status' => $status,
-                                'sold' => $totalSold,
-                                'gain_loss' => $gainLoss
+                                'sold' => $totalSold
                             ]);
 
             $transaction = Transaction::create([
@@ -125,8 +126,9 @@ class TransactionsController extends Controller
                 'fees' => $request->fees,
                 'net' => $request->net,
                 'trade_id' => $trade->id,
+                'gain_loss_percentage' => $gainLoss,
                 'type' => 'sell'
-            ]);
+            ]); 
 
             DB::commit();
  
@@ -141,9 +143,7 @@ class TransactionsController extends Controller
     // ( PRICE SOLD - PURCHASE PRICE ) / PURCHASE PRICE * 100
     private function gainLossCalculator( float $priceSold, float $purchasePrice) {
         
-        echo $priceSold . "<br>";
-        echo $purchasePrice . "<br>";
-        return (( $priceSold - $purchasePrice ) / $purchasePrice) * 100;
+        return ( (( $priceSold - $purchasePrice ) / $purchasePrice) * 100 ); 
     }
 
  

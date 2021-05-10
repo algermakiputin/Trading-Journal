@@ -76,9 +76,9 @@ class Dashboard extends React.Component {
             position = res.data.map( (trade, index) => {
                 return <tr key={trade.stock_code + index }>
                     <td> {trade.stock_code }</td>
-                    <td> {trade.ave_price }</td>
+                    <td> <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={trade.ave_price} prefix={'₱'} /></td>
                     <td> {trade.total_shares }</td>
-                    <td> {trade.total_cost }</td>
+                    <td> <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={trade.total_cost} prefix={'₱'} /> </td>
                     <td> 
                         <div className="dropdown show">
                         <i className="fa fa-cog dropdown-toggle" href="#" role="button" id="portfolioActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -119,7 +119,7 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="col-7">
                             <div className="text-end upgrade-btn"> 
-                                <Button onClick={() => {this.handleModal()}} className="btn btn-danger text-white">New Trade</Button> 
+                            <Button onClick={() => {this.handleModal()}} className="btn btn-danger text-white">New Trade</Button> 
                
                                 <Modal 
                                     show={this.state.show} 
@@ -170,13 +170,13 @@ class Dashboard extends React.Component {
                                                     <i className="mdi mdi-chart-timeline"></i>
                                                 </div> Total Equity
                                                 <span className="ms-auto font-13">
-                                                    <NumberFormat thousandSeparator={true} displayType='text' value={this.state.totalEquity} prefix={'₱'} />
+                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.totalEquity} prefix={'₱'} />
                                                 </span>
                                             </li>
                                             <li className="feed-item">
                                                 <div className="feed-icon bg-success"><i className="mdi mdi-chart-pie"></i></div> Available Cash
                                                 <span className="ms-auto font-13">
-                                                    <NumberFormat thousandSeparator={true} displayType='text' value={ this.state.availableCash } prefix={'₱'} />
+                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.availableCash.toFixed(2) } prefix={'₱'} />
                                                 </span>
                                             </li>  
                                             <li className="feed-item">
@@ -190,6 +190,8 @@ class Dashboard extends React.Component {
                                                 availableCash={this.state.availableCash}
                                                 totalEquity={this.state.totalEquity}
                                             />  
+
+                                            
                                         </div>
                                     </div> 
                                 </div>

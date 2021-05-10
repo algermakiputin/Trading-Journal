@@ -24,6 +24,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedInteger('shares');
             $table->string('fees');
             $table->string('net');
+            $table->string('gain_loss_percentage');
             $table->unsignedInteger('trade_id');
             $table->timestamps();
 

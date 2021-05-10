@@ -51,11 +51,11 @@ class TradesController extends Controller
 
         foreach ( $trades as $trade ) {
 
-            $total_shares += $trade->shares;
+            $total_shares += $trade->shares - $trade->sold;
             $total_cost += $trade->net; 
         }
 
-        $ave_price = number_format( ($total_cost / $total_shares), 2 );
+        $ave_price = ($total_cost / $total_shares);
 
         return array(
             'ave_price' => $ave_price,

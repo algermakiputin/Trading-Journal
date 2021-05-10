@@ -1,6 +1,7 @@
 import React from 'react'
-import { Form, Table, Button, Modal, Alert } from "react-bootstrap"
+import { Form, Button, Modal } from "react-bootstrap"
 import Transactions from '../../classes/Transactions'
+import NumberFormat from 'react-number-format'
 import axios from 'axios'
 
 class SellForm extends React.Component {
@@ -117,8 +118,8 @@ class SellForm extends React.Component {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{this.state.fees}</td>
-                                        <td>{this.state.net}</td>
+                                        <td><NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.fees } prefix={'₱'} /></td>
+                                        <td><NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.net } prefix={'₱'} /></td>
                                     </tr>
                                 </tbody>
                             </table> 
