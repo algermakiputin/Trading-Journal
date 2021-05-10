@@ -17,8 +17,8 @@ class BankController extends Controller
         $date = $request['data']['date'];
         $amount = $request['data']['amount'];
         $action = $request['data']['action'];
-        $totalEquity = $request['totalEquity'] + $amount;
-        $remainingCash = $request['availableCash'] + $amount;
+        $totalEquity = (float)$request['totalEquity'] + $amount;
+        $remainingCash = (float)$request['availableCash'] + $amount;
 
         DB::beginTransaction();
 

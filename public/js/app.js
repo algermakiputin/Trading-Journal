@@ -2831,7 +2831,9 @@ var SellForm = /*#__PURE__*/function (_React$Component) {
       stock_code: '',
       date: '2021-05-07',
       net: 0,
-      fees: 0
+      fees: 0,
+      availableCash: 0,
+      totalEquity: 0
     };
     return _this;
   }
@@ -2841,15 +2843,23 @@ var SellForm = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       this.setState({
         shares: this.props.trade.total_shares,
-        stock_code: this.props.trade.stock_code
+        stock_code: this.props.trade.stock_code,
+        availableCash: this.props.availableCash,
+        totalEquity: this.props.totalEquity
       });
     }
   }, {
     key: "formSubmitHandle",
     value: function formSubmitHandle() {
+      var _this2 = this;
+
       if (this.state.shares && this.state.price && this.state.date) {
         axios__WEBPACK_IMPORTED_MODULE_3___default().post('/api/transactions/sell', this.state).then(function (res) {
-          console.log(res);
+          _this2.props.closeHandle();
+
+          _this2.props.setEquity();
+
+          _this2.props.load_positions();
         })["catch"](function (err) {
           console.log(err);
         });
@@ -2884,7 +2894,7 @@ var SellForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__.default.Header, {
@@ -2903,7 +2913,7 @@ var SellForm = /*#__PURE__*/function (_React$Component) {
                 autoComplete: "off",
                 defaultValue: "2021-05-07",
                 onChange: function onChange(event) {
-                  _this2.setState({
+                  _this3.setState({
                     date: event.target.value
                   });
                 }
@@ -2926,11 +2936,11 @@ var SellForm = /*#__PURE__*/function (_React$Component) {
                 name: "shares",
                 defaultValue: this.props.trade.total_shares,
                 onChange: function onChange(event) {
-                  _this2.setState({
+                  _this3.setState({
                     shares: event.target.value
                   });
 
-                  _this2.netCalculatorSharesHandle(event);
+                  _this3.netCalculatorSharesHandle(event);
                 }
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Group, {
@@ -2941,11 +2951,11 @@ var SellForm = /*#__PURE__*/function (_React$Component) {
                 autoComplete: "off",
                 defaultValue: this.props.trade.price,
                 onChange: function onChange(event) {
-                  _this2.setState({
+                  _this3.setState({
                     price: event.target.value
                   });
 
-                  _this2.netCalculatorPriceHandle(event);
+                  _this3.netCalculatorPriceHandle(event);
                 }
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__.default.Group, {
@@ -2987,13 +2997,13 @@ var SellForm = /*#__PURE__*/function (_React$Component) {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default, {
             variant: "secondary",
             onClick: function onClick() {
-              _this2.props.closeHandle();
+              _this3.props.closeHandle();
             },
             children: "Close"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__.default, {
             variant: "primary",
             onClick: function onClick() {
-              _this2.formSubmitHandle();
+              _this3.formSubmitHandle();
             },
             children: "Submit"
           })]
@@ -3594,7 +3604,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                         children: [" ", trade.stock_code]
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("td", {
                         children: [" ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_6__.default, {
-                          decimalScale: 2,
+                          decimalScale: 4,
                           thousandSeparator: true,
                           displayType: "text",
                           value: trade.ave_price,
@@ -3604,7 +3614,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                         children: [" ", trade.total_shares]
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("td", {
                         children: [" ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_6__.default, {
-                          decimalScale: 2,
+                          decimalScale: 4,
                           thousandSeparator: true,
                           displayType: "text",
                           value: trade.total_cost,
@@ -3786,7 +3796,7 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                             decimalScale: 2,
                             thousandSeparator: true,
                             displayType: "text",
-                            value: this.state.totalEquity,
+                            value: this.state.totalEquity.toFixed(2),
                             prefix: '₱'
                           })
                         })]
@@ -3816,8 +3826,8 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                           })
                         }), "Gain / Loss", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
                           className: "ms-auto font-13",
-                          children: ["25,000 ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("small", {
-                            children: "25%"
+                          children: ["0 ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("small", {
+                            children: "0%"
                           })]
                         })]
                       })]
@@ -3862,7 +3872,11 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                       show: this.state.showSellModal,
                       handleModal: this.handleSellModal,
                       trade: this.state.toSell,
-                      closeHandle: this.closeSellModal
+                      closeHandle: this.closeSellModal,
+                      availableCash: this.state.availableCash,
+                      totalEquity: this.state.totalEquity,
+                      setEquity: this.setEquity,
+                      load_positions: this.load_positions
                     })
                   })]
                 })

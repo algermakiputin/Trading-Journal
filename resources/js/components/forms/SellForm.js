@@ -16,14 +16,21 @@ class SellForm extends React.Component {
             stock_code:'',
             date:'2021-05-07', 
             net:0,
-            fees:0
+            fees:0,
+            availableCash:0,
+            totalEquity:0
         }
          
     }
 
     componentDidMount() { 
       
-        this.setState({shares: this.props.trade.total_shares, stock_code: this.props.trade.stock_code})
+        this.setState({
+            shares: this.props.trade.total_shares, 
+            stock_code: this.props.trade.stock_code,
+            availableCash: this.props.availableCash,
+            totalEquity: this.props.totalEquity
+        })
     }   
  
 
@@ -33,7 +40,10 @@ class SellForm extends React.Component {
  
             axios.post('/api/transactions/sell', this.state)
                 .then( res => {
-                    console.log(res)
+                    
+                    this.props.closeHandle()
+                    this.props.setEquity()
+                    this.props.load_positions()
                 })
                 .catch( err => {
                     console.log(err)

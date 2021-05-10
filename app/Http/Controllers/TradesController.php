@@ -13,10 +13,9 @@ class TradesController extends Controller
 
         $position = [];
         $trades = DB::table('trades')
-                        ->where('trades.status', 0)
-                        ->leftJoin('transactions', 'tradeS.id', '=', 'transactions.trade_id')
+                        ->where('trades.status', 0) 
                         ->get();
-        
+   
         $trades = $this->group_trades( $trades );
         
 
@@ -47,14 +46,14 @@ class TradesController extends Controller
 
         $ave_price = 0;
         $total_cost = 0;
-        $total_shares = 0; 
-
+        $total_shares = 0;  
         foreach ( $trades as $trade ) {
-
-            $total_shares += $trade->shares - $trade->sold;
-            $total_cost += $trade->net; 
+           
+            $total_shares += $trade->shares - $trade->sold; 
+            $total_cost += $total_shares * $trade->purchase_price + 0; //Need to get fees of transaction $trade->fees; 
+        
         }
-
+ 
         $ave_price = ($total_cost / $total_shares);
 
         return array(

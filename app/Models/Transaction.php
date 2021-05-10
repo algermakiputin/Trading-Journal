@@ -9,5 +9,5 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date','stock_code', 'price', 'shares', 'fees', 'net', 'trade_id','type','gain_loss_percentage'];
+    protected $fillable = ['date','stock_code', 'price', 'shares', 'fees', 'net', 'trade_id','type'];
 }

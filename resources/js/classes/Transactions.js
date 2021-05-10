@@ -29,7 +29,7 @@ class Transactions {
         var trans_fee = ( shares * price ) * trans_fee_per;
         var sccp = ( shares * price ) * sccp_per; 
 
-        return (commission + vat + trans_fee + sccp);
+        return commission + vat + trans_fee + sccp;
 
     }
 
@@ -48,7 +48,7 @@ class Transactions {
         var sccp = ( shares * price ) * sccp_per;
         var sales_tax = ( shares * price ) * 0.006;
 
-        return ( commission + vat + trans_fee + sccp + sales_tax);
+        return commission + vat + trans_fee + sccp + sales_tax;
   
     }
 

@@ -76,9 +76,9 @@ class Dashboard extends React.Component {
             position = res.data.map( (trade, index) => {
                 return <tr key={trade.stock_code + index }>
                     <td> {trade.stock_code }</td>
-                    <td> <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={trade.ave_price} prefix={'₱'} /></td>
+                    <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.ave_price} prefix={'₱'} /></td>
                     <td> {trade.total_shares }</td>
-                    <td> <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={trade.total_cost} prefix={'₱'} /> </td>
+                    <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.total_cost} prefix={'₱'} /> </td>
                     <td> 
                         <div className="dropdown show">
                         <i className="fa fa-cog dropdown-toggle" href="#" role="button" id="portfolioActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -170,7 +170,7 @@ class Dashboard extends React.Component {
                                                     <i className="mdi mdi-chart-timeline"></i>
                                                 </div> Total Equity
                                                 <span className="ms-auto font-13">
-                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.totalEquity} prefix={'₱'} />
+                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.totalEquity.toFixed(2)} prefix={'₱'} />
                                                 </span>
                                             </li>
                                             <li className="feed-item">
@@ -180,7 +180,7 @@ class Dashboard extends React.Component {
                                                 </span>
                                             </li>  
                                             <li className="feed-item">
-                                                <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">25,000 <small>25%</small></span>
+                                                <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">0 <small>0%</small></span>
                                             </li>  
                                         </ul>
                                         <hr></hr>
@@ -189,9 +189,7 @@ class Dashboard extends React.Component {
                                                 setEquity={this.setEquity}
                                                 availableCash={this.state.availableCash}
                                                 totalEquity={this.state.totalEquity}
-                                            />  
-
-                                            
+                                            />   
                                         </div>
                                     </div> 
                                 </div>
@@ -221,6 +219,10 @@ class Dashboard extends React.Component {
                                             handleModal= { this.handleSellModal }
                                             trade= {this.state.toSell}
                                             closeHandle = { this.closeSellModal }
+                                            availableCash={this.state.availableCash}
+                                            totalEquity={this.state.totalEquity}
+                                            setEquity={this.setEquity}
+                                            load_positions={this.load_positions}
                                             />
                                     </Modal>
                                    
