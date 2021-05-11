@@ -20,7 +20,7 @@ class EquityChart extends React.Component {
 
         var options = {
             fullWidth: true,
-            height:240,
+            height:230,
             low:0,
             showArea: true,
             scaleMinSpace: 20,

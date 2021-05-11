@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Trade; 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB; 
 
 class TradesController extends Controller
 {
@@ -50,7 +50,7 @@ class TradesController extends Controller
         foreach ( $trades as $trade ) {
            
             $total_shares += $trade->shares - $trade->sold; 
-            $total_cost += $total_shares * $trade->purchase_price + 0; //Need to get fees of transaction $trade->fees; 
+            $total_cost += $total_shares * $trade->purchase_price + $this->calculateBuyingFees($total_shares, $trade->purchase_price); //Need to get fees of transaction $trade->fees; 
         
         }
  
@@ -62,5 +62,22 @@ class TradesController extends Controller
             'total_shares' => $total_shares,
             'stock_code' => $trades[0]->stock_code
         );
+    }
+
+    public function calculateBuyingFees( $shares, $price ) {
+    
+        // BUYING FEES CALCULATION
+        // Commission = ( TOTAL SHARES * PRICE ) * .25% 
+        // VAT = Commission * 12%
+        // PSE Trans Fee = ( TOTAL SHARES * PRICE ) * 0.005%
+        // SCCP = ( TOTAL SHARES * PRICE ) * 0.01%
+
+        $commission = ( $shares * $price ) * 0.0025;
+        $vat = $commission * 0.12;
+        $trans_fee = ( $shares * $price ) * 0.00005;
+        $sccp = ( $shares * $price ) * 0.0001; 
+
+        return $fees = $commission + $vat + $trans_fee + $sccp;
+      
     }
 }

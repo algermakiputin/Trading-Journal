@@ -2528,7 +2528,7 @@ var EquityChart = /*#__PURE__*/function (_React$Component) {
       };
       var options = {
         fullWidth: true,
-        height: 240,
+        height: 230,
         low: 0,
         showArea: true,
         scaleMinSpace: 20,
@@ -3485,6 +3485,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var positions = [];
 
 var Dashboard = /*#__PURE__*/function (_React$Component) {
@@ -3501,6 +3502,8 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
     _this.state = {
       totalEquity: 0,
       availableCash: 0,
+      gainLossPercentage: 0,
+      gainLossAmount: 0,
       show: false,
       positions: null,
       showSellModal: false,
@@ -3552,7 +3555,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                   if (res.data) {
                     return _this2.setState({
                       totalEquity: res.data.total_equity,
-                      availableCash: res.data.remaining_cash
+                      availableCash: res.data.remaining_cash,
+                      gainLossAmount: res.data.gainLossAmount,
+                      gainLossPercentage: res.data.gainLossPercentage
                     });
                   }
                 })["catch"](function (err) {
@@ -3674,6 +3679,25 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
 
       return load_positions;
     }()
+  }, {
+    key: "formatGainLoss",
+    value: function formatGainLoss() {
+      var color = this.state.gainLossAmount > 0 ? 'text-success' : 'text-danger';
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_number_format__WEBPACK_IMPORTED_MODULE_6__.default, {
+            decimalScale: 2,
+            thousandSeparator: true,
+            displayType: "text",
+            value: this.state.gainLossAmount.toFixed(2),
+            prefix: '₱'
+          })
+        }), " \xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("small", {
+          className: color,
+          children: [this.state.gainLossPercentage, "%"]
+        })]
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -3824,11 +3848,9 @@ var Dashboard = /*#__PURE__*/function (_React$Component) {
                           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("i", {
                             className: "mdi mdi-chart-line"
                           })
-                        }), "Gain / Loss", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
+                        }), "Gain / Loss", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
                           className: "ms-auto font-13",
-                          children: ["0 ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("small", {
-                            children: "0%"
-                          })]
+                          children: this.formatGainLoss()
                         })]
                       })]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
@@ -13100,7 +13122,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".user-name {\n    margin-bottom: 0;\n}\n\n.user-content {\n    margin-left: 10px;\n} \n\n#positions-table .dropdown-toggle:empty:after {\n    margin-left: 3px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".user-name {\n    margin-bottom: 0;\n}\n\n.user-content {\n    margin-left: 10px;\n} \n\n#positions-table .dropdown-toggle:empty:after {\n    margin-left: 3px;\n}\n.campaign {\n    height: 33vh;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

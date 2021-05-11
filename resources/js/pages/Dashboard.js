@@ -7,6 +7,7 @@ import { Button, Modal } from "react-bootstrap"
 import NumberFormat from 'react-number-format'
 import axios from "axios"
 import SellForm from '../components/forms/SellForm'
+import { Fragment } from "react"
 
 var positions = [];
 
@@ -17,6 +18,8 @@ class Dashboard extends React.Component {
         this.state = {
             totalEquity:0,
             availableCash:0,
+            gainLossPercentage:0,
+            gainLossAmount:0,
             show: false,
             positions:null,
             showSellModal: false,
@@ -51,7 +54,9 @@ class Dashboard extends React.Component {
 
                         return this.setState({
                             totalEquity: res.data.total_equity,
-                            availableCash: res.data.remaining_cash
+                            availableCash: res.data.remaining_cash,
+                            gainLossAmount: res.data.gainLossAmount,
+                            gainLossPercentage: res.data.gainLossPercentage
                          })
                     }
                 })
@@ -99,6 +104,18 @@ class Dashboard extends React.Component {
         
         this.setState({positions: position})
     }  
+
+    formatGainLoss() {
+
+        let color = this.state.gainLossAmount > 0 ? 'text-success' : 'text-danger'
+
+        return  (
+            <Fragment>
+                <span><NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.gainLossAmount.toFixed(2)} prefix={'₱'} /></span> &nbsp;
+                <small className={color}>{this.state.gainLossPercentage}%</small>
+            </Fragment>
+        )
+    }
  
     render() {      
         return (
@@ -180,7 +197,9 @@ class Dashboard extends React.Component {
                                                 </span>
                                             </li>  
                                             <li className="feed-item">
-                                                <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">0 <small>0%</small></span>
+                                                <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">
+                                                    {this.formatGainLoss()}
+                                                </span>
                                             </li>  
                                         </ul>
                                         <hr></hr>

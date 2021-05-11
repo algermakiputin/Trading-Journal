@@ -11,3 +11,6 @@
 #positions-table .dropdown-toggle:empty:after {
     margin-left: 3px;
 }
+.campaign {
+    height: 33vh;
+}
