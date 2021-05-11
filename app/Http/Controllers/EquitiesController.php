@@ -15,8 +15,7 @@ class EquitiesController extends Controller
         $equity = Equity::orderBy('id', 'DESC')
                         ->limit(1)
                         ->first();
-                        
-    
+                         
         $equity->gainLossPercentage = $this->monthlyGainLoss()['percentage'];
         $equity->gainLossAmount = $this->monthlyGainLoss()['amount'];
         return $equity;
@@ -56,4 +55,46 @@ class EquitiesController extends Controller
             'amount' => $amount
         );
     }
+
+    public function getEquityCurve() {
+
+        $lastHalfQuarter = new \DateTime( date('Y-m-d', strtotime('-12 weeks')) );
+		$today = new \DateTime( date('Y-m-d') );
+        $equities = Equity::where('date', '>=', $lastHalfQuarter->format('Y-m-d'))
+                            ->where('date', '<=', $today->format('Y-m-d'))
+                            ->get();
+
+        $data = $this->initDates("weeks", $lastHalfQuarter, $today, 'Y-m-d');
+
+        foreach ( $data as $key => $row ) {
+
+            $start = (new \DateTime($key))->modify('-7 days')->format('Y-m-d');
+			$end = date("Y-m-d", strtotime($key));
+            
+            foreach ( $equities as $equity ) {
+
+                $date = strtotime( $equity->date );
+
+                if ( $date >= strtotime($start) && $date <= strtotime($end) ) 
+                    $data[$key] = $equity->total_equity;
+            
+            }
+        }
+
+        return $data;
+    }
+
+    public function initDates($interval, $from, $to, $format = "M j") {
+
+		$dataset = array(); 
+		
+		for ( $i = $from; $i <= $to; $i->modify('+1 ' . $interval)) {
+ 
+			$dataset[$i->format($format)] = 0;
+			$profit[$i->format($format)] = 0;
+		}
+
+		return $dataset;
+
+	}
 }
