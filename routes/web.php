@@ -28,3 +28,5 @@ Route::get('positions', [ TradesController::class, 'positions']);
 Route::post('api/transactions/sell', [TransactionsController::class, 'sell']);
 Route::post('api/bank/create', [BankController::class, 'store']);
 Route::get('get_equities', [EquitiesController::class, 'getEquities']);
+
+Route::get('api/equitycurve', [EquitiesController::class,'getEquityCurve']);

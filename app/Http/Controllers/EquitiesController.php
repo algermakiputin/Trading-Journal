@@ -15,7 +15,7 @@ class EquitiesController extends Controller
         $equity = Equity::orderBy('id', 'DESC')
                         ->limit(1)
                         ->first();
-                         
+       
         $equity->gainLossPercentage = $this->monthlyGainLoss()['percentage'];
         $equity->gainLossAmount = $this->monthlyGainLoss()['amount'];
         return $equity;
@@ -81,7 +81,25 @@ class EquitiesController extends Controller
             }
         }
 
-        return $data;
+        return $data = $this->rechartsFormatData($data);
+    }
+
+    public function rechartsFormatData($data) {
+
+        $dataset = [];
+
+        if ( $data ) {
+
+            foreach ( $data as $key => $row ) {
+
+                $dataset[] = array(
+                    'date' => date('M j', strtotime($key)),
+                    'amount' => $row
+                );
+            }
+        }
+
+        return $dataset;
     }
 
     public function initDates($interval, $from, $to, $format = "M j") {
