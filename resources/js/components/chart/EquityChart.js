@@ -50,7 +50,7 @@ class EquityChart extends React.Component {
                     <XAxis tickFormatter={this.xAxisLabelFormat} tickLine={false}  axisLine={false}  dataKey="date" opacity={0.65} tick={{fontSize:'0.9rem', color:'#000'}} dy={10} />
                     <YAxis orientation="left" stroke="black" tickMargin={10} tickLine={false}  axisLine={false} opacity={0.65} tick={{fontSize:'0.9rem', color:"#000"}} />
                     <Tooltip />
-                        <Line dot={false} tick={{fontSize:'5px'}} type="monotone" dataKey="amount" stroke="#4fc3f7" strokeWidth={2} /> 
+                        <Line dot={false} tick={{fontSize:'5px'}} type="monotone" dataKey="amount" stroke="#4fc3f7" strokeWidth={2.5} /> 
                     </LineChart>
                 </ResponsiveContainer>
             </Fragment>

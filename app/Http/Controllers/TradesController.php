@@ -64,6 +64,26 @@ class TradesController extends Controller
         );
     }
 
+    public function getClosedTrades() {
+
+        $closedTrades = Trade::where('status','=', 1)
+                                ->get();
+        
+        foreach ( $closedTrades as $trade ) {
+
+            $transactions = Transaction::where('trade_id', '=', $trade->id)
+                                            ->get();
+
+            foreach ( $transactions as $transaction ) {
+
+                
+            }
+            
+        }  
+        return $closedTrades;
+        
+    }
+
     public function calculateBuyingFees( $shares, $price ) {
     
         // BUYING FEES CALCULATION

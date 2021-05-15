@@ -15,9 +15,13 @@ class EquitiesController extends Controller
         $equity = Equity::orderBy('id', 'DESC')
                         ->limit(1)
                         ->first();
-       
-        $equity->gainLossPercentage = $this->monthlyGainLoss()['percentage'];
-        $equity->gainLossAmount = $this->monthlyGainLoss()['amount'];
+        
+        if ( $equity ) {
+            
+            $equity->gainLossPercentage = $this->monthlyGainLoss()['percentage'];
+            $equity->gainLossAmount = $this->monthlyGainLoss()['amount'];
+        }
+        
         return $equity;
     }
 
@@ -25,31 +29,56 @@ class EquitiesController extends Controller
 
         $today = date('Y-m-d');
         $pastMonth = date('Y-m-d', strtotime('-30 days'));
+        $count = DB::table('equities')->count();
+        $startingEquity = 0;
+        $endingEquity = 0;
+
+        // Get the first and last recoreded date of the month 
+        // to query the starting equity and ending equity
+
         $equity = DB::table("equities")
                         ->select(DB::raw('MIN(date) as min, MAX(date) as max'))
                         ->where('date', '>=', $pastMonth)
                         ->where('date', '<=', $today)
                         ->first();
+      
         
-        $startingEquity = DB::table('equities')
-                                ->where('date', '=', $equity->min)
-                                ->orderBy('id', 'ASC')
-                                ->first(); 
-        
-        $endingEquity = DB::table('equities')
-                                ->where('date', '=', $equity->max)
-                                ->orderBy('id', 'DESC')
-                                ->first();
-
-        return $this->gainLossCalculator( $endingEquity->total_equity, $startingEquity->total_equity );
+        $startingEquity = $this->getStartingEquity($equity->min);
+        $endingEquity = $this->getEndingEquity($equity->max);
+ 
+       
+        return $this->gainLossCalculator( $endingEquity, $startingEquity );
         
     }
 
-    private function gainLossCalculator( float $endingEquity, float $startingEquity) {
-        
-        $percentage = number_format((( $endingEquity - $startingEquity ) / $startingEquity) * 100,2);
-        $amount = $endingEquity - $startingEquity;
+    private function getStartingEquity($date) {
 
+        $equity =  DB::table('equities')
+                        ->select('total_equity as total')
+                        ->where('date', '=', $date)
+                        ->orderBy('id', 'ASC')
+                        ->first(); 
+        
+        return $equity->total ?? 0;
+    }
+
+    private function getEndingEquity($date) {
+
+        $equity = DB::table('equities')
+                        ->select('total_equity as total')
+                        ->where('date', '=', $date)
+                        ->orderBy('id', 'DESC')
+                        ->first();
+
+        return $equity->total ?? 0;
+    } 
+
+    private function gainLossCalculator( $endingEquity,  $startingEquity) {
+        
+        $startingEquity = $startingEquity == 0 ? 1 : $startingEquity;
+        $amount = $endingEquity - $startingEquity; 
+        $percentage = number_format((( $endingEquity - $startingEquity ) / $startingEquity) * 100,2);
+    
         return array(
             'percentage' => $percentage,
             'amount' => $amount

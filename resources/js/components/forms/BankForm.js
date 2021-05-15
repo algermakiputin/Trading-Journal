@@ -1,6 +1,8 @@
 import React from "react";
 import { Form, Table, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios"; 
+import Datetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
 import NumberFormat from 'react-number-format'
 
 class BankForm extends React.Component {
@@ -88,9 +90,13 @@ class BankForm extends React.Component {
                         <Form noValidate>
                             <Form.Group>
                                 <Form.Label>Date</Form.Label>
-                                <Form.Control type="date" 
-                                    onChange={ event=> { this.setState({date: event.target.value })} }
-                                />  
+                                <Datetime 
+                                    initialValue={new Date()}
+                                    timeFormat={false}
+                                    onChange={ event=> { this.setState({date: event.format('YYYY-MM-DD') }) } }
+                                    closeOnSelect
+                                />
+                                 
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Action</Form.Label>

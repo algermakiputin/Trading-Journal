@@ -20,10 +20,14 @@ use App\Http\Controllers\EquitiesController;
 Route::get('/', function () {
     return view('welcome');
 }); 
+Route::get('/logs', function () {
+    return view('welcome');
+}); 
 
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
 Route::get('positions', [ TradesController::class, 'positions']);
+Route::get('api/getClosedTrades', [ TradesController::class, 'getClosedTrades']);
 
 Route::post('api/transactions/sell', [TransactionsController::class, 'sell']);
 Route::post('api/bank/create', [BankController::class, 'store']);

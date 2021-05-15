@@ -33,7 +33,9 @@
         "react-bootstrap": "^1.5.1",
         "react-chartist": "^0.14.4",
         "react-data-table-component": "^6.11.7",
+        "react-datetime": "^3.0.4",
         "react-number-format": "^4.5.5",
+        "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
         "recharts": "^2.0.9",
         "styled-components": "^5.2.1"

@@ -1,5 +1,6 @@
 import React from "react";
 import profile_pict from '../profile.jpg';
+import { Link} from 'react-router-dom'
 
 export default function Sidebar() {
     
@@ -22,18 +23,20 @@ export default function Sidebar() {
                             </div> 
                         </li>
                     
-                        <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="#" aria-expanded="false"><i className="mdi mdi-view-dashboard"></i><span
-                                    className="hide-menu">Dashboard</span></a></li>
-                        <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
+                        <li className="sidebar-item">
+                            <Link to='/' className='sidebar-link waves-effect waves-dark sidebar-link'> <i className="mdi mdi-view-dashboard"></i><span
+                                    className="hide-menu">Dashboard</span> </Link>
+                        </li>
+                        <li className="sidebar-item"> 
+                            <Link className="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="#" aria-expanded="false"><i
-                                    className="mdi mdi-chart-bar"></i><span className="hide-menu">Analytics</span></a></li>
-                        <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
+                                    className="mdi mdi-chart-bar"></i><span className="hide-menu">Analytics</span></Link></li>
+                        <li className="sidebar-item"> <Link to='/logs' className="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="#" aria-expanded="false"><i className="mdi mdi-history"></i><span
-                                    className="hide-menu">Trade Logs</span></a></li>
-                        <li className="sidebar-item"> <a className="sidebar-link waves-effect waves-dark sidebar-link"
+                                    className="hide-menu">Trade Logs</span></Link></li>
+                        <li className="sidebar-item"> <Link className="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="#" aria-expanded="false"><i className="mdi mdi-logout"></i><span
-                                    className="hide-menu">Logout</span></a></li> 
+                                    className="hide-menu">Logout</span></Link></li> 
                      
                     </ul>
 

@@ -3,6 +3,8 @@ import { Form, Table, Button, Modal, Alert } from "react-bootstrap"
 import axios from "axios"
 import Transactions from '../../classes/Transactions'
 import NumberFormat from 'react-number-format'
+import Datetime from 'react-datetime'
+import "react-datetime/css/react-datetime.css"
 
 class TradeForm extends React.Component {
 
@@ -155,11 +157,13 @@ class TradeForm extends React.Component {
                             <tbody>
                                 <tr>
                                     <td>
-                                        
-                                        <Form.Control type="date" name="date" 
-                                        onChange={ event => this.setState({ date: event.target.value }) } 
-                                        value={ this.state.date }
-                                        autoComplete="off"></Form.Control> 
+                                        <Datetime 
+                                            initialValue={new Date()}
+                                            timeFormat={false}
+                                            onChange={ event=> { this.setState({date: event.format('YYYY-MM-DD') })} }
+                                            closeOnSelect
+                                        />
+                                       
                                     </td>
                                     <td>
                                         <Form.Control type="text" name="stock_code" 
