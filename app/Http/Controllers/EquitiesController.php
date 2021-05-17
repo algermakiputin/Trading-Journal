@@ -41,13 +41,13 @@ class EquitiesController extends Controller
                         ->where('date', '>=', $pastMonth)
                         ->where('date', '<=', $today)
                         ->first();
-      
+     
+        if ( Equity::count() !== 1)
+            $startingEquity = $this->getStartingEquity($equity->min);
         
-        $startingEquity = $this->getStartingEquity($equity->min);
         $endingEquity = $this->getEndingEquity($equity->max);
- 
-       
-        return $this->gainLossCalculator( $endingEquity, $startingEquity );
+  
+        return $this->gainLossCalculator( $startingEquity, $endingEquity );
         
     }
 
@@ -74,11 +74,15 @@ class EquitiesController extends Controller
     } 
 
     private function gainLossCalculator( $endingEquity,  $startingEquity) {
-        
+         
         $startingEquity = $startingEquity == 0 ? 1 : $startingEquity;
         $amount = $endingEquity - $startingEquity; 
-        $percentage = number_format((( $endingEquity - $startingEquity ) / $startingEquity) * 100,2);
-    
+        $percentage = 0;
+
+        $percentage = ( ($endingEquity - $startingEquity ) / $startingEquity) * 100;
+        $percentage = number_format($percentage,2); 
+       
+            
         return array(
             'percentage' => $percentage,
             'amount' => $amount

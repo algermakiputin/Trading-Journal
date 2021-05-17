@@ -81,6 +81,7 @@ class Dashboard extends React.Component {
             position = res.data.map( (trade, index) => {
                 return <tr key={trade.stock_code + index }>
                     <td> {trade.stock_code }</td>
+                    <td> Long </td>
                     <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.ave_price} prefix={'₱'} /></td>
                     <td> {trade.total_shares }</td>
                     <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.total_cost} prefix={'₱'} /> </td>
@@ -178,7 +179,7 @@ class Dashboard extends React.Component {
                         </div>
                         <div className="col-md-4">
                             <div className="card">
-                                <div className="card-body">
+                                <div className="card-body equity-card">
                                     <h4 className="card-title">Account Summary (PHP)</h4>
                                     <div className="feed-widget">
                                         <ul className="list-style-none feed-body m-0 p-b-20">
@@ -197,7 +198,8 @@ class Dashboard extends React.Component {
                                                 </span>
                                             </li>  
                                             <li className="feed-item">
-                                                <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss<span className="ms-auto font-13">
+                                                <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss
+                                                <span className="ms-auto font-13">
                                                     {this.formatGainLoss()}
                                                 </span>
                                             </li>  

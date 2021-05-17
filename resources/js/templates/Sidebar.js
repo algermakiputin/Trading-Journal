@@ -29,13 +29,14 @@ export default function Sidebar() {
                         </li>
                         <li className="sidebar-item"> 
                             <Link className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="#" aria-expanded="false"><i
+                                to='/' aria-expanded="false"><i
                                     className="mdi mdi-chart-bar"></i><span className="hide-menu">Analytics</span></Link></li>
                         <li className="sidebar-item"> <Link to='/logs' className="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="#" aria-expanded="false"><i className="mdi mdi-history"></i><span
                                     className="hide-menu">Trade Logs</span></Link></li>
-                        <li className="sidebar-item"> <Link className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="#" aria-expanded="false"><i className="mdi mdi-logout"></i><span
+                        <li className="sidebar-item"> 
+                            <Link className="sidebar-link waves-effect waves-dark sidebar-link"
+                                to="/" aria-expanded="false"><i className="mdi mdi-logout"></i><span
                                     className="hide-menu">Logout</span></Link></li> 
                      
                     </ul>

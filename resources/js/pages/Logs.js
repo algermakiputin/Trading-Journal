@@ -1,23 +1,46 @@
 import React from 'react'
 import axios from 'axios'
+import DatatableHelper from '../Helper/DatatableHelper'
+import { Tabs, Tab } from 'react-bootstrap'
 
 class Logs extends React.Component {
 
     constructor(props) {
 
         super(props)
+
+        this.state = {
+            columns: [
+                {key: 'date', title: "Date"},
+                {key: 'stock_code', title: "Stock Code"},
+                {key: 'avg_buy', title: "Avg Buy"},
+                {key: 'avg_sell', title: "Avg Sell"},
+                {key: 'side', title: "Side"},
+                {key: 'result', title: "Result", cell: (row) => this.winLossFormat(row.result)  },
+                {key: 'profit_loss', title: 'Profit Loss'},
+                {key: 'gain_loss_percentage', title: 'Gain/Loss (%)'},
+                {key:'action', title:'action'}
+            ],
+            data:[], 
+            recordsTotal: 0 
+        } 
     }
 
     componentDidMount() {
 
         this.getClosedTrades()
     }
+
+    winLossFormat(result) {
+        let badge = result == 'win' ? 'success' : 'danger';
+        return <span className={'result badge-' + badge}>{result}</span>;
+    }
     
     getClosedTrades() {
 
         axios.get('/api/getClosedTrades')
                 .then(res => {
-                    console.log(res)
+                    this.setState({ data: res.data})
                 })
                 .catch( err => {
                     console.log(err)
@@ -46,24 +69,26 @@ class Logs extends React.Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="card">
-                                <div className="card-body">
-                                    <div>
-                                        <h4 className="card-title">Equity Curve</h4>
-                                        <h5 className="card-subtitle">Overview of the last 12 Months </h5>
-                                    </div> 
-                                    <table className="table table-striped table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Stock Code</th>
-                                                <th>Ave Buy</th>
-                                                <th>Ave Sell</th>
-                                                <th>Side</th>
-                                                <th>Result</th>
-                                                <th>Gain / Loss</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                <div className="card-body" >
+                                    <Tabs defaultActiveKey="closed-trades" id="uncontrolled-tab-example">
+                                        <Tab eventKey="closed-trades" title="Closed Trades">
+                                            <div className='tab-content'> 
+                                                <DatatableHelper 
+                                                    columns={this.state.columns}
+                                                    data={this.state.data}
+                                                    onChangePage={(page) => { console.log(page) }} 
+                                                /> 
+                                            </div>
+                                        </Tab>
+                                        <Tab eventKey="transactions" title="Transactions">
+                                            
+                                        </Tab>
+                                        <Tab eventKey="bank" title="Contact" disabled>
+                                            
+                                        </Tab>
+                                    </Tabs>
+                                    
+
                                 </div>
                             </div>
                         </div>

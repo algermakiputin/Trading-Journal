@@ -68,20 +68,72 @@ class TradesController extends Controller
 
         $closedTrades = Trade::where('status','=', 1)
                                 ->get();
+        $data = [];
         
         foreach ( $closedTrades as $trade ) {
 
-            $transactions = Transaction::where('trade_id', '=', $trade->id)
-                                            ->get();
-
-            foreach ( $transactions as $transaction ) {
-
-                
-            }
+            $transaction = DB::table('transactions')
+                                ->select(
+                                    DB::raw('SUM(price) as total_price'),
+                                    DB::raw('COUNT(id) as total_records'),
+                                    DB::raw('SUM(fees) as total_fees')
+                                )
+                                ->where('trade_id', '=', $trade->id)
+                                ->where('type','=','sell')
+                                ->first();
+    
+            $avgSellPrice = $transaction->total_price / $transaction->total_records;
+            $avgSell = $this->calculateAvgSellPrice( $avgSellPrice, $trade->shares, $transaction->total_fees );
+            $avgBuy = $this->calculateAvgBuyPrice( $trade->purchase_price, $trade->shares );
             
+            $total_buying_cost = $avgBuy * $trade->shares;
+            $total_selling_cost = $avgSell * $trade->shares;
+            $gain_loss_percentage = $this->calculateGainLoss($total_buying_cost, $total_selling_cost);
+            $profit_loss = $this->calculateProfitLoss($total_buying_cost, $total_selling_cost);
+            $result = $gain_loss_percentage >= 0 ? 'win' : 'loss';
+
+            $data[] = array(
+                'date' => $trade->date,
+                'stock_code' => $trade->stock_code,
+                'avg_buy' => number_format($avgBuy,2),
+                'avg_sell' => number_format($avgSell,4),
+                'side' => 'Long',
+                'result' => $result,
+                'profit_loss' => number_format($profit_loss,2),
+                'gain_loss_percentage' => number_format($gain_loss_percentage,2) . '%',
+                'action' => ''
+            );
         }  
-        return $closedTrades;
+
+        return $data;
         
+    }
+
+    public function calculateProfitLoss( $buyPrice, $sellPrice ) {
+
+        return $sellPrice - $buyPrice;
+    }
+
+    public function calculateAvgSellPrice( $price, $shares, $fees) {
+ 
+        $avegSellingPrice = ($price * $shares) + $fees;
+        
+        return $avegSellingPrice / $shares;
+    } 
+
+    public function calculateAvgBuyPrice( $price, $shares ) {
+
+        $fees = $this->calculateBuyingFees( $shares, $price );
+        $avgPrice = $price * $shares + $fees;
+
+        return $avgPrice / $shares;
+        
+    }
+
+    public function calculateGainLoss( $totalBuy, $totalSold ) {
+
+        $percentageGain = ($totalSold - $totalBuy) / $totalBuy;
+        return $percentageGain * 100;
     }
 
     public function calculateBuyingFees( $shares, $price ) {

@@ -12,9 +12,43 @@
     margin-left: 3px;
 }
 .campaign {
-    height: 33vh;
+    height: 243px;
+}
+
+.equity-card .feed-widget {
+    height: 266px;
 }
 
 body{
-    font-size: 0.91rem;
+    font-size: 0.90rem;
+    font-weight: 600;
+}  
+
+.card-body .nav-tabs {
+    margin-bottom: 10px;
+}
+
+.result { 
+    border:solid 2px;
+    display: block;
+    padding: 3px 12px;
+    text-align: center; 
+    color: #333;
+}
+table tr td,
+table tr th {
+    vertical-align: middle;
+}
+ 
+
+table tr td {
+    font-weight: 600;
+}
+
+.result.badge-success {
+    border-color: #36bea6;
+}
+
+.result.badge-danger {
+    border-color: #f62d51;
 }
