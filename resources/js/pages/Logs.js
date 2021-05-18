@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import DatatableHelper from '../Helper/DatatableHelper'
+import Transactions from '../components/datatable/Transactions'
+
 import { Tabs, Tab } from 'react-bootstrap'
 
 class Logs extends React.Component {
@@ -81,11 +83,8 @@ class Logs extends React.Component {
                                             </div>
                                         </Tab>
                                         <Tab eventKey="transactions" title="Transactions">
-                                            
-                                        </Tab>
-                                        <Tab eventKey="bank" title="Contact" disabled>
-                                            
-                                        </Tab>
+                                            <Transactions />
+                                        </Tab> 
                                     </Tabs>
                                     
 

@@ -16,6 +16,11 @@ class TransactionsController extends Controller
     {
         //
     }
+
+    public function datatable() {
+
+        return Transaction::all();
+    }
  
     public function store(Request $request)
     {
