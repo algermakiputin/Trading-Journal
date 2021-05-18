@@ -5,8 +5,8 @@ import '../../css/app.css'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Header from '../templates/Header'
 import Sidebar from '../templates/Sidebar'
-import Dashboard from '../pages/Dashboard'
-import Logs from '../pages/Logs'
+import Dashboard from '../components/pages/Dashboard'
+import Logs from '../components/pages/Logs'
 
 
 class Main extends React.Component {

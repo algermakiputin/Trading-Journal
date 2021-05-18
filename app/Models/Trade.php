@@ -9,7 +9,7 @@ class Trade extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['status', 'shares', 'stock_code', 'date','gain_loss_percentage', 'purchase_price','sold'];
+    protected $fillable = ['status', 'shares', 'stock_code', 'date','gain_loss_percentage', 'purchase_price','sold','win'];
     
     public function transactions() {
 

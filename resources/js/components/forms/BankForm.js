@@ -4,6 +4,7 @@ import axios from "axios";
 import Datetime from 'react-datetime';
 import "react-datetime/css/react-datetime.css";
 import NumberFormat from 'react-number-format'
+import '../../global/global'
 
 class BankForm extends React.Component {
     
@@ -11,7 +12,7 @@ class BankForm extends React.Component {
         super(props)
         this.state = {
             show: false,
-            date: '',
+            date: global.server_date,
             action: 'deposit',
             amount: null,
             alert_danger: false

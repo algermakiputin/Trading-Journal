@@ -2,7 +2,10 @@ import React from 'react'
 import { Form, Button, Modal } from "react-bootstrap"
 import Transactions from '../../classes/Transactions'
 import NumberFormat from 'react-number-format'
+import Datetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
 import axios from 'axios'
+import '../../global/global'
 
 class SellForm extends React.Component {
 
@@ -14,7 +17,7 @@ class SellForm extends React.Component {
             shares: 0,
             price:0,
             stock_code:'',
-            date:'2021-05-07', 
+            date: global.server_date, 
             net:0,
             fees:0,
             availableCash:0,
@@ -88,14 +91,13 @@ class SellForm extends React.Component {
                         
                     <Form noValidate>
                     <Form.Group>
-                            <Form.Label>Date</Form.Label>
-                            <Form.Control 
-                                type="date" 
-                                autoComplete="off" 
-                                defaultValue="2021-05-07"
-                                onChange={ (event )=> { this.setState({date: event.target.value })}}   
-                            
-                            ></Form.Control>
+                            <Form.Label>Date</Form.Label> 
+                            <Datetime 
+                                initialValue={new Date()}
+                                timeFormat={false}
+                                onChange={ event=> { this.setState({date: event.format('YYYY-MM-DD') }) } }
+                                closeOnSelect
+                            /> 
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Stock Code</Form.Label>

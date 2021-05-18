@@ -22,6 +22,7 @@ class CreateTradesTable extends Migration
             $table->string('date');
             $table->double('purchase_price');
             $table->integer('sold');
+            $table->integer('win');
         });
     }
 

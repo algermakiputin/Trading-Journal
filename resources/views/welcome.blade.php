@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Hero Journal</title> 
-  
+        <meta name="server-date" content="<?php echo date('Y-m-d') ?>" >
     </head>
     <body class="antialiased">
         

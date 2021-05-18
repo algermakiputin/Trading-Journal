@@ -5,6 +5,7 @@ import Transactions from '../../classes/Transactions'
 import NumberFormat from 'react-number-format'
 import Datetime from 'react-datetime'
 import "react-datetime/css/react-datetime.css"
+import '../../global/global'
 
 class TradeForm extends React.Component {
 
@@ -14,7 +15,7 @@ class TradeForm extends React.Component {
         super(props)
 
         this.state = {
-            date: "",
+            date: global.server_date,
             stock_code: "",
             price: "",
             shares: "",
@@ -27,14 +28,8 @@ class TradeForm extends React.Component {
 
         this.baseState = this.state;
  
-    } 
-
-    componentDidMount() {
-        console.log(this.props)
-    }
- 
-
-
+    }  
+   
     handleFormSubmit() { 
         
         this.validateForm()

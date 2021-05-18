@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\Trade;
 use App\Models\Equity;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\TradesController;
 
 class TransactionsController extends Controller
 { 
@@ -21,6 +22,19 @@ class TransactionsController extends Controller
 
         return Transaction::all();
     }
+
+    public function storeTrade($request) {
+
+        return Trade::create([
+            'shares' => $request['data']['shares'],
+            'status' => 0,
+            'stock_code' => $request['data']['stock_code'],
+            'date' => $request['data']['date'],
+            'purchase_price' => $request['data']['price'],
+            'sold' => 0,
+            'win' => 0
+        ]);
+    }
  
     public function store(Request $request)
     {
@@ -32,14 +46,7 @@ class TransactionsController extends Controller
             $remainingCash = $request['availableCash'] - $request['data']['net'];
             $totalEquity = $request['totalEquity'];
 
-            $trade = Trade::create([
-                'shares' => $request['data']['shares'],
-                'status' => 0,
-                'stock_code' => $request['data']['stock_code'],
-                'date' => $request['data']['date'],
-                'purchase_price' => $request['data']['price'],
-                'sold' => 0
-            ]);
+            $trade = $this->storeTrade($request);
 
             Transaction::create([
                 'date' => $request['data']['date'],
@@ -61,13 +68,13 @@ class TransactionsController extends Controller
             ]);
 
             DB::commit();
-            echo 1;
+            return 1;
 
         } catch ( \Exception $e ) {
 
             DB::rollback();
             throw $e;
-            echo 0;
+            return 0;
         }
 
         return;
@@ -112,6 +119,8 @@ class TransactionsController extends Controller
             $totalSold = $trade->sold + $request->shares; 
             $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price); 
             $sellNetAmount = $request->net;
+            $availableCash = $request->availableCash + $request->net; 
+            $status = 0;
         
             if ( $sellNetAmount < $buyNetAmount) { 
                 
@@ -120,10 +129,7 @@ class TransactionsController extends Controller
             }else { 
                 $totalEquity = $request->totalEquity - ( $buyNetAmount - $request->net );
             
-            }  
-              
-            $availableCash = $request->availableCash + $request->net; 
-            $status = 0;
+            }   
 
             if ( $totalSold == $trade->shares )
                 $status = 1;
@@ -153,6 +159,17 @@ class TransactionsController extends Controller
                 'action_reference_id' => $trade->id
             ]);
 
+            //Update Trade Result ( Win or Loss )
+
+            if ( $status == 1) {
+
+                Trade::where('id', $trade->id)
+                            ->update([
+                                'win' => $this->getResult( $trade->id)
+                            ]);
+            }
+                
+
             DB::commit();
  
         } catch (\Exception $e) {
@@ -162,10 +179,23 @@ class TransactionsController extends Controller
         }
     } 
 
-    // public function getNetAmount( $net, $quantity, $quantitySold ) {
-
-    //     return $netValue = ( $net / $quantity ) * $quantitySold;
-    // }
+    public function getResult( $trade_id = 7 ) {
+ 
+        $tradesController = new TradesController();
+        $trade = DB::table('trades')->find($trade_id);
+        
+        $transaction = $tradesController->getTradeTransactions($trade_id);
+        $avgSellPrice = $transaction->total_price / $transaction->total_records;
+        $avgSell = $tradesController->calculateAvgSellPrice( $avgSellPrice, $trade->shares, $transaction->total_fees );
+        $avgBuy = $tradesController->calculateAvgBuyPrice( $trade->purchase_price, $trade->shares );
+        
+        $total_buying_cost = $avgBuy * $trade->shares;
+        $total_selling_cost = $avgSell * $trade->shares;
+        
+        $result = $tradesController->calculateProfitLoss($total_buying_cost, $total_selling_cost);
+    
+        return $result > 0 ? 1 : 0;
+    } 
  
     public function show($id)
     {

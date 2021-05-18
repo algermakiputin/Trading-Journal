@@ -72,16 +72,7 @@ class TradesController extends Controller
         
         foreach ( $closedTrades as $trade ) {
 
-            $transaction = DB::table('transactions')
-                                ->select(
-                                    DB::raw('SUM(price) as total_price'),
-                                    DB::raw('COUNT(id) as total_records'),
-                                    DB::raw('SUM(fees) as total_fees')
-                                )
-                                ->where('trade_id', '=', $trade->id)
-                                ->where('type','=','sell')
-                                ->first();
-    
+            $transaction = $this->getTradeTransactions($trade->id);
             $avgSellPrice = $transaction->total_price / $transaction->total_records;
             $avgSell = $this->calculateAvgSellPrice( $avgSellPrice, $trade->shares, $transaction->total_fees );
             $avgBuy = $this->calculateAvgBuyPrice( $trade->purchase_price, $trade->shares );
@@ -107,6 +98,19 @@ class TradesController extends Controller
 
         return $data;
         
+    }
+
+    public function getTradeTransactions( $trade_id ) {
+
+        return $transaction = DB::table('transactions')
+                                ->select(
+                                    DB::raw('SUM(price) as total_price'),
+                                    DB::raw('COUNT(id) as total_records'),
+                                    DB::raw('SUM(fees) as total_fees')
+                                )
+                                ->where('trade_id', '=', $trade_id)
+                                ->where('type','=','sell')
+                                ->first();
     }
 
     public function calculateProfitLoss( $buyPrice, $sellPrice ) {
