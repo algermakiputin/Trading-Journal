@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Header from '../templates/Header'
 import Sidebar from '../templates/Sidebar'
 import Dashboard from '../components/pages/Dashboard'
+import Analytics from '../components/pages/Analytics'
 import Logs from '../components/pages/Logs'
 
 
@@ -26,6 +27,9 @@ class Main extends React.Component {
                     <Switch>
                         <Route exact path="/">
                             <Dashboard />
+                        </Route>
+                        <Route path="/analytics">
+                            <Analytics />
                         </Route>
                         <Route path="/logs">
                             <Logs />

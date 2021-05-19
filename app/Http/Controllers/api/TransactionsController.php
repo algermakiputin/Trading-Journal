@@ -18,9 +18,28 @@ class TransactionsController extends Controller
         //
     }
 
-    public function datatable() {
+    public function datatable(Request $request) {
 
-        return Transaction::all();
+        $page = $request->page; 
+        $recordsPerPage = $request->recordsPerPage;
+        $offset = $page * $recordsPerPage - $recordsPerPage;
+        $totalRecords = Transaction::count();
+        $transactions = Transaction::offset($offset)
+                                    ->limit($recordsPerPage)
+                                    ->orderBy('date', 'desc')
+                                    ->orderBy('id', 'desc')
+                                    ->get();
+        //calculate avg buy amount
+        foreach ( $transactions as $transaction) {
+
+            $total = $transaction->price * $transaction->shares + $transaction->fees;
+            $transaction->price = number_format($total / $transaction->shares,4);
+        }
+
+        return array(
+            'total_records' => $totalRecords,
+            'transactions' => $transactions
+        );
     }
 
     public function storeTrade($request) {

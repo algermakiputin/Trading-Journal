@@ -66,7 +66,9 @@ class TradesController extends Controller
 
     public function getClosedTrades() {
 
-        $closedTrades = Trade::where('status','=', 1)
+        $closedTrades = Trade::where('status','=', 1)  
+                                ->orderBy('date','DESC')
+                                ->orderBy('id', 'DESC')
                                 ->get();
         $data = [];
         
@@ -86,7 +88,7 @@ class TradesController extends Controller
             $data[] = array(
                 'date' => $trade->date,
                 'stock_code' => $trade->stock_code,
-                'avg_buy' => number_format($avgBuy,2),
+                'avg_buy' => number_format($avgBuy,4),
                 'avg_sell' => number_format($avgSell,4),
                 'side' => 'Long',
                 'result' => $result,
@@ -116,6 +118,11 @@ class TradesController extends Controller
     public function calculateProfitLoss( $buyPrice, $sellPrice ) {
 
         return $sellPrice - $buyPrice;
+    }
+
+    public function getTotalTradesTaken() {
+
+        return Trade::where('status', 1)->count();
     }
 
     public function calculateAvgSellPrice( $price, $shares, $fees) {

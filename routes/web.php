@@ -23,6 +23,9 @@ Route::get('/', function () {
 Route::get('/logs', function () {
     return view('welcome');
 }); 
+Route::get('/analytics', function () {
+    return view('welcome');
+}); 
 
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);

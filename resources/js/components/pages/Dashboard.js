@@ -7,6 +7,8 @@ import { Button, Modal } from "react-bootstrap"
 import NumberFormat from 'react-number-format'
 import axios from "axios"
 import SellForm from '../forms/SellForm'
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { Fragment } from "react"
 
 var positions = [];
@@ -81,7 +83,7 @@ class Dashboard extends React.Component {
             position = res.data.map( (trade, index) => {
                 return <tr key={trade.stock_code + index }>
                     <td> {trade.stock_code }</td>
-                    <td> Long </td>
+                    <td> <span className='badge badge-success'>Long</span> </td>
                     <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.ave_price} prefix={'₱'} /></td>
                     <td> {trade.total_shares }</td>
                     <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.total_cost} prefix={'₱'} /> </td>
@@ -249,6 +251,39 @@ class Dashboard extends React.Component {
                                    
                                 </div>
                                 
+                            </div>
+                        </div>
+                         
+                        <div className='col-md-6'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div> 
+                                        <h4 className="card-title">Top Gainers / Lossers</h4>
+                                        <h5 className="card-subtitle">Commulative of my top gainers / lossers trades</h5>
+                                    
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-6'>
+                            <div className='card'>
+                                <div className='card-body'>
+                                    <div> 
+                                        <h4 className="card-title">Account Performance</h4>
+                                        <h5 className="card-subtitle">Summary of my trade metrics</h5>
+                                        {/* 
+                                            Metrics
+                                            1. Win Rate
+                                            2. Reward:Risk Ratio
+                                            3. Expectancy
+                                            4. Maximum Consecutive Loss
+                                            5. Maximum Drawdown
+                                            6. Number of Trades
+                                            7. Profitability 
+
+                                        */}
+                                    </div> 
+                                </div>
                             </div>
                         </div>
                     </div>  

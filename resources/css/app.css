@@ -21,7 +21,7 @@
 
 body{
     font-size: 0.90rem;
-    font-weight: 600;
+    font-weight: 700;
 }  
 
 .card-body .nav-tabs {
@@ -38,12 +38,7 @@ body{
 table tr td,
 table tr th {
     vertical-align: middle;
-}
- 
-
-table tr td {
-    font-weight: 600;
-}
+} 
 
 .result.badge-success {
     border-color: #36bea6;
@@ -51,4 +46,22 @@ table tr td {
 
 .result.badge-danger {
     border-color: #f62d51;
+}
+
+.badge {
+    padding: 3px 12px;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.badge.badge-success { 
+    background:#36bea6;
+}
+
+.badge.badge-danger { 
+    background:#f62d51;
 }

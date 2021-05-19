@@ -60,6 +60,7 @@ class DatatableHelper extends React.Component {
             return
 
         let pages = ceil(this.props.totalRecords / 10);
+        console.log(pages)
         pages = pages ? pages : 1
          
         let items = [];    

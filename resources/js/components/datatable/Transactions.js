@@ -1,5 +1,6 @@
 import React from 'react'
 import DatatableHelper from '../../Helper/DatatableHelper'
+import NumberFormat from 'react-number-format'
 
 class Transaction extends React.Component {
 
@@ -9,15 +10,16 @@ class Transaction extends React.Component {
         this.state = {
             columns: [
                 {key: 'date', 'title': 'Date'},
-                {key: 'stock_code', title: 'Stock Code'},
-                {key: 'type', title: 'Side'},
-                {key: 'action', title: 'Action', cell: (row) => row.type == 'long' ? 'Buy' : row.type },
-                {key: 'price', title: 'Price'},
+                {key: 'stock_code', title: 'Stock Code'}, 
+                {key: 'action', title: 'Action', cell: (row) => this.formatAction(row)},
+                {key: 'price', title: 'Avg Price', cell: (row) => this.formatNumber(row.price, 4)},
                 {key: 'shares', title: 'Shares'},
                 {key: 'fees', title: 'Fees'},
                 {key: 'net', title: 'Net'}
             ],
-            data: []
+            data: [],
+            totalRecords:0,
+            page:1
         }
     }
 
@@ -26,16 +28,37 @@ class Transaction extends React.Component {
         this.setData()
     }
 
-    setData() {
+    formatNumber(number, scale) {
 
-        axios.get('/api/transactions/datatable')
-                .then(res => {
-                    this.setState({ data: res.data})
+        return <NumberFormat decimalScale={scale} thousandSeparator={true} displayType='text' value={number} prefix={'₱'} />
+    }
+
+    formatAction(row) {
+
+        return row.type == 'long' ? <span className='badge badge-success'>Buy</span> : <span className='badge badge-danger'>sell</span>
+    }
+
+    setData(page = 0) {
+
+        let currentPage = page ? page : this.state.page
+
+        axios.get('/api/transactions/datatable', {
+            params: {
+                recordsPerPage: 10,
+                page: currentPage
+            }
+        })
+                .then(res => { 
+                    this.setState({ 
+                        data: res.data.transactions,
+                        totalRecords: res.data.total_records
+                    })
                 })
                 .catch( err => {
                     console.log(err)
                 })
     }
+ 
     render() {
 
         return (
@@ -45,6 +68,8 @@ class Transaction extends React.Component {
                 data={this.state.data}
                 onChangePage={(page) => { console.log(page) }} 
                 pagination
+                totalRecords={this.state.totalRecords}
+                onChangePage={(page) => this.setData(page) }
             /> 
         )
     }
