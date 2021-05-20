@@ -78,10 +78,10 @@ class TradesController extends Controller
             $avgSellPrice = $transaction->total_price / $transaction->total_records;
             $avgSell = $this->calculateAvgSellPrice( $avgSellPrice, $trade->shares, $transaction->total_fees );
             $avgBuy = $this->calculateAvgBuyPrice( $trade->purchase_price, $trade->shares );
-            
+        
             $total_buying_cost = $avgBuy * $trade->shares;
             $total_selling_cost = $avgSell * $trade->shares;
-            $gain_loss_percentage = $this->calculateGainLoss($total_buying_cost, $total_selling_cost);
+            $gain_loss_percentage = $this->calculateGainLossPercentage($total_buying_cost, $total_selling_cost);
             $profit_loss = $this->calculateProfitLoss($total_buying_cost, $total_selling_cost);
             $result = $gain_loss_percentage >= 0 ? 'win' : 'loss';
 
@@ -127,21 +127,23 @@ class TradesController extends Controller
 
     public function calculateAvgSellPrice( $price, $shares, $fees) {
  
-        $avegSellingPrice = ($price * $shares) + $fees;
+        $sellAmount = ($price * $shares) + $fees;
+        $avgSell = $sellAmount / $shares; 
         
-        return $avegSellingPrice / $shares;
+        return $avgSell;
     } 
 
     public function calculateAvgBuyPrice( $price, $shares ) {
-
-        $fees = $this->calculateBuyingFees( $shares, $price );
+        
+        $fees = $this->calculateBuyingFees( $shares, $price );  
+      
         $avgPrice = $price * $shares + $fees;
 
         return $avgPrice / $shares;
         
     }
 
-    public function calculateGainLoss( $totalBuy, $totalSold ) {
+    public function calculateGainLossPercentage( $totalBuy, $totalSold ) {
 
         $percentageGain = ($totalSold - $totalBuy) / $totalBuy;
         return $percentageGain * 100;
@@ -154,13 +156,14 @@ class TradesController extends Controller
         // VAT = Commission * 12%
         // PSE Trans Fee = ( TOTAL SHARES * PRICE ) * 0.005%
         // SCCP = ( TOTAL SHARES * PRICE ) * 0.01%
-
+        
         $commission = ( $shares * $price ) * 0.0025;
         $vat = $commission * 0.12;
         $trans_fee = ( $shares * $price ) * 0.00005;
         $sccp = ( $shares * $price ) * 0.0001; 
-
-        return $fees = $commission + $vat + $trans_fee + $sccp;
+        $fees = $commission + $vat + $trans_fee + $sccp;
+        
+        return $fees; 
       
     }
 }

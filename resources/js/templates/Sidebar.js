@@ -16,8 +16,8 @@ export default function Sidebar() {
                                 <div className="user-content hide-menu m-l-10">
                                     <a href="#" className="" id="Userdd" role="button"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <h5 className="m-b-0 user-name font-medium">Hero Trader </h5>
-                                        <span className="op-5 user-email">herotrader.net</span>
+                                        <h5 className="m-b-0 user-name font-medium">Trader Journalist </h5>
+                                        <span className="op-5 user-email">journal@email.com</span>
                                     </a> 
                                 </div>
                             </div> 

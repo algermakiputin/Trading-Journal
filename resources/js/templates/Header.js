@@ -9,7 +9,7 @@ export default function Header() {
                     <a className="navbar-brand" href="index.html">
                       
                         <b className="logo-text" style={{marginLeft:'10px'}}> 
-                            Hero Trader Journal
+                            PSE Trader Journal
                         </b>
                     </a>  
                 </div> 

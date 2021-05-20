@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Trade;
 use App\Models\Equity;
+use App\Models\TradeResult;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\TradesController;
 
@@ -50,8 +51,7 @@ class TransactionsController extends Controller
             'stock_code' => $request['data']['stock_code'],
             'date' => $request['data']['date'],
             'purchase_price' => $request['data']['price'],
-            'sold' => 0,
-            'win' => 0
+            'sold' => 0
         ]);
     }
  
@@ -179,16 +179,19 @@ class TransactionsController extends Controller
             ]);
 
             //Update Trade Result ( Win or Loss )
-
             if ( $status == 1) {
 
-                Trade::where('id', $trade->id)
-                            ->update([
-                                'win' => $this->getResult( $trade->id)
-                            ]);
+                $result = $this->getResult($trade->id);
+                $win = $result['gainLossAmount'] > 0 ? 1 : 0;
+
+                TradeResult::create([
+                    'win' => $win,
+                    'gain_loss_percentage' => $result['gainLossPercentage'],
+                    'gain_loss_amount' => $result['gainLossAmount'],
+                    'trade_id' => $trade->id
+                ]);
             }
                 
-
             DB::commit();
  
         } catch (\Exception $e) {
@@ -198,7 +201,7 @@ class TransactionsController extends Controller
         }
     } 
 
-    public function getResult( $trade_id = 7 ) {
+    public function getResult( $trade_id ) {
  
         $tradesController = new TradesController();
         $trade = DB::table('trades')->find($trade_id);
@@ -211,9 +214,13 @@ class TransactionsController extends Controller
         $total_buying_cost = $avgBuy * $trade->shares;
         $total_selling_cost = $avgSell * $trade->shares;
         
-        $result = $tradesController->calculateProfitLoss($total_buying_cost, $total_selling_cost);
-    
-        return $result > 0 ? 1 : 0;
+        $gainLossAmount = $tradesController->calculateProfitLoss($total_buying_cost, $total_selling_cost);
+        $gainLossPercentage = $tradesController->calculateGainLossPercentage($total_buying_cost, $total_selling_cost);
+        
+        return array(
+            'gainLossAmount' => $gainLossAmount,
+            'gainLossPercentage' => $gainLossPercentage
+        );
     } 
  
     public function show($id)
