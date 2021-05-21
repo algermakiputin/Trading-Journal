@@ -124,10 +124,17 @@ class TransactionsController extends Controller
                 $this->storeSell($request, $trade); 
                 return;
                 
-            }
+            } 
+        }  
+    }
 
-        } 
-     
+    public function updateTotalEquity($sellNetAmount, $buyNetAmount, $net, $totalEquity) {
+
+        if ( $sellNetAmount < $buyNetAmount) 
+            return $totalEquity = $totalEquity + ( $net - $buyNetAmount );
+        
+        return $totalEquity = $totalEquity - ( $buyNetAmount - $net );
+        
     }
 
     public function storeSell($request, $trade) {
@@ -140,16 +147,8 @@ class TransactionsController extends Controller
             $sellNetAmount = $request->net;
             $availableCash = $request->availableCash + $request->net; 
             $status = 0;
-        
-            if ( $sellNetAmount < $buyNetAmount) { 
-                
-                $totalEquity = $request->totalEquity + ( $request->net - $buyNetAmount );
-            
-            }else { 
-                $totalEquity = $request->totalEquity - ( $buyNetAmount - $request->net );
-            
-            }   
-
+            $totalEquity = $this->updateTotalEquity( $sellNetAmount, $buyNetAmount, $request->net, $request->totalEquity );
+         
             if ( $totalSold == $trade->shares )
                 $status = 1;
 

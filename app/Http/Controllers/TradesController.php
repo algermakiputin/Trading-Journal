@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Trade; 
+use App\Models\TradeResult; 
 use Illuminate\Support\Facades\DB; 
 
 class TradesController extends Controller
@@ -78,7 +79,7 @@ class TradesController extends Controller
             $avgSellPrice = $transaction->total_price / $transaction->total_records;
             $avgSell = $this->calculateAvgSellPrice( $avgSellPrice, $trade->shares, $transaction->total_fees );
             $avgBuy = $this->calculateAvgBuyPrice( $trade->purchase_price, $trade->shares );
-        
+       
             $total_buying_cost = $avgBuy * $trade->shares;
             $total_selling_cost = $avgSell * $trade->shares;
             $gain_loss_percentage = $this->calculateGainLossPercentage($total_buying_cost, $total_selling_cost);
@@ -100,6 +101,36 @@ class TradesController extends Controller
 
         return $data;
         
+    } 
+
+    public function getTopGainers() {
+
+        return DB::table('trade_results')
+                    ->join('trades', 'trades.id', '=', 'trade_results.trade_id')
+                    ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount', 'trades.stock_code')
+                    ->where('trade_results.win', '=', '1')
+                    ->orderBy('gain_loss_percentage', 'ASC')
+                    ->limit(5)
+                    ->get();
+                            
+    }
+    
+    public function getTopLosers() {
+
+        $topLosers = DB::table('trade_results')
+                    ->join('trades', 'trades.id', '=', 'trade_results.trade_id')
+                    ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount', 'trades.stock_code')
+                    ->where('trade_results.win', '=', '0')
+                    ->orderBy('gain_loss_percentage', 'DESC')
+                    ->limit(5)
+                    ->get();
+
+        foreach ( $topLosers as $loser) {
+
+            $loser->gain_loss_amount = $loser->gain_loss_amount * -1;
+        }
+
+        return $topLosers;
     }
 
     public function getTradeTransactions( $trade_id ) {
@@ -120,14 +151,9 @@ class TradesController extends Controller
         return $sellPrice - $buyPrice;
     }
 
-    public function getTotalTradesTaken() {
-
-        return Trade::where('status', 1)->count();
-    }
-
     public function calculateAvgSellPrice( $price, $shares, $fees) {
  
-        $sellAmount = ($price * $shares) + $fees;
+        $sellAmount = ($price * $shares) - $fees;
         $avgSell = $sellAmount / $shares; 
         
         return $avgSell;
@@ -165,5 +191,89 @@ class TradesController extends Controller
         
         return $fees; 
       
+    }
+
+    public function getAccountPerformanceSummary() {
+
+        $totalTradesTaken = $this->getTotalTradesTaken();
+        $winningPercentage = $this->getWinningPercentage();
+        $averageWins = $this->calculateAverageGain();
+        $averageLosses = $this->calculateAverageLosses();
+        $winLossRatio = $this->getWinLossRatio();
+
+        return array(
+            'totalTrades' => $totalTradesTaken,
+            'winningPercentage' => $winningPercentage,
+            'averageWins' => $averageWins,
+            'averageLosses' => $averageLosses,
+            'winLossRatio' => $this->getWinLossRatio(),
+            'adjustedWinLossRatio' => 0
+        );
+
+    }
+
+    public function getTotalTradesTaken() {
+
+        return Trade::where('status', 1)->count();
+    }
+
+    public function getTotalLossTrades() {
+
+        return TradeResult::where('win', '=', 0)->count();
+    }
+
+    public function getTotalWinTrades() {
+
+        return TradeResult::where('win', '=', 1)->count();
+    }
+
+    //calculate trade winning percentage
+    public function getWinningPercentage() {
+
+        $totalTrades = $this->getTotalTradesTaken(); 
+        $winTrades = $this->getTotalWinTrades();
+
+
+        return $winTrades / $totalTrades * 100;
+    }
+
+    public function getWinLossRatio() {
+
+        $wins = $this->getTotalWinTrades();
+        $losses = $this->getTotalLossTrades();
+
+        return $wins / $losses;
+    }
+
+    public function calculateAverageGain() {
+ 
+        $gains = TradeResult::where('win', '=', 1)
+                                ->select(
+                                    DB::raw('SUM(gain_loss_percentage) as totalGains'), 
+                                    DB::raw('count(id) as numRows'))
+                                ->first();
+            
+        return number_format($gains->totalGains / $gains->numRows,2);
+
+    }
+
+    public function calculateAverageLosses() {
+ 
+        $gains = TradeResult::where('win', '=', 0)
+                                ->select(
+                                    DB::raw('SUM(gain_loss_percentage) as totalGains'), 
+                                    DB::raw('count(id) as numRows'))
+                                ->first();
+        
+        return number_format($gains->totalGains / $gains->numRows,2);
+
+    }
+
+    public function calculateAdjustedWinLossRatio() {
+
+        //Average Gain * % Of winning Trades / average loss * % of losing Trades
+
+        $averageGain = $this->calculateAverageGain();
+
     }
 }

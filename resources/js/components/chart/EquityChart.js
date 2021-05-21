@@ -41,9 +41,7 @@ class EquityChart extends React.Component {
         return (
             <Fragment>
                 <ResponsiveContainer width="100%" height="100%">
-                    <LineChart
-                        width={500}
-                        height={300}
+                    <LineChart 
                         data={this.state.data} 
                     >
                     <CartesianGrid stroke="#000000" strokeOpacity="0.1" strokeDasharray="3 3" verticalFill={['#fff', '#f4f4f5']} fillOpacity={0.2}/> 

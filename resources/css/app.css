@@ -12,7 +12,7 @@
     margin-left: 3px;
 }
 .campaign {
-    height: 243px;
+    height: 267px;
 }
 
 .equity-card .feed-widget {
@@ -64,4 +64,53 @@ table tr th {
 
 .badge.badge-danger { 
     background:#f62d51;
+}
+
+.card-subtitle {
+    margin-bottom: 15px;
+}
+
+.trade-overview-widget {
+    margin-bottom: 15px;
+}
+
+.circle-wrapper {
+    width: 67px;
+    height: 67px;
+    border-radius: 50%;
+    display: block;
+    margin: auto;
+    border:solid 2px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    border-color: rgb(79, 195, 247);
+}
+
+.circle-wrapper span { 
+    font-weight: 700;
+}
+
+.trade-overview-widget .text {
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.table.account-performance {
+    margin-bottom: 0;
+    height: 230px;
+}
+
+.table.account-performance tr {
+    border-bottom: solid 1px #f4f4f4;
+}
+.table.account-performance td {
+    padding:0.5rem;
+    padding-left: 0;
+}
+
+.text-right {
+    text-align: right;
 }
