@@ -19,7 +19,8 @@ class CreateTradesTable extends Migration
             $table->unsignedInteger('status');
             $table->unsignedInteger('shares');
             $table->string('stock_code'); 
-            $table->string('date');
+            $table->string('purchase_date');
+            $table->string('sell_date');
             $table->double('purchase_price');
             $table->integer('sold'); 
         });

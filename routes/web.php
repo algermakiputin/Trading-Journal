@@ -26,6 +26,9 @@ Route::get('/logs', function () {
 Route::get('/analytics', function () {
     return view('welcome');
 }); 
+Route::get('/monthly-tracker', function () {
+    return view('welcome');
+}); 
 
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
@@ -34,6 +37,7 @@ Route::get('positions', [ TradesController::class, 'positions']);
 Route::get('api/getTopGainers', [ TradesController::class, 'getTopGainers']);
 Route::get('api/getTopLosers', [ TradesController::class, 'getTopLosers']);
 Route::get('api/getClosedTrades', [ TradesController::class, 'getClosedTrades']);
+Route::get('api/monthlyTracker', [ TradesController::class, 'monthlyTracker']);
 Route::get('api/getAccountPerformanceSummary', [ TradesController::class, 'getAccountPerformanceSummary']);
 
 Route::post('api/transactions/sell', [TransactionsController::class, 'sell']);

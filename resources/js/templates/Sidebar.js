@@ -27,13 +27,23 @@ export default function Sidebar() {
                             <Link to='/' className='sidebar-link waves-effect waves-dark sidebar-link'> <i className="mdi mdi-view-dashboard"></i><span
                                     className="hide-menu">Dashboard</span> </Link>
                         </li>
+                        
                         <li className="sidebar-item"> 
                             <Link className="sidebar-link waves-effect waves-dark sidebar-link"
                                 to='/analytics' aria-expanded="false"><i
                                     className="mdi mdi-chart-bar"></i><span className="hide-menu">Analytics</span></Link></li>
-                        <li className="sidebar-item"> <Link to='/logs' className="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="#" aria-expanded="false"><i className="mdi mdi-history"></i><span
-                                    className="hide-menu">Trade Logs</span></Link></li>
+                        <li className="sidebar-item"> 
+                                <Link 
+                                    to='/logs' 
+                                    className="sidebar-link waves-effect waves-dark sidebar-link"
+                                    >
+                                    <i className="mdi mdi-history"></i>
+                                    <span className="hide-menu">Trade Logs</span>
+                                </Link>
+                        </li>
+                        <li className="sidebar-item"> <Link to='/monthly-tracker' className="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="#" aria-expanded="false"><i className="mdi mdi-calendar"></i><span
+                                    className="hide-menu">Monthly Tracker</span></Link></li>
                         <li className="sidebar-item"> 
                             <Link className="sidebar-link waves-effect waves-dark sidebar-link"
                                 to="/" aria-expanded="false"><i className="mdi mdi-logout"></i><span

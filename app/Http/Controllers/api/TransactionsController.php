@@ -49,7 +49,8 @@ class TransactionsController extends Controller
             'shares' => $request['data']['shares'],
             'status' => 0,
             'stock_code' => $request['data']['stock_code'],
-            'date' => $request['data']['date'],
+            'purchase_date' => $request['data']['date'],
+            'sell_date' => 0,
             'purchase_price' => $request['data']['price'],
             'sold' => 0
         ]);
@@ -155,7 +156,8 @@ class TransactionsController extends Controller
             Trade::where('id', $trade->id)
                             ->update([
                                 'status' => $status,
-                                'sold' => $totalSold
+                                'sold' => $totalSold,
+                                'sell_date' => $request->date
                             ]);
 
             $transaction = Transaction::create([

@@ -68,7 +68,7 @@ class TradesController extends Controller
     public function getClosedTrades() {
 
         $closedTrades = Trade::where('status','=', 1)  
-                                ->orderBy('date','DESC')
+                                ->orderBy('purcased_date','DESC')
                                 ->orderBy('id', 'DESC')
                                 ->get();
         $data = [];
@@ -234,15 +234,20 @@ class TradesController extends Controller
         $winTrades = $this->getTotalWinTrades();
 
 
-        return $winTrades / $totalTrades * 100;
+        if ( $totalTrades && $winTrades)
+            return $winTrades / $totalTrades * 100;
+
     }
 
     public function getWinLossRatio() {
 
         $wins = $this->getTotalWinTrades();
         $losses = $this->getTotalLossTrades();
+ 
+        if ( $wins && $losses) 
+            return $wins / $losses;
 
-        return $wins / $losses;
+        return 0;
     }
 
     public function calculateAverageGain() {
@@ -252,20 +257,22 @@ class TradesController extends Controller
                                     DB::raw('SUM(gain_loss_percentage) as totalGains'), 
                                     DB::raw('count(id) as numRows'))
                                 ->first();
-            
-        return number_format($gains->totalGains / $gains->numRows,2);
+        
+        if ( $gains->totalGains )
+            return number_format($gains->totalGains / $gains->numRows,2);
 
     }
 
     public function calculateAverageLosses() {
  
-        $gains = TradeResult::where('win', '=', 0)
+        $trades = TradeResult::where('win', '=', 0)
                                 ->select(
                                     DB::raw('SUM(gain_loss_percentage) as totalGains'), 
                                     DB::raw('count(id) as numRows'))
                                 ->first();
         
-        return number_format($gains->totalGains / $gains->numRows,2);
+        if ( $trades->totalGains)
+            return number_format($trades->totalGains / $trades->numRows,2);                       
 
     }
 
@@ -275,5 +282,10 @@ class TradesController extends Controller
 
         $averageGain = $this->calculateAverageGain();
 
+    }
+
+    public function monthlyTracker() {
+
+        $pastYear = date('Y-m-d', strtotime('-12 months'));
     }
 }
