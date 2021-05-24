@@ -17,8 +17,16 @@ class BankController extends Controller
         $date = $request['data']['date'];
         $amount = $request['data']['amount'];
         $action = $request['data']['action'];
-        $totalEquity = (float)$request['totalEquity'] + $amount;
-        $remainingCash = (float)$request['availableCash'] + $amount;
+        $totalEquity = $amount;
+        $remainingCash = $amount;
+        $equity = Equity::where('date', '<=', $date) 
+                        ->orderBy('id', 'DESC')
+                        ->first();
+
+        if ( $equity) {
+            $totalEquity += $equity->total_equity;
+            $remainingCash += $equity->remaining_cash;
+        }
 
         DB::beginTransaction();
 

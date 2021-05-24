@@ -23,6 +23,14 @@ class EquitiesController extends Controller
         }
         
         return $equity;
+    } 
+
+    public function profitLoss($startingDate, $endingDate) {
+
+        $startingEquity = $this->getStartingEquity($startingDate);
+        $endingEquity = $this->getEndingEquity($endingDate);
+
+        return $this->gainLossCalculator($startingEquity, $endingEquity);
     }
 
     public function monthlyGainLoss() {
@@ -55,7 +63,7 @@ class EquitiesController extends Controller
 
         $equity =  DB::table('equities')
                         ->select('total_equity as total')
-                        ->where('date', '=', $date)
+                        ->where('date', '>=', $date)
                         ->orderBy('id', 'ASC')
                         ->first(); 
         
@@ -66,7 +74,7 @@ class EquitiesController extends Controller
 
         $equity = DB::table('equities')
                         ->select('total_equity as total')
-                        ->where('date', '=', $date)
+                        ->where('date', '<=', $date)
                         ->orderBy('id', 'DESC')
                         ->first();
 
@@ -74,9 +82,9 @@ class EquitiesController extends Controller
     } 
 
     private function gainLossCalculator( $startingEquity,  $endingEquity) {
-          
+      
         $amount = $endingEquity - $startingEquity;  
-   
+        
         $percentage = 100;
 
         if ( $startingEquity != 0)

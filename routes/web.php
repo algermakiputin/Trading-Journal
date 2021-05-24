@@ -38,6 +38,7 @@ Route::get('api/getTopGainers', [ TradesController::class, 'getTopGainers']);
 Route::get('api/getTopLosers', [ TradesController::class, 'getTopLosers']);
 Route::get('api/getClosedTrades', [ TradesController::class, 'getClosedTrades']);
 Route::get('api/monthlyTracker', [ TradesController::class, 'monthlyTracker']);
+Route::get('api/tradeSummary', [ TradesController::class, 'tradeSummary']);
 Route::get('api/getAccountPerformanceSummary', [ TradesController::class, 'getAccountPerformanceSummary']);
 
 Route::post('api/transactions/sell', [TransactionsController::class, 'sell']);

@@ -113,6 +113,25 @@ table tr th {
 
 .text-right {
     text-align: right;
+} 
+
+.summary-widget h5 {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.summary-widget h2 {
+    font-size: 1.25rem;
+}
+
+.summary-widget hr {
+    margin: 10px 0;
+}
+
+.summary-widget span {
+    font-size: 0.80rem;
+    opacity: 0.7;
+    font-weight: normal;
 }
 
 @media (min-width: 768px) {
