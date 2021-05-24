@@ -6,17 +6,48 @@ class MonthlyTracker extends React.Component {
     constructor(props) {
 
         super(props)
+        this.state = {
+            tradesSummary: []
+        }
+    }
+
+    componentDidMount() {
+
+        this.setData()
     }
 
     async setData() {
 
         await axios.get('/api/monthlyTracker')
                     .then(res => {
-                        console.log(res)
+                        console.log(res.data)
+                        this.setState({tradesSummary: res.data})
                     })
                     .catch(err => {
                         console.log(err)
                     })
+    }
+
+    displayData() {
+        
+        var data = []
+        Object.keys(this.state.tradesSummary).map( (key, index) => (
+            data.push(<tr key={index}>
+                <td>{key}</td>
+                <td>{this.state.tradesSummary[key].avgGain}</td>
+                <td>{this.state.tradesSummary[key].avgLoss}</td>
+                <td>{this.state.tradesSummary[key].winPercentage}</td>
+                <td>{this.state.tradesSummary[key].totalTrades}</td>
+                <td>{this.state.tradesSummary[key].largestGain}</td>
+                <td>{this.state.tradesSummary[key].largestLost}</td>
+                <td>{this.state.tradesSummary[key].winHoldingDays}</td>
+                <td>{this.state.tradesSummary[key].lossHoldingDays}</td>
+                
+            </tr>)
+        ))
+        
+        return data
+         
     }
     render() {
 
@@ -42,7 +73,19 @@ class MonthlyTracker extends React.Component {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="card">
-                                <div className="card-body" >
+                                <div className="card-body" > 
+                                    <div className="row">
+                                        <div className="col-3">
+                                            <div className="form-inline">
+                                                <div className="form-group">
+                                                    <label>Filter: </label>
+                                                    <select className="form-control">
+                                                        <option>Past 12 Months</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table className="table table-bordered table-striped table-hover">
                                         <thead>
                                             <tr>
@@ -57,7 +100,7 @@ class MonthlyTracker extends React.Component {
                                                 <th>Loss holding days</th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>{ this.displayData() }</tbody>
                                     </table> 
                                 </div>
                             </div>

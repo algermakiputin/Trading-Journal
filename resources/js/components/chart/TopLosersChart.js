@@ -9,7 +9,7 @@ class TopLosersChart extends React.Component {
         super(props)
         this.state = {
             data: null,
-            height:45
+            height:50
         }
     }
 

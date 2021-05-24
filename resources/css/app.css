@@ -114,3 +114,11 @@ table tr th {
 .text-right {
     text-align: right;
 }
+
+@media (min-width: 768px) {
+    .form-inline .form-control {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+    }
+}

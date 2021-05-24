@@ -68,7 +68,7 @@ class TradesController extends Controller
     public function getClosedTrades() {
 
         $closedTrades = Trade::where('status','=', 1)  
-                                ->orderBy('purcased_date','DESC')
+                                ->orderBy('purchase_date','DESC')
                                 ->orderBy('id', 'DESC')
                                 ->get();
         $data = [];
@@ -87,7 +87,7 @@ class TradesController extends Controller
             $result = $gain_loss_percentage >= 0 ? 'win' : 'loss';
 
             $data[] = array(
-                'date' => $trade->date,
+                'date' => $trade->purchase_date,
                 'stock_code' => $trade->stock_code,
                 'avg_buy' => number_format($avgBuy,4),
                 'avg_sell' => number_format($avgSell,4),
@@ -243,11 +243,10 @@ class TradesController extends Controller
 
         $wins = $this->getTotalWinTrades();
         $losses = $this->getTotalLossTrades();
- 
-        if ( $wins && $losses) 
-            return $wins / $losses;
+  
+        return $wins / $losses;
 
-        return 0;
+       
     }
 
     public function calculateAverageGain() {
@@ -287,5 +286,207 @@ class TradesController extends Controller
     public function monthlyTracker() {
 
         $pastYear = date('Y-m-d', strtotime('-12 months'));
+        $today = date('Y-m-d');
+        $trades = $this->getTradesByMonth($pastYear, $today); 
+        $startingDate = new \DateTime($pastYear);
+        $endingDate = new \DateTime($today);
+        $data = []; 
+
+        for ( $start = $startingDate; $start <= $endingDate; $start->modify('+1 month')) {
+
+            $summary = array(
+                'avgGain' => 0,
+                'avgLoss' => 0,
+                'totalTrades' => 0,
+                'winPercentage' => 0,
+                'largestWin' => 0,
+                'largestLoss' => 0,
+                'winHoldingDays' => 0,
+                'lossHoldingDays' => 0
+            );
+
+            foreach ( $trades as $key => $trade ) {
+                
+                $tradeDate = $key;  
+                $tradeCount = count($trade);  
+                if ( $tradeDate === $start->format('Y-m')) {
+                     
+                    $summary['avgGain'] = number_format($this->averageGain($trade),2) . '%';
+                    $summary['avgLoss'] = number_format($this->averageLoss($trade),2) . '%';
+                    $summary['totalTrades'] = $tradeCount;
+                    $summary['winPercentage'] = 0;
+                    $summary['largestGain'] = number_format($this->largestGain($trade),2) . '%';
+                    $summary['LargestLoss'] = number_format($this->largestLoss($trade) ,2) . '%';
+                    $summary['winHoldingDays'] = $this->getWinHoldingDays($trade);
+                    $summary['lossHoldingDays'] = $this->getLossHoldingDays($trade); 
+                    continue;
+                }
+
+            }
+
+            $data[$start->format('F, Y')] = $summary;
+        }
+
+        return array_reverse($data);
+    }  
+
+    private function getWinHoldingDays($trades) {
+    
+        if ( $trades ) {
+
+            $winTrades = $this->winTrades($trades);
+          
+            $days = 0;
+            $totalTrades = count($trades);
+
+            foreach ( $winTrades as $trade ) {
+              
+                $days += $this->getDaysDifference( $trade->purchase_date, $trade->sell_date);
+            }
+
+            return $days / $totalTrades;
+        }
+
+        return 0;
+        
+    }
+
+    public function getDaysDifference($date1, $date2) {
+
+        $startingDate = new \DateTime( $date1 );
+        $endingDate = new \DateTime( $date2 );
+        $dateDifference = $startingDate->diff($endingDate); 
+        return  $dateDifference->d;
+    }
+    private function getLossHoldingDays($trades) {
+
+        if ( $trades ) {
+            
+            $lossTrades = $this->lossTrades($trades);
+            $days = 0;
+            $totalTrades = count($trades);
+
+            foreach ( $lossTrades as $trade ) {
+              
+                $days += $this->getDaysDifference( $trade->purchase_date, $trade->sell_date);
+
+            }
+
+            return $days / $totalTrades;
+        }
+
+        return 0;
+        
+    }
+
+    public function winTrades($trades) {
+
+        $wins = [];
+        foreach ( $trades as $trade) {
+
+            if ( $trade->win )
+                array_push($wins, $trade);
+        }
+
+        return $wins;
+    }
+
+    public function lossTrades($trades) {
+
+        $losses = [];
+        foreach ( $trades as $trade) {
+
+            if ( !$trade->win )
+                array_push($losses, $trade);
+        }
+
+        return $losses;
+    }
+
+    public function largestGain($trade) {
+     
+        if ( $trade ) { 
+            $gains = array_column($trade,'gain_loss_percentage');
+            return max($gains);
+        }
+
+        return 0;
+    }
+
+    public function largestLoss($trade) {
+
+        if ( $trade ) {
+
+            $gains = array_column($trade,'gain_loss_percentage');
+            return min($gains);
+        }
+
+        return 0;
+    }
+
+    public function averageGain($trades) {
+       
+        $wins = 0;
+        $totalTrades = 0; 
+        foreach ( $trades as $trade ) {
+
+            if ( $trade->win ) {
+
+                $wins += $trade->gain_loss_percentage;
+                $totalTrades++;
+            }
+        }
+
+        return $wins / $totalTrades;
+    }
+
+    public function averageLoss($trades) {
+
+        if ( $trades ) {
+
+            $losses = 0;
+            $totalTrades = 0;
+    
+            foreach ( $trades as $trade ) {
+
+                if ( !$trade->win ) {
+
+                    $losses += $trade->gain_loss_percentage;
+                    $totalTrades++;
+                }
+            }
+
+            return $losses / $totalTrades;
+        }
+
+        return 0;
+    }
+
+    //This function will accept 2 parameters starting date and ending date and will return monthly trades
+    // base on passed date periods
+    public function getTradesByMonth($startingDate, $endingDate) {
+
+        $data = [];
+        $trades = DB::table('trades')
+                    ->join('trade_results', 'trade_results.trade_id', '=', 'trades.id')
+                    ->select(
+                        'trades.stock_code', 
+                        'trades.purchase_date',
+                        'trades.sell_date',
+                        'trade_results.win', 
+                        'trade_results.gain_loss_percentage', 
+                        'trade_results.gain_loss_amount'
+                    )
+                    ->where('trades.status', '=', 1)
+                    ->where('trades.purchase_date', '>=', $startingDate)
+                    ->where('trades.purchase_date', '<=', $endingDate)
+                    ->get();
+                    
+        foreach ( $trades as $trade ) {
+
+            $data[date('Y-m', strtotime($trade->purchase_date))][] = $trade;
+        }
+        
+        return $data;
     }
 }
