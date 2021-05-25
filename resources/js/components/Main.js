@@ -9,8 +9,10 @@ import Dashboard from '../components/pages/Dashboard'
 import Analytics from '../components/pages/Analytics'
 import MonthlyTracker from '../components/pages/MonthlyTracker'
 import Logs from '../components/pages/Logs'
+import axios from 'axios'
+import '../global/global'
 
-
+axios.defaults.headers.common['X-CSRF-TOKEN'] = global.csrf_token
 class Main extends React.Component {
 
     constructor(props) {

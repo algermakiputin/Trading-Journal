@@ -186,7 +186,7 @@ class Dashboard extends React.Component {
                             <div className="card">
                                 <div className="card-body equity-card">
                                     <h4 className="card-title">Account Summary (PHP)</h4>
-                                    <h5 className="card-subtitle">Summary for the last 12 months</h5>
+                                    <h5 className="card-subtitle">Summary for the last 12s months</h5>
                                     <div className="feed-widget">
                                         <ul className="list-style-none feed-body m-0 p-b-20">
                                             <li className="feed-item">
@@ -231,10 +231,8 @@ class Dashboard extends React.Component {
                                         <div>
                                         <h4 className="card-title">Stock Position</h4>
                                         <h5 className="card-subtitle">Overview of my open trades</h5>
-                                        </div>
-                                       
-                                    </div> 
-                                  
+                                        </div> 
+                                    </div>  
                                    <PositionsTable positions={this.state.positions} />
                                    <Modal     
                                         show={ this.state.showSellModal } 

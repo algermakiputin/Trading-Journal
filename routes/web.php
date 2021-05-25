@@ -5,6 +5,7 @@ use App\Http\Controllers\api\TransactionsController;
 use App\Http\Controllers\TradesController;
 use App\Http\Controllers\api\BankController;
 use App\Http\Controllers\EquitiesController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +18,10 @@ use App\Http\Controllers\EquitiesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-}); 
-Route::get('/logs', function () {
-    return view('welcome');
-}); 
-Route::get('/analytics', function () {
-    return view('welcome');
-}); 
-Route::get('/monthly-tracker', function () {
-    return view('welcome');
-}); 
+Route::get('/', [HomeController::class,'index']); 
+Route::get('/logs', [HomeController::class,'index']); 
+Route::get('/analytics', [HomeController::class,'index']); 
+Route::get('/monthly-tracker', [HomeController::class,'index']); 
 
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
@@ -48,3 +41,11 @@ Route::get('get_equities', [EquitiesController::class, 'getEquities']);
 Route::get('api/equitycurve', [EquitiesController::class,'getEquityCurve']);
 
 Route::get('test', [TransactionsController::class, 'getResult']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
