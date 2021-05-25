@@ -23,6 +23,7 @@ class CreateTradesTable extends Migration
             $table->string('sell_date');
             $table->double('purchase_price');
             $table->integer('sold'); 
+            $table->integer('profile_id')->index('profile_id');
         });
     }
 

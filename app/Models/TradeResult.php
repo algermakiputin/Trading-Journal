@@ -9,5 +9,5 @@ class TradeResult extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['trade_id', 'win', 'gain_loss_percentage', 'gain_loss_amount'];
+    protected $fillable = ['trade_id', 'win', 'gain_loss_percentage', 'gain_loss_amount','profile_id'];
 }

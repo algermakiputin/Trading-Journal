@@ -18,6 +18,7 @@ class CreateBanksTable extends Migration
             $table->string('date');
             $table->string('action');
             $table->string('amount');
+            $table->integer('profile_id')->index('profile_id');
             $table->timestamps();
         });
     }

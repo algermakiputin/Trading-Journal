@@ -24,7 +24,8 @@ class CreateTransactionsTable extends Migration
             $table->unsignedInteger('shares');
             $table->double('fees');
             $table->double('net'); 
-            $table->unsignedInteger('trade_id');
+            $table->unsignedInteger('trade_id')->index('trade_id');
+            $table->integer('profile_id')->index('profile_id');
             $table->timestamps();
 
         });
