@@ -66,7 +66,7 @@ class AccountPerformanceTable extends React.Component {
                         <td className="text-right">{this.state.winLossRatio}</td>
                     </tr>
                     <tr>
-                        <td>Adjusted Win / Loss Ratio</td>
+                        <td>Avg Profitability Per Trade</td>
                         <td className="text-right">{this.state.adjustedWinLossRatio}</td>
                     </tr>
                 </tbody>

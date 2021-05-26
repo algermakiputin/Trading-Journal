@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Trade; 
 use App\Models\TradeResult; 
 use Illuminate\Support\Facades\DB; 
+use Session;
 
 class TradesController extends Controller
 {
@@ -15,8 +16,9 @@ class TradesController extends Controller
 
         $position = [];
         $trades = DB::table('trades')
-                        ->where('trades.status', 0) 
-                        ->get();
+                    ->where('profile_id', '=', session('profile_id'))
+                    ->where('trades.status', 0) 
+                    ->get();
    
         $trades = $this->group_trades( $trades );
         
@@ -67,12 +69,12 @@ class TradesController extends Controller
         );
     }
 
-    public function getClosedTrades() {
-
+    public function getClosedTrades() { 
         $closedTrades = Trade::where('status','=', 1)  
-                                ->orderBy('purchase_date','DESC')
-                                ->orderBy('id', 'DESC')
-                                ->get();
+                            ->where('profile_id', '=', session('profile_id'))
+                            ->orderBy('purchase_date','DESC')
+                            ->orderBy('id', 'DESC')
+                            ->get();
         $data = [];
         
         foreach ( $closedTrades as $trade ) {
@@ -204,6 +206,7 @@ class TradesController extends Controller
         $averageWins = $this->calculateAverageGain($pastMonth, $today);
         $averageLosses = $this->calculateAverageLosses($pastMonth, $today);
         $winLossRatio = $this->getWinLossRatio($pastMonth, $today);
+        $appt = $this->calculateAverageProfitabilityPerTrade($pastMonth, $today);
 
         return array(
             'totalTrades' => $totalTradesTaken,
@@ -211,14 +214,59 @@ class TradesController extends Controller
             'averageWins' => $averageWins,
             'averageLosses' => $averageLosses,
             'winLossRatio' => $winLossRatio,
-            'adjustedWinLossRatio' => 0
+            'adjustedWinLossRatio' => $appt
         );
 
     }
 
+    public function calculateAverageProfitabilityPerTrade($startingDate, $endingDate) {
+ 
+        $lossingProbability = $this->getLossingPercentage($startingDate, $endingDate);
+        $winnningProbability = $this->getWinningPercentage($startingDate, $endingDate);
+        $averageWinAmount = $this->getAverageWinAmount($startingDate, $endingDate);
+        $averageLossAmount = $this->getAverageLossAmount($startingDate, $endingDate);
+
+        return ( $winnningProbability * $averageWinAmount) - ( $lossingProbability * $averageLossAmount );
+    }
+
+    public function getAverageWinAmount($startingDate, $endingDate) {
+
+        $winTrades = DB::table('trades')
+                        ->join('trade_results', 'trade_results.trade_id', '=', 'trades.id')
+                        ->select(
+                            DB::raw('SUM(trade_results.gain_loss_percentage) as total'),
+                            DB::raw('COUNT(trades.id) as total_rows'),
+                        )
+                        ->where('trade_results.win', '=', 1)
+                        ->whereDate('trades.purchase_date', '>=', $startingDate)
+                        ->whereDate('trades.purchase_date', '<=', $endingDate)
+                        ->first();
+    
+        if ( $winTrades->total && $winTrades->total_rows )
+            return $winTrades->total / $winTrades->total_rows;
+    }
+
+    public function getAverageLossAmount($startingDate, $endingDate) {
+
+        $winTrades = DB::table('trades')
+                        ->join('trade_results', 'trade_results.trade_id', '=', 'trades.id')
+                        ->select(
+                            DB::raw('SUM(trade_results.gain_loss_percentage) as total'),
+                            DB::raw('COUNT(trades.id) as total_rows'),
+                        )
+                        ->where('trade_results.win', '=', 0)
+                        ->whereDate('trades.purchase_date', '>=', $startingDate)
+                        ->whereDate('trades.purchase_date', '<=', $endingDate)
+                        ->first();
+
+        if ( $winTrades->total && $winTrades->total_rows )
+            return $winTrades->total / $winTrades->total_rows;
+    }
+
     public function getTotalTradesTaken($startingDate, $endingDate) {
 
-        return Trade::where('status', 1)
+        return Trade::where('status', '=' , 1) 
+                    ->where('profile_id', '=', session('profile_id'))
                     ->whereDate('created_at', '>=', $startingDate)
                     ->whereDate('created_at', '<=', $endingDate)
                     ->count();
@@ -227,17 +275,19 @@ class TradesController extends Controller
     public function getTotalLossTrades( $startingDate, $endingDate) {
 
         return TradeResult::where('win', '=', 0)
-                            ->whereDate('created_at', '>=', $startingDate)
-                            ->whereDate('created_at', '<=', $endingDate)
-                            ->count();
+                        ->where('profile_id', '=', session('profile_id'))
+                        ->whereDate('created_at', '>=', $startingDate)
+                        ->whereDate('created_at', '<=', $endingDate)
+                        ->count();
     }
 
     public function getTotalWinTrades( $startingDate, $endingDate ) { 
 
         return TradeResult::where('win', '=', 1)
-                            ->whereDate('created_at', '>=', $startingDate)
-                            ->whereDate('created_at', '<=', $endingDate)
-                            ->count();
+                        ->where('profile_id', '=', session('profile_id'))
+                        ->whereDate('created_at', '>=', $startingDate)
+                        ->whereDate('created_at', '<=', $endingDate)
+                        ->count();
     }
 
     //calculate trade winning percentage
@@ -251,14 +301,25 @@ class TradesController extends Controller
 
     }
 
+    public function getLossingPercentage($startingDate, $endingDate) {
+
+        $totalTrades = $this->getTotalTradesTaken($startingDate, $endingDate); 
+        $losses = $this->getTotalLossTrades($startingDate, $endingDate); 
+
+        if ( $totalTrades && $losses)
+            return $losses / $totalTrades * 100;
+
+    }
+
     public function getWinLossRatio($startingDate, $endingDate) {
 
         $wins = $this->getTotalWinTrades($startingDate, $endingDate);
         $losses = $this->getTotalLossTrades($startingDate, $endingDate);
       
-        return $wins / $losses;
-
-       
+        if ( $wins && $losses)
+            return $wins / $losses;
+        
+        return 0;
     }
 
     public function calculateAverageGain($startingDate, $endingDate ) {
@@ -267,13 +328,16 @@ class TradesController extends Controller
                                 DB::raw('SUM(gain_loss_percentage) as totalGains'), 
                                 DB::raw('count(id) as numRows') 
                             )
-                            ->where('win', '=', 1) 
+                            ->where('win', '=', 1)  
+                            ->where('profile_id', '=', session('profile_id'))
                             ->whereDate('created_at', '>=', $startingDate)
                             ->whereDate('created_at', '<=', $endingDate)
                             ->first(); 
         
         if ( $gains->totalGains )
             return number_format($gains->totalGains / $gains->numRows,2);
+        
+        return 0;
 
     }
 
@@ -283,13 +347,15 @@ class TradesController extends Controller
                                     DB::raw('SUM(gain_loss_percentage) as totalGains'), 
                                     DB::raw('count(id) as numRows'))
                             ->where('win', '=', 0)
+                            ->where('profile_id', '=', session('profile_id'))
                             ->whereDate('created_at', '>=', $startingDate)
                             ->whereDate('created_at', '<=', $endingDate)
                             ->first();
         
         if ( $trades->totalGains)
-            return number_format($trades->totalGains / $trades->numRows,2);                       
-
+            return number_format($trades->totalGains / $trades->numRows,2);  
+            
+        return 0;
     }
 
     public function calculateAdjustedWinLossRatio() {
@@ -502,10 +568,12 @@ class TradesController extends Controller
                 }
             }
 
-            return $losses / $totalTrades;
-        }
+            if ( $losses && $totalTrades )
+                return $losses / $totalTrades; 
+            
+        } 
 
-        return 0;
+        return 1;
     }
 
     //This function will accept 2 parameters starting date and ending date and will return monthly trades
@@ -524,6 +592,7 @@ class TradesController extends Controller
                         'trade_results.gain_loss_amount'
                     )
                     ->where('trades.status', '=', 1)
+                    ->where('profile_id', '=', session('profile_id'))
                     ->whereDate('trades.purchase_date', '>=', $startingDate)
                     ->whereDate('trades.purchase_date', '<=', $endingDate)
                     ->get();

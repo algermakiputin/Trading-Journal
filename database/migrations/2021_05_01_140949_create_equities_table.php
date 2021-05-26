@@ -21,6 +21,7 @@ class CreateEquitiesTable extends Migration
             $table->double('remaining_cash');
             $table->string('action');
             $table->integer('action_reference_id');
+            $table->integer('profile_id')->index('profile_id');
         });
     }
 

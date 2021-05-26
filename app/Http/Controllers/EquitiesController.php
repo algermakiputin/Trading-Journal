@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Equity;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class EquitiesController extends Controller
 {
@@ -13,6 +14,7 @@ class EquitiesController extends Controller
     public function getEquities() {
 
         $equity = Equity::orderBy('id', 'DESC')
+                        ->where('profile_id', '=', session('profile_id'))
                         ->limit(1)
                         ->first();
         
@@ -46,7 +48,8 @@ class EquitiesController extends Controller
 
         $equity = DB::table("equities")
                         ->select(DB::raw('MIN(date) as min, MAX(date) as max'))
-                        ->where('date', '>=', $pastMonth)
+                        ->where('profile_id', '=', session('profile_id'))
+                        ->where('date', '>=', $pastMonth) 
                         ->where('date', '<=', $today)
                         ->first();
         
@@ -62,10 +65,11 @@ class EquitiesController extends Controller
     private function getStartingEquity($date) {
 
         $equity =  DB::table('equities')
-                        ->select('total_equity as total')
-                        ->where('date', '>=', $date)
-                        ->orderBy('id', 'ASC')
-                        ->first(); 
+                    ->select('total_equity as total')
+                    ->where('profile_id', '=', session('profile_id'))
+                    ->where('date', '>=', $date)
+                    ->orderBy('id', 'ASC')
+                    ->first(); 
         
         return $equity->total ?? 0;
     }
@@ -73,10 +77,11 @@ class EquitiesController extends Controller
     private function getEndingEquity($date) {
 
         $equity = DB::table('equities')
-                        ->select('total_equity as total')
-                        ->where('date', '<=', $date)
-                        ->orderBy('id', 'DESC')
-                        ->first();
+                    ->select('total_equity as total')
+                    ->where('profile_id', '=', session('profile_id'))
+                    ->where('date', '<=', $date)
+                    ->orderBy('id', 'DESC')
+                    ->first();
 
         return $equity->total ?? 0;
     } 
@@ -103,7 +108,8 @@ class EquitiesController extends Controller
 
         $lastHalfQuarter = new \DateTime( date('Y-m-d', strtotime('-12 weeks')) );
 		$today = new \DateTime( date('Y-m-d') );
-        $equities = Equity::where('date', '>=', $lastHalfQuarter->format('Y-m-d'))
+        $equities = Equity::where('profile_id', '=', session('profile_id'))
+                            ->where('date', '>=', $lastHalfQuarter->format('Y-m-d'))
                             ->where('date', '<=', $today->format('Y-m-d'))
                             ->get();
 

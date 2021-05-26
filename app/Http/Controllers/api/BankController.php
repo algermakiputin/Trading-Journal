@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Bank;
 use App\Models\Equity;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class BankController extends Controller
 {
@@ -20,6 +21,7 @@ class BankController extends Controller
         $totalEquity = $amount;
         $remainingCash = $amount;
         $equity = Equity::where('date', '<=', $date) 
+                        ->where('profile_id', '=', session('profile_id'))
                         ->orderBy('id', 'DESC')
                         ->first();
 
@@ -35,7 +37,8 @@ class BankController extends Controller
             $bank = Bank::create([
                 'date' => $date,
                 'amount' => $amount,
-                'action' => $action
+                'action' => $action,
+                'profile_id' => session('profile_id')
             ]);
             
             Equity::create([
@@ -43,7 +46,8 @@ class BankController extends Controller
                 'total_equity' => $totalEquity,
                 'remaining_cash' => $remainingCash,
                 'action' => $action,
-                'action_reference_id' => $bank->id
+                'action_reference_id' => $bank->id,
+                'profile_id' => session('profile_id')
             ]);
 
             DB::commit();

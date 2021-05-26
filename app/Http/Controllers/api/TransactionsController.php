@@ -52,7 +52,8 @@ class TransactionsController extends Controller
             'purchase_date' => $request['data']['date'],
             'sell_date' => 0,
             'purchase_price' => $request['data']['price'],
-            'sold' => 0
+            'sold' => 0,
+            'profile_id' => session('profile_id')
         ]);
     }
  
@@ -76,15 +77,17 @@ class TransactionsController extends Controller
                 'fees' => $request['data']['fees'],
                 'net' => $request['data']['net'],
                 'trade_id' => $trade->id,
-                'type' => 'long'
+                'type' => 'long',
+                'profile_id' => session('profile_id')
             ]);
-
+                
             Equity::create([
                 'date' => $request['data']['date'],
                 'total_equity' => $totalEquity,
                 'remaining_cash' => $remainingCash,
                 'action' => 'buy',
-                'action_reference_id' => $trade->id
+                'action_reference_id' => $trade->id,
+                'profile_id' => session('profile_id')
             ]);
 
             DB::commit();
@@ -154,11 +157,12 @@ class TransactionsController extends Controller
                 $status = 1;
 
             Trade::where('id', $trade->id)
-                            ->update([
-                                'status' => $status,
-                                'sold' => $totalSold,
-                                'sell_date' => $request->date
-                            ]);
+                    ->update([
+                        'status' => $status,
+                        'sold' => $totalSold,
+                        'sell_date' => $request->date,
+                        'profile_id' => session('profile_id')
+                    ]);
 
             $transaction = Transaction::create([
                 'date' => $request->date,
@@ -168,7 +172,8 @@ class TransactionsController extends Controller
                 'fees' => $request->fees,
                 'net' => $request->net,
                 'trade_id' => $trade->id, 
-                'type' => 'sell'
+                'type' => 'sell',
+                'profile_id' => session('profile_id')
             ]); 
 
             Equity::create([
@@ -176,7 +181,8 @@ class TransactionsController extends Controller
                 'total_equity' => $totalEquity,
                 'remaining_cash' => $availableCash,
                 'action' => 'sell',
-                'action_reference_id' => $trade->id
+                'action_reference_id' => $trade->id,
+                'profile_id' => session('profile_id')
             ]);
 
             //Update Trade Result ( Win or Loss )
@@ -189,7 +195,8 @@ class TransactionsController extends Controller
                     'win' => $win,
                     'gain_loss_percentage' => $result['gainLossPercentage'],
                     'gain_loss_amount' => $result['gainLossAmount'],
-                    'trade_id' => $trade->id
+                    'trade_id' => $trade->id,
+                    'profile_id' => session('profile_id')
                 ]);
             }
                 
