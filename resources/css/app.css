@@ -141,3 +141,15 @@ table tr th {
         vertical-align: middle;
     }
 }
+
+.dropdown-menu-right {
+    right: 0!important;
+    left: unset;
+}
+
+.nav-link {
+    padding: 0px 15px;
+    font-size: 0.875rem;
+    line-height: 64px;
+    height: 64px;
+}

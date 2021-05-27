@@ -28,7 +28,7 @@ class Main extends React.Component {
                 <BrowserRouter>
                     <Header />
                     <Switch>
-                        <Route exact path="/">
+                        <Route exact path="/dashboard">
                             <Dashboard />
                         </Route>
                         <Route path="/monthly-tracker">

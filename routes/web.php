@@ -18,7 +18,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class,'index']); 
+Route::get('/dashboard', [HomeController::class,'index']); 
 Route::get('/logs', [HomeController::class,'index']); 
 Route::get('/analytics', [HomeController::class,'index']); 
 Route::get('/monthly-tracker', [HomeController::class,'index']); 

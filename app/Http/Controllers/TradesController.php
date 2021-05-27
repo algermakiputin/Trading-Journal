@@ -592,7 +592,7 @@ class TradesController extends Controller
                         'trade_results.gain_loss_amount'
                     )
                     ->where('trades.status', '=', 1)
-                    ->where('profile_id', '=', session('profile_id'))
+                    ->where('trades.profile_id', '=', session('profile_id'))
                     ->whereDate('trades.purchase_date', '>=', $startingDate)
                     ->whereDate('trades.purchase_date', '<=', $endingDate)
                     ->get();

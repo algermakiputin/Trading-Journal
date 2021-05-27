@@ -41,14 +41,10 @@ class Sidebar extends React.Component {
                             </li>
                         
                             <li className="sidebar-item">
-                                <Link to='/' className='sidebar-link waves-effect waves-dark sidebar-link'> <i className="mdi mdi-view-dashboard"></i><span
+                                <Link to='/dashboard' className='sidebar-link waves-effect waves-dark sidebar-link'> <i className="mdi mdi-view-dashboard"></i><span
                                         className="hide-menu">Dashboard</span> </Link>
-                            </li>
-                            
-                            <li className="sidebar-item"> 
-                                <Link className="sidebar-link waves-effect waves-dark sidebar-link"
-                                    to='/analytics' aria-expanded="false"><i
-                                        className="mdi mdi-chart-bar"></i><span className="hide-menu">Analytics</span></Link></li>
+                            </li> 
+                             
                             <li className="sidebar-item"> 
                                     <Link 
                                         to='/logs' 
