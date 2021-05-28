@@ -149,7 +149,11 @@ table tr th {
 
 .nav-link {
     padding: 0px 15px;
-    font-size: 0.875rem;
+    fsize: 0.875rem;
     line-height: 64px;
     height: 64px;
+}
+
+.logo-text {
+    font-weight: 600;
 }

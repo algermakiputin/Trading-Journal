@@ -1,5 +1,6 @@
 import React from "react";
 import {Dropdown} from 'react-bootstrap'
+import logo from '../../../public/images/logo.png'
 
 export default function Header() {
     
@@ -10,7 +11,7 @@ export default function Header() {
                     <a className="navbar-brand" href="index.html">
                       
                         <b className="logo-text" style={{marginLeft:'10px'}}> 
-                            HERO JOURNALS
+                            <img src={logo} width={34} /> Hero Journals
                         </b>
                     </a>  
                 </div> 

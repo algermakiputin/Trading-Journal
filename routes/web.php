@@ -6,6 +6,7 @@ use App\Http\Controllers\TradesController;
 use App\Http\Controllers\api\BankController;
 use App\Http\Controllers\EquitiesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,10 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class,'handleGoogleCallback']);
+
+Route::get('/', [HomeController::class, 'home']);
 Route::get('/dashboard', [HomeController::class,'index']); 
 Route::get('/logs', [HomeController::class,'index']); 
 Route::get('/analytics', [HomeController::class,'index']); 
