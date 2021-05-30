@@ -37,7 +37,7 @@ class GoogleController extends Controller
                     'google_id'=> $user->id,
                     'password' => $user->id . strtotime(date('h:i:s')) . $user->name
                 ]);
-    
+                    
                 Auth::login($newUser); 
                 return redirect('/dashboard');
             }

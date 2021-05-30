@@ -45,7 +45,7 @@
         <h1 class="cover-heading">Track and Manage Your Trades</h1>
         <p class="lead">Hero journal is a free powerful tool that will level up your strategy and become the best trader version of yourself.</p>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-primary">Sign Up Now</a>
+          <a href="{{ url('/register') }}" class="btn btn-lg btn-primary">Sign Up Now</a>
         </p>
       </main>
 

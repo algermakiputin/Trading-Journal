@@ -5,10 +5,22 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">Log in to your account</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
+                        <div class="mb-2"> 
+                        <a onclick="google_login('{{ url('auth/google') }}')" href="#" style="margin-top: 20px;" class="btn btn-lg btn-default btn-block login-with-btn google">
+                            <strong>Log in with Google</strong>
+                        </a> 
+                        </div>
+                        <div class="mb-2">
+                            <div class="d-flex p-2 divider"> 
+                                <hr/> 
+                                <span>Or</span>
+                                <hr/>
+                            </div>
+                        </div>
                         @csrf
 
                         <div class="form-group row">
@@ -64,9 +76,7 @@
                                 @endif
                             </div>
                         </div>
-                        <a onclick="window.open('{{ url('auth/google') }}', 'name','width=600,height=400')" href="#" style="margin-top: 20px;" class="btn btn-lg btn-success btn-block">
-                                  <strong>Login With Google</strong>
-                                </a> 
+                        
                     </form>
                 </div>
             </div>

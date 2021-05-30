@@ -7,6 +7,7 @@ use App\Http\Controllers\api\BankController;
 use App\Http\Controllers\EquitiesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,11 @@ use App\Http\Controllers\Auth\GoogleController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('signup', [
+    'as' => 'register',
+    'uses' => '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm'
+]);
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class,'handleGoogleCallback']);
