@@ -24,10 +24,22 @@ class BankController extends Controller
                         ->where('profile_id', '=', session('profile_id'))
                         ->orderBy('id', 'DESC')
                         ->first();
-
-        if ( $equity) {
+    
+        if ( $equity && $request->action == "deposit" ) {
             $totalEquity += $equity->total_equity;
             $remainingCash += $equity->remaining_cash;
+
+        }else if ( $equity && $request->action =="withdraw") { 
+            
+            $availableCash = $equity->remaining_cash; 
+            if ( $availableCash > $amount ) { 
+                $totalEquity = $equity->total_equity - $amount;
+                $remainingCash = $equity->remaining_cash - $amount;
+            
+            }else {
+                echo "not enough cash";
+                return false;
+            }
         }
 
         DB::beginTransaction();

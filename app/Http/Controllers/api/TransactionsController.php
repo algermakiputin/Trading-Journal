@@ -325,10 +325,23 @@ class TransactionsController extends Controller
   
     public function destroy(Request $request)
     {
-       
-        Transaction::where('id', '=', $request->id)
-                    ->delete(); 
-        Equity::where('action_reference_id', '=', $request->id);
+        
+        try {
+            
+            DB::beginTransaction();
+
+            Transaction::where('id', '=', $request->id)->delete();  
+            Trade::where('id', '=', $request->trade_id)->delete();
+            Equity::where('action_reference_id', '=', $request->id)->delete();
+            DB::commit();
+            return 1;
+
+        } catch (\Exception $e) { 
+            DB::rollback(); 
+            throw $e;
+            return 0;
+        } 
+        
 
     }
 

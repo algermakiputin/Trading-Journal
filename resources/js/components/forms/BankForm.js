@@ -35,7 +35,8 @@ class BankForm extends React.Component {
             axios.post('api/bank/create', {
                     data: this.state,
                     totalEquity: this.props.totalEquity,
-                    availableCash: this.props.availableCash
+                    availableCash: this.props.availableCash,
+                    action: this.state.action
                 })
                     .then( res => {
                          
@@ -103,6 +104,7 @@ class BankForm extends React.Component {
                                 <Form.Label>Action</Form.Label>
                                 <Form.Control as="select" 
                                     defaultValue="deposit" 
+                                    onChange={ event=> { this.setState({action: event.target.value }) } }
                                 >
                                     <option value="deposit">Deposit</option>
                                     <option value="withdraw">Withdraw</option>
