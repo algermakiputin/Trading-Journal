@@ -280,12 +280,12 @@ class TransactionsController extends Controller
             DB::beginTransaction();  
 
             Transaction::where('id','=', $request->transaction_id)
-                    ->update([
-                        'price' => $request->price,
-                        'shares' => $request->shares,
-                        'net' => $request->net,
-                        'fees' => $request->fees
-                    ]);
+                        ->update([
+                            'price' => $request->price,
+                            'shares' => $request->shares,
+                            'net' => $request->net,
+                            'fees' => $request->fees
+                        ]);
 
             Equity::create([
                         'date' => $request->date,
@@ -298,18 +298,18 @@ class TransactionsController extends Controller
 
             if ( $transaction->type == "long") {
                 Trade::where('id', '=', $trade_id)
-                    ->update([
-                        'shares' => $request->shares,
-                        'purchase_price' => $request->price,
-                    ]);
+                        ->update([
+                            'shares' => $request->shares,
+                            'purchase_price' => $request->price,
+                        ]);
             }else if ( $transaction->type == "sell") {
 
                 $status = $trade->shares <= $request->shares ? 1 : 0;
                 Trade::where('id', '=', $trade_id)
-                    ->update([
-                        'sold' => $request->shares, 
-                        'status' => $status
-                    ]);
+                        ->update([
+                            'sold' => $request->shares, 
+                            'status' => $status
+                        ]);
             }
 
             DB::commit();
@@ -331,8 +331,33 @@ class TransactionsController extends Controller
             DB::beginTransaction();
 
             Transaction::where('id', '=', $request->id)->delete();  
-            Trade::where('id', '=', $request->trade_id)->delete();
-            Equity::where('action_reference_id', '=', $request->id)->delete();
+            $totalEquity = $request->totalEquity;
+            $availableCash = $request->availableCash;
+            if ( $request->type == "long") { 
+
+                Trade::where('id', '=', $request->trade_id)->delete();
+                $availableCash += $request->net;
+                
+            }else if ( $request->type == "sell") {
+
+                Trade::where('id', '=', $request->trade_id) 
+                        ->update([
+                            'status' => 0,
+                            'sold' => DB::raw('sold -' . $request->shares)
+                        ]);
+                TradeResult::where('id', '=', $request->trade_id)->delete(); 
+                $totalEquity -= $request->totalEquity;
+                $availableCash -= $request->availableCash;
+            }
+
+            Equity::create([
+                'date' => $request->date,
+                'total_equity' => $totalEquity,
+                'remaining_cash' => $availableCash,
+                'action' => 'delete',
+                'action_reference_id' => $request->id,
+                'profile_id' => session('profile_id')
+            ]);
             DB::commit();
             return 1;
 

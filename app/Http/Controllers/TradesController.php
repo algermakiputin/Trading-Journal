@@ -294,8 +294,8 @@ class TradesController extends Controller
     public function getWinningPercentage($startingDate, $endingDate) {
 
         $totalTrades = $this->getTotalTradesTaken($startingDate, $endingDate); 
-        $winTrades = $this->getTotalWinTrades($startingDate, $endingDate); 
-
+        $winTrades = $this->getTotalWinTrades($startingDate, $endingDate);  
+          
         if ( $totalTrades && $winTrades)
             return $winTrades / $totalTrades * 100;
 

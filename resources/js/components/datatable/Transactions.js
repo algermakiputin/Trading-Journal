@@ -114,7 +114,10 @@ class Transaction extends React.Component {
     }
 
     delete(row) {
-
+        
+        row.availableCash = this.state.availableCash
+        row.totalEquity = this.state.totalEquity
+        
         axios.delete('/api/transactions/destroy', {
             params: row
         })

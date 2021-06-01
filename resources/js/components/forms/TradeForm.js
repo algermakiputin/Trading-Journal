@@ -3,7 +3,8 @@ import { Form, Table, Button, Modal, Alert } from "react-bootstrap"
 import axios from "axios"
 import Transactions from '../../classes/Transactions'
 import NumberFormat from 'react-number-format'
-import Datetime from 'react-datetime'
+import Datetime from 'react-datetime' 
+import AutowidthInput from "react-autowidth-input";
 import "react-datetime/css/react-datetime.css"
 import '../../global/global'
 
@@ -23,10 +24,13 @@ class TradeForm extends React.Component {
             net: 0.00,
             error_show: false,
             net:0,
-            fees: 0
+            fees: 0,
+            netText:'0.00',
+            feesText:'0.00'
         }
 
         this.baseState = this.state;
+        this.input = React.createRef()
  
     }  
    
@@ -78,9 +82,16 @@ class TradeForm extends React.Component {
         fee = Number(this.num_nan( fee )).toFixed(2);
         total = Number(this.num_nan ( total )).toFixed(2);
         
-        this.setState({ net: total, fees: fee});
+        this.setState({ 
+            net: total, 
+            fees: fee,
+            netText: this.numberWithCommas(total),
+            feesText: this.numberWithCommas(fee)
+        });
 
     }
+
+    
 
     net_calculator_shares_handle(event) {
          
@@ -90,10 +101,20 @@ class TradeForm extends React.Component {
         let total = Number(( price * shares) + fee).toFixed(2); 
 
         fee = Number(this.num_nan( fee )).toFixed(2);
-        total = Number(this.num_nan ( total )).toFixed(2);
-        
-        this.setState({ net: total, fees: fee});
+        total = Number(this.num_nan ( total )).toFixed(2); 
  
+        this.setState({ 
+            net: total, 
+            fees: fee,
+            netText: this.numberWithCommas(total),
+            feesText: this.numberWithCommas(fee)
+          
+        });
+ 
+    }
+
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     num_nan( number ) {
@@ -123,6 +144,11 @@ class TradeForm extends React.Component {
                 </Alert>
             )
         }
+    }
+
+    resize() {
+
+        console.log(this.input.current)
     }
 
     render() { 
@@ -185,22 +211,18 @@ class TradeForm extends React.Component {
                                         required></Form.Control> 
                                     </td>
                                     <td>
-                                        <NumberFormat 
-                                            thousandSeparator={true}
-                                            defaultValue={null} 
-                                            value={ this.state.fees }  
-                                            readOnly={true}
-                                            className='form-control'
-                                        /> 
+                                        <AutowidthInput 
+                                            readOnly
+                                            value={ this.state.feesText} 
+                                            wrapperClassName="auto-width-wrapper"
+                                        />
                                     </td>
-                                    <td>
-                                        <NumberFormat 
-                                            thousandSeparator={true}
-                                            defaultValue={null} 
-                                            value={ this.state.net }  
-                                            readOnly={true}
-                                            className='form-control'
-                                        />  
+                                    <td> 
+                                        <AutowidthInput 
+                                            readOnly
+                                            value={ this.state.netText} 
+                                            wrapperClassName="auto-width-wrapper"
+                                        />
                                     </td>
                                 </tr>
                             </tbody>
