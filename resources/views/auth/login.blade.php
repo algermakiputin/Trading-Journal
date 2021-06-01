@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         <div class="mb-2"> 
-                        <a onclick="google_login('{{ url('auth/google') }}')" href="#" style="margin-top: 20px;" class="btn btn-lg btn-default btn-block login-with-btn google">
+                        <a onclick="google_login('{{ url('auth/google') }}')" href="javascript:void(0)" style="margin-top: 20px;" class="btn btn-lg btn-default btn-block login-with-btn google">
                             <strong>Log in with Google</strong>
                         </a> 
                         </div>

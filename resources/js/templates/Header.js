@@ -17,14 +17,14 @@ export default function Header() {
                 </div> 
                 
                 <div style={{width:"100%",paddingRight:'20px'}}>
-                    <ul class="navbar-nav float-end"> 
-                        <li class="nav-item dropdown"> 
-                            <div class="dropdown ">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" id="navbarDropdown" data-toggle="dropdown">
+                    <ul className="navbar-nav float-end"> 
+                        <li className="nav-item dropdown"> 
+                            <div className="dropdown ">
+                                <a className="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" id="navbarDropdown" data-toggle="dropdown">
                                     Alger Makiputin <i className="mdi mdi-chevron-down"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Logout</a> 
+                                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a className="dropdown-item" href="#">Logout</a> 
                                 </div>
                             </div>
                         </li> 

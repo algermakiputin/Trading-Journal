@@ -8,6 +8,7 @@ use Socialite;
 use Auth;
 use Exception;
 use App\Models\User;
+use App\Models\Profile;
 
 class GoogleController extends Controller
 {
@@ -37,13 +38,31 @@ class GoogleController extends Controller
                     'google_id'=> $user->id,
                     'password' => $user->id . strtotime(date('h:i:s')) . $user->name
                 ]);
+
+                Profile::create([
+                    'user_id' => $newUser->id,
+                    'name' => $user->name
+                ]);
                     
                 Auth::login($newUser); 
+                $this->setUserSession($newUser);
                 return redirect('/dashboard');
             }
     
         } catch (Exception $e) {
             dd($e->getMessage());
         }
+    }
+
+    protected function setUserSession($user)
+    {
+        $user = Auth::user();
+        $profile = Profile::where('user_id', $user->id)
+                            ->first();
+        
+        session([
+            'profile_id' => $profile->id
+        ]);
+ 
     }
 }

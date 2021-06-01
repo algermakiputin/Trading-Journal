@@ -102,7 +102,7 @@ class TransactionsController extends Controller
 
         return;
     }
-
+ 
     public function sell(Request $request) {
         
         $shares = $request->shares; 
@@ -141,7 +141,8 @@ class TransactionsController extends Controller
         
     }
 
-    public function storeSell($request, $trade) {
+    public function storeSell($request, $trade) 
+    {
         
         try {
             DB::beginTransaction(); 
@@ -209,7 +210,8 @@ class TransactionsController extends Controller
         }
     } 
 
-    public function getResult( $trade_id ) {
+    public function getResult( $trade_id ) 
+    {
  
         $tradesController = new TradesController();
         $trade = DB::table('trades')->find($trade_id);
@@ -236,7 +238,8 @@ class TransactionsController extends Controller
         //
     }
 
-    public function calculateBuyingFees( $shares, $price ) {
+    public function calculateBuyingFees( $shares, $price ) 
+    {
     
         // BUYING FEES CALCULATION
         // Commission = ( TOTAL SHARES * PRICE ) * .25% 
@@ -253,21 +256,80 @@ class TransactionsController extends Controller
       
     }
 
-    public function calculateNetBuyingAmount( $shares, $price ) {
+    public function calculateNetBuyingAmount( $shares, $price ) 
+    {
 
         return $netBuyAmount = ( $shares * $price ) + $this->calculateBuyingFees($shares, $price);
     } 
 
  
-    public function update(Request $request, $id)
+    public function update(Request $request) 
     {
-        //
-    }
+          
+        $trade_id = $request->trade_id; 
+        $trade = Trade::find($trade_id);
+        $transaction = Transaction::find($request->transaction_id);
+        $totalEquity = $request->totalEquity;
+        $availableCash = $request->availableCash + $transaction->net - $request->net;
 
+        if ( $availableCash < $request->net)
+            return "Not enough cash";
+
+        try {
+
+            DB::beginTransaction();  
+
+            Transaction::where('id','=', $request->transaction_id)
+                    ->update([
+                        'price' => $request->price,
+                        'shares' => $request->shares,
+                        'net' => $request->net,
+                        'fees' => $request->fees
+                    ]);
+
+            Equity::create([
+                        'date' => $request->date,
+                        'total_equity' => $totalEquity,
+                        'remaining_cash' => $availableCash,
+                        'action' => 'update',
+                        'action_reference_id' => $transaction->id,
+                        'profile_id' => session('profile_id')
+                    ]);
+
+            if ( $transaction->type == "long") {
+                Trade::where('id', '=', $trade_id)
+                    ->update([
+                        'shares' => $request->shares,
+                        'purchase_price' => $request->price,
+                    ]);
+            }else if ( $transaction->type == "sell") {
+
+                $status = $trade->shares <= $request->shares ? 1 : 0;
+                Trade::where('id', '=', $trade_id)
+                    ->update([
+                        'sold' => $request->shares, 
+                        'status' => $status
+                    ]);
+            }
+
+            DB::commit();
+            return 1;
+        } catch (\Exception $e) { 
+            DB::rollback(); 
+            throw $e;
+            return 0;
+        } 
+
+     
+    } 
   
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+       
+        Transaction::where('id', '=', $request->id)
+                    ->delete(); 
+        Equity::where('action_reference_id', '=', $request->id);
+
     }
 
     public function fetch_all() {

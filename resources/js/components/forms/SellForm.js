@@ -85,7 +85,7 @@ class SellForm extends React.Component {
 
             <React.Fragment>   
                 <Modal.Header closeButton>
-                <Modal.Title>Sell Transaction</Modal.Title>
+                <Modal.Title>Edit Transaction</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                         

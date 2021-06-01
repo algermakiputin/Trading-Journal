@@ -6,9 +6,7 @@ import PositionsTable from '../positions_table/PositionsTable'
 import { Button, Modal } from "react-bootstrap"
 import NumberFormat from 'react-number-format'
 import axios from "axios"
-import SellForm from '../forms/SellForm'
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import SellForm from '../forms/SellForm' 
 import TopGainersChart from '../chart/TopGainersChart'
 import TopLosersChart from '../chart/TopLosersChart'
 import AccountPerformanceTable from '../tables/AccountPerformanceTable'
