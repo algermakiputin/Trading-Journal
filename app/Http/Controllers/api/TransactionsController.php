@@ -303,7 +303,10 @@ class TransactionsController extends Controller
         $transaction = Transaction::find($request->transaction_id);
         $totalEquity = $request->totalEquity;
         $availableCash = $request->availableCash + $transaction->net - $request->net;
-    
+        
+        if ( $trade->status == 1)
+            return "Not enough shares accumulated";
+            
         if ( $availableCash < $request->net)
             return "Not enough cash";
 
@@ -360,8 +363,7 @@ class TransactionsController extends Controller
         
         try {
             
-            DB::beginTransaction();
-
+            DB::beginTransaction(); 
             Transaction::where('id', '=', $request->id)->delete();  
             $totalEquity = $request->totalEquity;
             $availableCash = $request->availableCash;
@@ -380,9 +382,11 @@ class TransactionsController extends Controller
                         ]);
                 TradeResult::where('id', '=', $request->trade_id)->delete(); 
                 $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
-                dd($buyNetAmount);
-                $totalEquity -= $request->totalEquity;
-                $availableCash -= $request->availableCash;
+                $sellNetAmount = $request->net;
+                $netPL = $sellNetAmount - $buyNetAmount;
+                
+                $totalEquity -= $netPL;
+                $availableCash -= $buyNetAmount;
             }
 
             Equity::create([

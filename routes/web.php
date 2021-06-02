@@ -7,7 +7,7 @@ use App\Http\Controllers\api\BankController;
 use App\Http\Controllers\EquitiesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\GoogleController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\RegisterController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -18,18 +18,17 @@ use App\Http\Controllers\Auth\RegisterController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
-
-Route::get('signup', [
-    'as' => 'register',
-    'uses' => '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm'
-]);
+*/ 
+// Route::get('signup', [
+//     'as' => 'register',
+//     'uses' => '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm'
+// ]);
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class,'handleGoogleCallback']);
 
 Route::get('/', [HomeController::class, 'home']);
-Route::get('/dashboard', [HomeController::class,'index']); 
+Route::get('/dashboard', [HomeController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard'); 
 Route::get('/logs', [HomeController::class,'index']); 
 Route::get('/analytics', [HomeController::class,'index']); 
 Route::get('/monthly-tracker', [HomeController::class,'index']); 
@@ -55,10 +54,6 @@ Route::get('api/equitycurve', [EquitiesController::class,'getEquityCurve']);
 
 Route::get('test', [TransactionsController::class, 'getResult']);
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); 

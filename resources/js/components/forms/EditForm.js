@@ -54,6 +54,7 @@ class SellForm extends React.Component {
                      
                     if (res.data == "1") {
                         this.props.closeHandle()
+                        this.props.setData()
                     }else {
                         alert(res.data)
                     }

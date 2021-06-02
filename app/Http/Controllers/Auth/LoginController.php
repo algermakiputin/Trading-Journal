@@ -44,7 +44,10 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+
         $this->setUserSession($user);
+        return redirect('/dashboard');
+ 
     }
 
     protected function setUserSession($user)

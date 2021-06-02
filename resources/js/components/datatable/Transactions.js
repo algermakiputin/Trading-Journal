@@ -33,6 +33,7 @@ class Transaction extends React.Component {
         }
 
         this.closeModal = this.closeModal.bind(this) 
+        this.setData = this.setData.bind(this)
     }
 
     componentDidMount() {
@@ -119,10 +120,14 @@ class Transaction extends React.Component {
         row.totalEquity = this.state.totalEquity
         
         axios.delete('/api/transactions/destroy', {
-            params: row
-        })
+                    params: row
+                })
                 .then(res => {
-                    console.log(res.data)
+                    if (res.data == 1) {
+                        this.setData()
+                        alert("Transaction deleted successfully")
+                    }
+                        
                 }) 
                 .catch(err => {
                     console.log(err)
@@ -157,6 +162,7 @@ class Transaction extends React.Component {
                         totalEquity={this.state.totalEquity}
                         totalEquity={this.state.totalEquity}
                         availableCash={this.state.availableCash}
+                        setData={this.setData}
                         />
                 </Modal>
             </React.Fragment>

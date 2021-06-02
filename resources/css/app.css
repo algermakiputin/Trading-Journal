@@ -148,14 +148,17 @@ table tr th {
 }
 
 .nav-link {
-    padding: 0px 15px;
-    fsize: 0.875rem;
+    padding: 0px 15px; 
     line-height: 64px;
     height: 64px;
 }
 
 .logo-text {
     font-weight: 600;
+}
+
+.btn-danger {
+    color: #ffffff;
 }
 
 .auto-width-wrapper input {
