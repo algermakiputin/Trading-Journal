@@ -17,7 +17,7 @@ class Transaction extends React.Component {
                 {key: 'date', 'title': 'Date'},
                 {key: 'stock_code', title: 'Stock Code'}, 
                 {key: 'action', title: 'Action', cell: (row) => this.formatAction(row)},
-                {key: 'price', title: 'Avg Price', cell: (row) => this.formatNumber(row.price, 4)},
+                {key: 'price', title: 'Price', cell: (row) => this.formatNumber(row.price, 4)},
                 {key: 'shares', title: 'Shares'},
                 {key: 'fees', title: 'Fees', cell: (row) => this.formatNumber(row.fees, 2)},
                 {key: 'net', title: 'Net', cell: (row) => this.formatNumber(row.net, 2)},
@@ -50,7 +50,7 @@ class Transaction extends React.Component {
 
     formatNumber(number, scale) {
 
-        return <NumberFormat decimalScale={scale} thousandSeparator={true} displayType='text' value={number} prefix={'₱'} />
+        return <NumberFormat decimalScale={scale} thousandSeparator={true} displayType='text' value={number}  />
     }
 
     formatAction(row) {

@@ -51,16 +51,17 @@ class TradesController extends Controller
         $ave_price = 0;
         $total_cost = 0;
         $total_shares = 0;  
+  
         foreach ( $trades as $trade ) {
            
             $total_shares += $trade->shares - $trade->sold; 
             $fees = $this->calculateBuyingFees($total_shares, $trade->purchase_price);
-            $total_cost += $total_shares * $trade->purchase_price + $fees; //Need to get fees of transaction $trade->fees; 
-        
+            $total_cost += $trade->shares * $trade->purchase_price + $fees; //Need to get fees of transaction $trade->fees; 
+         
         }
  
         $ave_price = ($total_cost / $total_shares);
-
+       
         return array(
             'ave_price' => $ave_price,
             'total_cost' => $total_cost,

@@ -33,8 +33,7 @@ class TransactionsController extends Controller
         //calculate avg buy amount
         foreach ( $transactions as $transaction) {
 
-            $total = $transaction->price * $transaction->shares + $transaction->fees;
-            $transaction->price = number_format($total / $transaction->shares,4);
+            $total = $transaction->price * $transaction->shares + $transaction->fees; 
         }
 
         return array(
@@ -112,12 +111,12 @@ class TransactionsController extends Controller
                     'status' => 0
                 ]) 
                 ->get();
-                
+ 
         foreach ( $trades as $trade ) { 
             
             // If shares to sell is greather than the trade shares
             if ( $shares > $trade->shares) {
- 
+                 
                 $this->storeSell($request, $trade);
                 $shares -= $trade->shares; 
                 
@@ -148,6 +147,14 @@ class TransactionsController extends Controller
             DB::beginTransaction(); 
 
             $totalSold = $trade->sold + $request->shares; 
+            $shares = $request->shares;
+
+            if ( $totalSold > $trade->shares) {
+                die('test');
+                $totalSold = $trade->shares;
+                $shares = $totalSold - $trade->shares;
+            } 
+             
             $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price); 
             $sellNetAmount = $request->net;
             $availableCash = $request->availableCash + $request->net; 
@@ -169,7 +176,7 @@ class TransactionsController extends Controller
                 'date' => $request->date,
                 'stock_code' => $request->stock_code,
                 'price' => $request->price,
-                'shares' => $request->shares,
+                'shares' => $shares,
                 'fees' => $request->fees,
                 'net' => $request->net,
                 'trade_id' => $trade->id, 
@@ -256,9 +263,34 @@ class TransactionsController extends Controller
       
     }
 
+    public function calculateSellingFees( $shares, $price ) 
+    {
+    
+         // SELLING CALCULATION
+        // Commission = ( TOTAL SHARE * PRICE ) * .25%
+        // VAT = Commission * 12%
+        // PSE Trans Fee = ( TOTAL SHARE * PRICE ) * .005%
+        // SCCP = ( TOTAL SHARES * PRICE ) * 0.01%
+        // Sales Tax = ( TOTAL SHARES * PRICE ) * 0.006
+
+        $commission = ($shares * $price) * 0.0025;
+        $vat = $commission * 0.12;
+        $trans_fee = ($shares * $price) * 0.00005;
+        $sccp = ($shares * $price) * 0.0001; 
+        $salesTax = ($shares * $price) * 0.006;
+
+        return $fees = $commission + $vat + $trans_fee + $sccp + $salesTax;
+      
+    }
+
     public function calculateNetBuyingAmount( $shares, $price ) 
     {
 
+        return $netBuyAmount = ( $shares * $price ) + $this->calculateBuyingFees($shares, $price);
+    } 
+
+    public function calculateNetSellingAmount( $shares, $price ) 
+    { 
         return $netBuyAmount = ( $shares * $price ) + $this->calculateBuyingFees($shares, $price);
     } 
 
@@ -271,7 +303,7 @@ class TransactionsController extends Controller
         $transaction = Transaction::find($request->transaction_id);
         $totalEquity = $request->totalEquity;
         $availableCash = $request->availableCash + $transaction->net - $request->net;
-
+    
         if ( $availableCash < $request->net)
             return "Not enough cash";
 
@@ -333,6 +365,7 @@ class TransactionsController extends Controller
             Transaction::where('id', '=', $request->id)->delete();  
             $totalEquity = $request->totalEquity;
             $availableCash = $request->availableCash;
+            $trade = Trade::find($request->trade_id);
             if ( $request->type == "long") { 
 
                 Trade::where('id', '=', $request->trade_id)->delete();
@@ -346,6 +379,8 @@ class TransactionsController extends Controller
                             'sold' => DB::raw('sold -' . $request->shares)
                         ]);
                 TradeResult::where('id', '=', $request->trade_id)->delete(); 
+                $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
+                dd($buyNetAmount);
                 $totalEquity -= $request->totalEquity;
                 $availableCash -= $request->availableCash;
             }
