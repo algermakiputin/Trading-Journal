@@ -79,15 +79,7 @@ class MonthlyTracker extends React.Component {
                 <div className="page-breadcrumb">
                     <div className="row align-items-center">
                         <div className="col-5">
-                            <h4 className="page-title">Monthly Tracker</h4>
-                            <div className="d-flex align-items-center">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                        <li className="breadcrumb-item active" aria-current="page">Monthly Tracker</li>
-                                    </ol>
-                                </nav>
-                            </div>
+                            <h4 className="page-title">Monthly Tracker</h4> 
                         </div> 
                     </div>
                 </div> 

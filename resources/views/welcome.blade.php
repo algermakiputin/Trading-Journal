@@ -8,6 +8,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="user-email" content="{{ Auth()->user()->email }}" >
         <meta name="user-name" content="{{ Auth()->user()->name }}" >
+        <link rel="icon" href="{{ asset('images/ico.png')}}">
     </head>
     <body class="antialiased"> 
         <div id="example"></div>

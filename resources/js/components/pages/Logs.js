@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import DatatableHelper from '../../Helper/DatatableHelper'
+import BankDatatable from '../datatable/BankDatatable'
 import Transactions from '../datatable/Transactions'
 
 import { Tabs, Tab } from 'react-bootstrap'
@@ -55,15 +56,7 @@ class Logs extends React.Component {
                 <div className="page-breadcrumb">
                     <div className="row align-items-center">
                         <div className="col-5">
-                            <h4 className="page-title">Trade Logs</h4>
-                            <div className="d-flex align-items-center">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item"><a href="#">Home</a></li>
-                                        <li className="breadcrumb-item active" aria-current="page">Trade Logs</li>
-                                    </ol>
-                                </nav>
-                            </div>
+                            <h4 className="page-title">Transaction Logs</h4> 
                         </div> 
                     </div>
                 </div> 
@@ -82,8 +75,11 @@ class Logs extends React.Component {
                                                 /> 
                                             </div>
                                         </Tab>
-                                        <Tab eventKey="transactions" title="Transactions">
+                                        <Tab eventKey="transactions" title="Trade Transactions">
                                             <Transactions />
+                                        </Tab> 
+                                        <Tab eventKey="bank" title="Bank Transactions">
+                                            <BankDatatable />
                                         </Tab> 
                                     </Tabs>
                                     

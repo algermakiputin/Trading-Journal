@@ -55,12 +55,15 @@ class Sidebar extends React.Component {
                                         className="sidebar-link waves-effect waves-dark sidebar-link"
                                         >
                                         <i className="mdi mdi-history"></i>
-                                        <span className="hide-menu">Trade Logs</span>
+                                        <span className="hide-menu">Transactions Logs</span>
                                     </Link>
                             </li>
+                           
                             <li className="sidebar-item"> <Link to='/monthly-tracker' className="sidebar-link waves-effect waves-dark sidebar-link"
                                     href="#" aria-expanded="false"><i className="mdi mdi-calendar"></i><span
-                                        className="hide-menu">Monthly Tracker</span></Link></li>
+                                        className="hide-menu">Monthly Tracker</span></Link>
+                            </li>
+                          
                             <li className="sidebar-item"> 
                                 <UserContext.Consumer>
                                     {

@@ -32,6 +32,7 @@ Route::get('/dashboard', [HomeController::class,'index'])->middleware(['auth', '
 Route::get('/logs', [HomeController::class,'index']); 
 Route::get('/analytics', [HomeController::class,'index']); 
 Route::get('/monthly-tracker', [HomeController::class,'index']); 
+Route::get('/bank-transactions', [HomeController::class,'index']); 
 
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
@@ -48,6 +49,7 @@ Route::get('api/getAccountPerformanceSummary', [ TradesController::class, 'getAc
 
 Route::post('api/transactions/sell', [TransactionsController::class, 'sell']);
 Route::post('api/bank/create', [BankController::class, 'store']);
+Route::get('api/bank/datatable', [BankController::class, 'datatable']);
 Route::get('get_equities', [EquitiesController::class, 'getEquities']);
 
 Route::get('api/equitycurve', [EquitiesController::class,'getEquityCurve']);

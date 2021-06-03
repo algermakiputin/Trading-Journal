@@ -24,6 +24,7 @@ class TransactionsController extends Controller
         $page = $request->page; 
         $recordsPerPage = $request->recordsPerPage;
         $offset = $page * $recordsPerPage - $recordsPerPage;
+    
         $totalRecords = Transaction::count();
         $transactions = Transaction::offset($offset)
                                     ->limit($recordsPerPage)

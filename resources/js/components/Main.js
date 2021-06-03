@@ -7,7 +7,7 @@ import Header from '../templates/Header'
 import Sidebar from '../templates/Sidebar'
 import Dashboard from '../components/pages/Dashboard'
 import Analytics from '../components/pages/Analytics'
-import MonthlyTracker from '../components/pages/MonthlyTracker'
+import MonthlyTracker from '../components/pages/MonthlyTracker' 
 import Logs from '../components/pages/Logs'
 import axios from 'axios'
 import UserContext from '../UserContext'
@@ -53,7 +53,7 @@ class Main extends React.Component {
                             </Route>
                             <Route path="/monthly-tracker">
                                 <MonthlyTracker />
-                            </Route>
+                            </Route> 
                             <Route path="/analytics">
                                 <Analytics />
                             </Route>

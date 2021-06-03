@@ -12,6 +12,21 @@ use Session;
 class BankController extends Controller
 {
     //
+    public function datatable(Request $request) {
+
+        $page = $request->page; 
+        $recordsPerPage = $request->recordsPerPage;
+        $offset = $page * $recordsPerPage - $recordsPerPage;
+        $totalRecords = Bank::count();
+        $transactions = Bank::orderBy('date', 'desc')
+                                    ->orderBy('id', 'desc')
+                                    ->get();
+
+        return array(
+            'total_records' => $totalRecords,
+            'transactions' => $transactions
+        );
+    }
 
     public function store(Request $request) {
    
