@@ -7,17 +7,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts --> 
-
-    <!-- Fonts -->
+    <title>{{ config('app.name', 'Laravel') }}</title> 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700" rel="stylesheet">
-
-    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700" rel="stylesheet"> 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset('images/ico.png')}}">
 </head>
 <body> 
 <div id="overlay"></div>

@@ -2,20 +2,14 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title> 
-
-    <!-- Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="csrf-token" content="{{ csrf_token() }}"> 
+    <title>{{ config('app.name', 'Hero Journals') }}</title>  
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700" rel="stylesheet">
-
-    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700" rel="stylesheet">  
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/auth.css') }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset('images/ico.png')}}">
 </head>
 <body>
     <div id="app">
@@ -46,7 +40,7 @@
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Sign Up') }}</a>
+                                    <a class="nav-link" href="{{ url('signup') }}">{{ __('Sign Up') }}</a>
                                 </li>
                             @endif
                         @else

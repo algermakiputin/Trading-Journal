@@ -19,10 +19,10 @@ use App\Http\Controllers\Auth\RegisterController;
 | contains the "web" middleware group. Now create something great!
 |
 */ 
-// Route::get('signup', [
-//     'as' => 'register',
-//     'uses' => '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm'
-// ]);
+Route::get('signup', [
+    'as' => 'register',
+    'uses' => '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm'
+]);
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class,'handleGoogleCallback']);

@@ -22,7 +22,13 @@
                             </div>
                         </div>
                         @csrf
-
+                        <div class="form-group">
+                            @if (session()->has('message'))
+                                <div class="alert alert-success">
+                                    {!! session('message') !!}
+                                </div>
+                            @endif
+                        </div>
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 

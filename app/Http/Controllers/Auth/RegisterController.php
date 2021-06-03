@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -95,7 +96,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all()))); 
-
+        Session::flash('message', 'Congratulations, your account has been successfully created. Before proceeding, please check your email for a verification link');
         return redirect('/login');
     }
 }

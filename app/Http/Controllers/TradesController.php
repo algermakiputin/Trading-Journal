@@ -114,6 +114,7 @@ class TradesController extends Controller
                     ->join('trades', 'trades.id', '=', 'trade_results.trade_id')
                     ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount', 'trades.stock_code')
                     ->where('trade_results.win', '=', '1')
+                    ->where('profile_id', '=', session('profile_id'))
                     ->orderBy('gain_loss_percentage', 'ASC')
                     ->limit(5)
                     ->get();

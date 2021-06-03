@@ -3,15 +3,7 @@ import { Fragment } from "react";
 import logo from '../../../public/images/logo.png'
 import UserContext from '../UserContext'
 
-class Header extends React.Component {
-
-    logout() {
-
-        axios.post('/logout')
-            .then( res => {
-                window.location.href = '/login'
-            })
-    }
+class Header extends React.Component { 
 
     render() {
 
