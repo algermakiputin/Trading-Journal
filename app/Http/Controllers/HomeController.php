@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $this->middleware('auth');
+        $this->middleware('auth'); 
         return view('welcome');
     }
 

@@ -1,5 +1,7 @@
 import React from "react"; 
+import { Fragment } from "react";
 import logo from '../../../public/images/logo.png'
+import UserContext from '../UserContext'
 
 class Header extends React.Component {
 
@@ -29,12 +31,20 @@ class Header extends React.Component {
                         <ul className="navbar-nav float-end"> 
                             <li className="nav-item dropdown"> 
                                 <div className="dropdown ">
-                                    <a className="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" id="navbarDropdown" data-toggle="dropdown">
-                                        Alger Makiputin <i className="mdi mdi-chevron-down"></i>
-                                    </a>
-                                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a className="dropdown-item" href="javascript:void(0)" onClick={() => this.logout()}>Logout</a> 
-                                    </div>
+                                    <UserContext.Consumer>
+                                        {
+                                            (value) => (
+                                                <Fragment>
+                                                    <a className="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" id="navbarDropdown" data-toggle="dropdown">
+                                                            {value.name} <i className="mdi mdi-chevron-down"></i>
+                                                        </a>
+                                                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                                            <a className="dropdown-item" href="" onClick={(event) => value.logout()}>Sign Out</a> 
+                                                        </div>
+                                                </Fragment>
+                                            )
+                                        }
+                                    </UserContext.Consumer>
                                 </div>
                             </li> 
                         </ul>

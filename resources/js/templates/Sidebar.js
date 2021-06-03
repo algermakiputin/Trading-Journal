@@ -3,21 +3,15 @@ import profile_pict from '../profile.jpg';
 import { Link} from 'react-router-dom'
 import '../global/global'
 import axios from "axios";
+import UserContext from "../UserContext";
+import { Fragment } from "react";
 
 class Sidebar extends React.Component {
 
     constructor(props) {
         super(props)
         this.logoutForm = React.createRef()
-    }
-
-    logout() {
-
-        axios.post('/logout')
-            .then( res => {
-                window.location.href = '/login'
-            })
-    }
+    } 
 
     render() {
 
@@ -33,8 +27,18 @@ class Sidebar extends React.Component {
                                     <div className="user-content hide-menu m-l-10">
                                         <a href="#" className="" id="Userdd" role="button"
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <h5 className="m-b-0 user-name font-medium">Trader Journalist </h5>
-                                            <span className="op-5 user-email">journal@email.com</span>
+                                            
+                                            
+                                            <UserContext.Consumer>
+                                                {
+                                                    (value) => (
+                                                        <Fragment>
+                                                            <h5 className="m-b-0 user-name font-medium">{value.name}</h5>
+                                                            <span className="op-5 user-email">{value.email}</span>
+                                                        </Fragment>
+                                                    )
+                                                }
+                                            </UserContext.Consumer>
                                         </a> 
                                     </div>
                                 </div> 
@@ -58,13 +62,19 @@ class Sidebar extends React.Component {
                                     href="#" aria-expanded="false"><i className="mdi mdi-calendar"></i><span
                                         className="hide-menu">Monthly Tracker</span></Link></li>
                             <li className="sidebar-item"> 
-                                <a 
-                                    className="sidebar-link waves-effect waves-dark sidebar-link"
-                                    onClick={() => this.logout()}
-                                   >
-                                    <i className="mdi mdi-logout"></i>
-                                    <span className="hide-menu">Logout</span>
-                                </a>
+                                <UserContext.Consumer>
+                                    {
+                                        (value) => (
+                                            <a 
+                                                className="sidebar-link waves-effect waves-dark sidebar-link"
+                                                onClick={() => value.logout()}
+                                            >
+                                                <i className="mdi mdi-logout"></i>
+                                                <span className="hide-menu">Logout</span>
+                                            </a>
+                                        )
+                                    }
+                                </UserContext.Consumer>
                             </li> 
     
                         </ul> 

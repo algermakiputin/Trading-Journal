@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Socialite;
 use Auth;
 use Exception;
@@ -21,7 +22,7 @@ class GoogleController extends Controller
     {
         try {
     
-            $user = Socialite::driver('google')->user();
+            $user = Socialite::driver('google')->user(); 
      
             $finduser = User::where('google_id', $user->id)->first();
      
@@ -36,8 +37,11 @@ class GoogleController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'google_id'=> $user->id,
-                    'password' => $user->id . strtotime(date('h:i:s')) . $user->name
+                    'password' => Hash::make($user->id . strtotime(date('h:i:s')) . $user->name),
+                    'email_verified_at' => strtotime(date('Y-m-d h:i:s'))
                 ]);
+
+                $newUser->markEmailAsVerified();
 
                 Profile::create([
                     'user_id' => $newUser->id,
@@ -57,8 +61,7 @@ class GoogleController extends Controller
     protected function setUserSession($user)
     {
         $user = Auth::user();
-        $profile = Profile::where('user_id', $user->id)
-                            ->first();
+        $profile = Profile::where('user_id', $user->id)->first();
         
         session([
             'profile_id' => $profile->id
