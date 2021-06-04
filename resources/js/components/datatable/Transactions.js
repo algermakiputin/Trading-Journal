@@ -142,8 +142,7 @@ class Transaction extends React.Component {
             <React.Fragment>
                 <DatatableHelper 
                     columns={this.state.columns}
-                    data={this.state.data}
-                    onChangePage={(page) => { console.log(page) }} 
+                    data={this.state.data} 
                     pagination
                     totalRecords={this.state.totalRecords}
                     onChangePage={(page) => this.setData(page) }
@@ -151,8 +150,7 @@ class Transaction extends React.Component {
                 <Modal     
                     show={ this.state.show } 
                     onHide={ () => this.closeModal() }
-                    >
-                        
+                    > 
                     <EditForm 
                         show={this.state.show }  
                         toggleModal= { this.toggleModal }

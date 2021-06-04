@@ -25,7 +25,7 @@ class Logs extends React.Component {
                 {key:'action', title:'action'}
             ],
             data:[], 
-            recordsTotal: 0 
+            totalRecords: 10
         } 
     }
 
@@ -39,9 +39,15 @@ class Logs extends React.Component {
         return <span className={'result badge-' + badge}>{result}</span>;
     }
     
-    getClosedTrades() {
+    getClosedTrades(page = 0) {
 
-        axios.get('/api/getClosedTrades')
+        let currentPage = page ? page : this.state.page
+        axios.get('/api/getClosedTrades', {
+                params: {
+                        recordsPerPage:10,
+                        page: currentPage
+                    }
+                })
                 .then(res => {
                     this.setState({ data: res.data})
                 })
@@ -72,7 +78,9 @@ class Logs extends React.Component {
                                                     columns={this.state.columns}
                                                     data={this.state.data}
                                                     onChangePage={(page) => { console.log(page) }} 
-                                                /> 
+                                                    totalRecords={this.state.totalRecords}
+                                                    pagination
+                                               /> 
                                             </div>
                                         </Tab>
                                         <Tab eventKey="transactions" title="Trade Transactions">

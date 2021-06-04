@@ -58,28 +58,25 @@ class DatatableHelper extends React.Component {
        
         if ( !this.props.pagination)
             return
-
-        let pages = ceil(this.props.totalRecords / 10);
-        console.log(pages)
+        let totalRecords = this.props.totalRecords;
+        let pages = ceil(totalRecords / 10); 
         pages = pages ? pages : 1
          
         let items = [];    
         let isDisabled = pages == 1 ? 'disabled' : null
-       
-        for ( let i = 0; i < pages; i++) {
-        
-            let isActive = this.state.currentPage == (i + 1) && pages > 1 ? 1 : null; 
-            let page = i + 1;
-            items.push(<Pagination.Item disabled={isDisabled || isActive} onClick={() => { this.onChangePage(page)  }}  active={isActive} key={i}>{i + 1}</Pagination.Item>)
-            
-        }
-        
+        let currentPage = this.state.currentPage 
+        let prevDisabled = currentPage == 1 || pages == 1
+        let nextDisabled = currentPage == pages || pages == 1
+   
         return (
             <Pagination>
-                <Pagination.First disabled={isDisabled}/>  
-                { items }
-                <Pagination.Last disabled={isDisabled}/>  
-            </Pagination>
+                <Pagination.Item 
+                    disabled={prevDisabled} 
+                    onClick={() => { this.onChangePage(currentPage - 1)  }}
+                >Prev</Pagination.Item>   
+                <Pagination.Item disabled={nextDisabled} onClick={() => { this.onChangePage(currentPage + 1)  }}>Next</Pagination.Item> 
+                <small style={{display:'flex',alignItems:'center'}}> &nbsp;Pages: {currentPage}/{pages}</small>
+            </Pagination> 
         ) 
     }
 
