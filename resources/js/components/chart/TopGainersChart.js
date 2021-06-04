@@ -43,11 +43,13 @@ class TopGainersChart extends React.Component {
                             barCategoryGap={1}
                             margin={{top:5}} 
                             >
-                                <Tooltip />
+                                <Tooltip 
+                                    formatter={(num) => Number(num).toLocaleString()}
+                                />
                                 <XAxis type="number" hide />
                                 <YAxis type="category" hide dataKey="stock_code" axisLine={false} dx={-10} tickLine={false} style={{ fill: "#285A64" }}/>
                                 <Bar 
-                                    dataKey="gain_loss_amount" 
+                                    dataKey="Gain" 
                                     fill="#36bea6"  
                                     barSize={15}
                                     barCategoryGap={0}

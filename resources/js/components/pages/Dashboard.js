@@ -252,67 +252,7 @@ class Dashboard extends React.Component {
                                     <div> 
                                         <h4 className="card-title">Account Performance</h4>
                                         <h5 className="card-subtitle">Summary of my trade metrics</h5>
-                                        {/* 
-                                            Metrics
-                                            1. Win Rate
-                                            2. Reward:Risk Ratio
-                                            3. Expectancy
-                                            4. Maximum Consecutive Loss
-                                            5. Maximum Drawdown
-                                            6. Number of Trades
-                                            7. Profitability 
-
-                                        */}
-                                        {/* <div className="row">
-                                            <div className="col-6">
-                                                <div className="trade-overview-widget">
-                                                    <div className="text-center circle-wrapper">
-                                                        <span>105</span>
-                                                    </div>
-                                                    <div className="text-center text">Total Trades Taken</div>
-                                                </div>
-                                            </div>
-                                            <div className="col-6">
-                                                <div className="trade-overview-widget">
-                                                    <div className="text-center circle-wrapper">
-                                                        <span>45%</span>
-                                                    </div>
-                                                    <div className="text-center text">Winning Percentage</div>
-                                                </div>
-                                            </div>
-                                            <div className="col-6">
-                                                <div className="trade-overview-widget">
-                                                    <div className="text-center circle-wrapper">
-                                                        <span>21%</span>
-                                                    </div>
-                                                    <div className="text-center text">Avg Gain</div>
-                                                </div>
-                                            </div>
-                                            <div className="col-6">
-                                                <div className="trade-overview-widget">
-                                                    <div className="text-center circle-wrapper">
-                                                        <span>6%</span>
-                                                    </div>
-                                                    <div className="text-center text">Avg Loss</div>
-                                                </div>
-                                            </div>
-                                            <div className="col-6">
-                                                <div className="trade-overview-widget">
-                                                    <div className="text-center circle-wrapper">
-                                                        <span>2:3</span>
-                                                    </div>
-                                                    <div className="text-center text">Win Loss Ratio</div>
-                                                </div>
-                                            </div>
-                                            <div className="col-6">
-                                                <div className="trade-overview-widget">
-                                                    <div className="text-center circle-wrapper">
-                                                        <span>1:3</span>
-                                                    </div>
-                                                    <div className="text-center text">Adjusted Win Loss Ratio</div>
-                                                </div>
-                                            </div>
-                                        </div> */}
+                                       
                                         <AccountPerformanceTable />
                                     </div> 
                                 </div>
@@ -326,7 +266,7 @@ class Dashboard extends React.Component {
                                         <h5 className="card-subtitle">Commulative of my top gainers trades</h5>
 
                                     </div> 
-                                    <div style={{height:'230px'}}>
+                                    <div style={{height:'235px'}}>
                                         <TopGainersChart />
                                     </div>
                                 </div>
@@ -340,7 +280,7 @@ class Dashboard extends React.Component {
                                         <h5 className="card-subtitle">Commulative of my top lossers trades</h5>
                                         
                                     </div> 
-                                    <div style={{height:'230px'}}>
+                                    <div style={{height:'235px'}}>
                                         <TopLosersChart />
                                     </div>
                                 </div>

@@ -48,16 +48,18 @@ class TopLosersChart extends React.Component {
                             barCategoryGap={1}
                             margin={{top:5}} 
                             >
-                                <Tooltip />
+                                <Tooltip 
+                                    formatter={(num) => Number(num).toLocaleString()}
+                                />
                                 <XAxis maxBarSize={2} type="number" hide />
                                 <YAxis type="category" hide dataKey="stock_code" axisLine={false} dx={-10} tickLine={false} style={{ fill: "#285A64" }}/>
                                 <Bar 
-                                    dataKey="gain_loss_amount" 
-                                    fill="#f62d51" 
+                                    dataKey="Loss" 
+                                    fill="#dc3545" 
                                     barSize={15}
                                     barCategoryGap={0}
                                     orientation="left"
-                                    maxBarSize={1}
+                                    maxBarSize={1} 
                                     
                                 >
                                     <LabelList style={{opacity:0.7}} offset={0} dy={-20} fill="ffffff" dataKey="stock_code" position="insideLeft" />

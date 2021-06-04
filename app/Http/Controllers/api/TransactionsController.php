@@ -150,8 +150,7 @@ class TransactionsController extends Controller
             $totalSold = $trade->sold + $request->shares; 
             $shares = $request->shares;
 
-            if ( $totalSold > $trade->shares) {
-                die('test');
+            if ( $totalSold > $trade->shares) { 
                 $totalSold = $trade->shares;
                 $shares = $totalSold - $trade->shares;
             } 

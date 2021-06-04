@@ -70,17 +70,29 @@ class TradesController extends Controller
         );
     }
 
-    public function getClosedTrades() { 
+    public function getClosedTrades(Request $request) { 
+
+        $page = $request->page; 
+        $recordsPerPage = $request->recordsPerPage;
+        $offset = $page * $recordsPerPage - $recordsPerPage;
+
         $closedTrades = Trade::where('status','=', 1)  
                             ->where('profile_id', '=', session('profile_id'))
+                            ->offset($offset)
+                            ->limit($recordsPerPage)
                             ->orderBy('purchase_date','DESC')
                             ->orderBy('id', 'DESC')
                             ->get();
+        $totalRecords = Trade::where('status', 1) 
+                                ->where('profile_id', session('profile_id'))
+                                ->count();
+
         $data = [];
         
         foreach ( $closedTrades as $trade ) {
 
             $transaction = $this->getTradeTransactions($trade->id);
+        
             $avgSellPrice = $transaction->total_price / $transaction->total_records;
             $avgSell = $this->calculateAvgSellPrice( $avgSellPrice, $trade->shares, $transaction->total_fees );
             $avgBuy = $this->calculateAvgBuyPrice( $trade->purchase_price, $trade->shares );
@@ -99,12 +111,14 @@ class TradesController extends Controller
                 'side' => 'Long',
                 'result' => $result,
                 'profit_loss' => number_format($profit_loss,2),
-                'gain_loss_percentage' => number_format($gain_loss_percentage,2) . '%',
-                'action' => ''
+                'gain_loss_percentage' => number_format($gain_loss_percentage,2) . '%' 
             );
         }  
 
-        return $data;
+        return array(
+            'trades' => $data,
+            'totalRecords' => $totalRecords
+        );
         
     } 
 
@@ -112,9 +126,9 @@ class TradesController extends Controller
 
         return DB::table('trade_results')
                     ->join('trades', 'trades.id', '=', 'trade_results.trade_id')
-                    ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount', 'trades.stock_code')
+                    ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount as Gain', 'trades.stock_code')
                     ->where('trade_results.win', '=', '1')
-                    ->where('profile_id', '=', session('profile_id'))
+                    ->where('trade_results.profile_id', '=', session('profile_id'))
                     ->orderBy('gain_loss_percentage', 'ASC')
                     ->limit(5)
                     ->get();
@@ -125,7 +139,7 @@ class TradesController extends Controller
 
         $topLosers = DB::table('trade_results')
                     ->join('trades', 'trades.id', '=', 'trade_results.trade_id')
-                    ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount', 'trades.stock_code')
+                    ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount as Loss', 'trades.stock_code')
                     ->where('trade_results.win', '=', '0')
                     ->orderBy('gain_loss_percentage', 'DESC')
                     ->limit(5)
@@ -133,7 +147,7 @@ class TradesController extends Controller
 
         foreach ( $topLosers as $loser) {
 
-            $loser->gain_loss_amount = $loser->gain_loss_amount * -1;
+            $loser->Loss = $loser->Loss * -1;
         }
 
         return $topLosers;
@@ -216,7 +230,7 @@ class TradesController extends Controller
             'averageWins' => $averageWins,
             'averageLosses' => $averageLosses,
             'winLossRatio' => $winLossRatio,
-            'adjustedWinLossRatio' => $appt
+            'adjustedWinLossRatio' => number_format($appt,2)
         );
 
     }
@@ -477,8 +491,8 @@ class TradesController extends Controller
                 $days += $this->getDaysDifference( $trade->purchase_date, $trade->sell_date);
 
             }
-
-            return $days > 1 ? $days / $lossTrades : $days;
+         
+            return $days > 1 ? $days / $totalTrades : $days;
         }
 
         return 0;

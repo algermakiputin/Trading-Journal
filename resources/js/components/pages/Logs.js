@@ -21,11 +21,10 @@ class Logs extends React.Component {
                 {key: 'side', title: "Side"},
                 {key: 'result', title: "Result", cell: (row) => this.winLossFormat(row.result)  },
                 {key: 'profit_loss', title: 'Profit Loss'},
-                {key: 'gain_loss_percentage', title: 'Gain/Loss (%)'},
-                {key:'action', title:'action'}
+                {key: 'gain_loss_percentage', title: 'Gain/Loss (%)'} 
             ],
             data:[], 
-            totalRecords: 10
+            totalRecords: 0
         } 
     }
 
@@ -36,7 +35,7 @@ class Logs extends React.Component {
 
     winLossFormat(result) {
         let badge = result == 'win' ? 'success' : 'danger';
-        return <span className={'result badge-' + badge}>{result}</span>;
+        return <span className={'badge badge-' + badge}>{result}</span>;
     }
     
     getClosedTrades(page = 0) {
@@ -49,7 +48,7 @@ class Logs extends React.Component {
                     }
                 })
                 .then(res => {
-                    this.setState({ data: res.data})
+                    this.setState({ data: res.data.trades, totalRecords: res.data.totalRecords})
                 })
                 .catch( err => {
                     console.log(err)
@@ -77,7 +76,7 @@ class Logs extends React.Component {
                                                 <DatatableHelper 
                                                     columns={this.state.columns}
                                                     data={this.state.data}
-                                                    onChangePage={(page) => { console.log(page) }} 
+                                                    onChangePage={(page) => this.getClosedTrades(page)} 
                                                     totalRecords={this.state.totalRecords}
                                                     pagination
                                                /> 

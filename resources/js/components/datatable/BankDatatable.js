@@ -1,6 +1,7 @@
 import React from 'react'
 import DatatableHelper from '../../Helper/DatatableHelper'
 import axios from 'axios'
+import NumberFormat from 'react-number-format'
 import { Fragment } from 'react'
 
 class BankDatatable extends React.Component {
@@ -11,7 +12,7 @@ class BankDatatable extends React.Component {
             columns: [
                 {key:'date', title:'Date'},
                 {key:'action', title:'Action'},
-                {key:'amount', title:'Amount'},
+                {key:'amount', title:'Amount', cell: (row) => this.formatNumber(row.amount,2)},
                 {key:'action', title:'Actions', cell:(row) => this.deleteAction(row)}  
             ],
             data: []
@@ -26,6 +27,11 @@ class BankDatatable extends React.Component {
     deleteAction(row) {
 
         return <button onClick={() => this.destroy(row)} className="btn btn-danger">Delete</button>
+    }
+
+    formatNumber(number, scale) {
+
+        return <NumberFormat decimalScale={scale} thousandSeparator={true} displayType='text' value={number}  />
     }
 
     destroy(row) {
