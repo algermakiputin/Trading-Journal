@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EquitiesController;
 use Illuminate\Http\Request;
 use App\Models\Bank;
 use App\Models\Equity;
@@ -87,5 +88,27 @@ class BankController extends Controller
             return 0;
         }
           
+    }
+
+    public function destroy(Request $request) {
+
+        $equitiesController = new EquitiesController();
+        $equity = $equitiesController->getEquities();
+        $remainingCash = $equity->remaining_cash;
+        $totalEquity = $equity->total_equity;
+        $amount = $request->amount;
+
+        if ($remainingCash < $amount)
+            return "Cannot delete this bank transaction";
+
+        Bank::where('id', $request->id)->delete();
+        Equity::create([
+            'date' => date('Y-m-d'),
+            'total_equity' => $totalEquity - $amount,
+            'remaining_cash' => $remainingCash - $amount,
+            'action' => 'delete',
+            'action_reference_id' => $request->id,
+            'profile_id' => session('profile_id')
+        ]);
     }
 }

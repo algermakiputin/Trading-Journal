@@ -12,7 +12,7 @@ class BankDatatable extends React.Component {
                 {key:'date', title:'Date'},
                 {key:'action', title:'Action'},
                 {key:'amount', title:'Amount'},
-                {key:'action', title:'Actions'}  
+                {key:'action', title:'Actions', cell:(row) => this.deleteAction(row)}  
             ],
             data: []
         }
@@ -21,6 +21,33 @@ class BankDatatable extends React.Component {
     componentDidMount() {
 
         this.setData()
+    }
+
+    deleteAction(row) {
+
+        return <button onClick={() => this.destroy(row)} className="btn btn-danger">Delete</button>
+    }
+
+    destroy(row) {
+
+        let confirm = window.confirm("Are you sure you want to delete that transaction?")
+
+        if (confirm) {
+
+            axios.delete('/api/bank/destroy', {
+                    params: {
+                        id: row.id,
+                        amount: row.amount
+                    }
+                })
+                .then(res => {
+                    alert('Bank transaction deleted successfully')
+                    this.setData()
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
     }
 
     setData() {
@@ -43,6 +70,8 @@ class BankDatatable extends React.Component {
                     columns={this.state.columns}
                     data={this.state.data}
                     onChangePage={(page) => { console.log(page) }} 
+                    pagination
+                    
                 /> 
             </Fragment>
         )
