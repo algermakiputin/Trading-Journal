@@ -92,7 +92,7 @@ class MonthlyTracker extends React.Component {
                                         <h5>Net P/L</h5>
                                         <h2>{ this.state.netPL}</h2>
                                         <hr/>
-                                        <span>+90% Gain for the past 12 months</span>
+                                        <span>Profit and Loss Revenue summary</span>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@ class MonthlyTracker extends React.Component {
                                         <h5>Average Win</h5>
                                         <h2>{ this.state.averageGain}</h2>
                                         <hr/>
-                                        <span>Greather than your average loss</span>
+                                        <span>Avg Win for the last 12 months</span>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@ class MonthlyTracker extends React.Component {
                                         <h5>Average Loss</h5>
                                         <h2>{ this.state.averageLoss}</h2>
                                         <hr/>
-                                        <span>Lesser than average gain</span>
+                                        <span>Average Loss for the past 12 months</span>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@ class MonthlyTracker extends React.Component {
                                         <h5>Win Loss Ratio</h5>
                                         <h2>{ this.state.winLossRatio}</h2>
                                         <hr/>
-                                        <span>Your win/loss ratio is favorable</span>
+                                        <span>Ratio above 1.0 or 50% is favorable</span>
                                     </div>
                                 </div>
                             </div>

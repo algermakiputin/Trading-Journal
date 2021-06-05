@@ -18,7 +18,7 @@ class Trade extends Model
             'gain_loss_percentage', 
             'purchase_price',
             'sold',
-            'win',
+            'win', 
             'profile_id'
         ];
     

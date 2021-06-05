@@ -52,7 +52,7 @@ class TransactionsController extends Controller
             'purchase_date' => $request['data']['date'],
             'sell_date' => 0,
             'purchase_price' => $request['data']['price'],
-            'sold' => 0,
+            'sold' => 0, 
             'profile_id' => session('profile_id')
         ]);
     }
@@ -78,7 +78,8 @@ class TransactionsController extends Controller
                 'net' => $request['data']['net'],
                 'trade_id' => $trade->id,
                 'type' => 'long',
-                'profile_id' => session('profile_id')
+                'profile_id' => session('profile_id'),
+                'remarks' => $request['data']['remarks']
             ]);
                 
             Equity::create([
@@ -107,12 +108,13 @@ class TransactionsController extends Controller
         
         $shares = $request->shares; 
         $trades = Trade::orderBy('id', 'DESC')
-                ->where([
-                    'stock_code' => $request->stock_code,
-                    'status' => 0
-                ]) 
-                ->get();
- 
+                        ->where([
+                            'stock_code' => $request->stock_code,
+                            'status' => 0
+                        ]) 
+                        ->get();
+        
+            
         foreach ( $trades as $trade ) { 
             
             // If shares to sell is greather than the trade shares
@@ -181,7 +183,8 @@ class TransactionsController extends Controller
                 'net' => $request->net,
                 'trade_id' => $trade->id, 
                 'type' => 'sell',
-                'profile_id' => session('profile_id')
+                'profile_id' => session('profile_id'),
+                'remarks' => $request->remarks
             ]); 
 
             Equity::create([

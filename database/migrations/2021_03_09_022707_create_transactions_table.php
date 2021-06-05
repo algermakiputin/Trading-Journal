@@ -27,6 +27,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedInteger('trade_id')->index('trade_id');
             $table->integer('profile_id')->index('profile_id');
             $table->double('net_pl')->nullable();
+            $table->string('remarks',99)->nullable();
             $table->timestamps();
 
         });

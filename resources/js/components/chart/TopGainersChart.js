@@ -17,6 +17,21 @@ class TopGainersChart extends React.Component {
 
         this.getTopGainersLosers()
     }
+
+    label(props) {
+        const {x, y, value} = props;
+
+             return (
+             <text 
+                x={x} 
+                y={y} 
+                dx={'90%'}
+                dy={10}  
+                fontWeight="bold"
+                fill={"#181818"}
+                textAnchor="middle">{value}</text>
+             )
+    }
     
     async getTopGainersLosers() {
 
@@ -45,6 +60,7 @@ class TopGainersChart extends React.Component {
                             >
                                 <Tooltip 
                                     formatter={(num) => Number(num).toLocaleString()}
+                                    cursor={{fill: '#fff'}}
                                 />
                                 <XAxis type="number" hide />
                                 <YAxis type="category" hide dataKey="stock_code" axisLine={false} dx={-10} tickLine={false} style={{ fill: "#285A64" }}/>
@@ -54,10 +70,13 @@ class TopGainersChart extends React.Component {
                                     barSize={15}
                                     barCategoryGap={0}
                                     orientation="left"
-                                    maxBarSize={1}
+                                    maxBarSize={1} 
+                                    // label={(props) => this.label(props)} 
+                                    
                                 >
                                     <LabelList style={{opacity:0.7}} offset={0} dy={-20} fill="ffffff" dataKey="stock_code" position="insideLeft" />
                                 </Bar>
+                                
                         </BarChart>
                     </ResponsiveContainer>
                 </div>  

@@ -21,6 +21,7 @@ class Transaction extends React.Component {
                 {key: 'shares', title: 'Shares'},
                 {key: 'fees', title: 'Fees', cell: (row) => this.formatNumber(row.fees, 2)},
                 {key: 'net', title: 'Net', cell: (row) => this.formatNumber(row.net, 2)},
+                {key: 'remarks', title: 'Remarks'},
                 {key: 'actions', title: 'Actions', cell: (row) => this.buttons(row) }
             ],
             data: [],
@@ -108,14 +109,19 @@ class Transaction extends React.Component {
 
         return(
             <Fragment>
-                <button onClick={() => this.formHandler(row)} className="btn btn-info">Edit</button> &nbsp;
-                <button onClick={() => this.delete(row)} className="btn btn-danger">Delete</button>
+                <span onClick={() => this.formHandler(row)} className="mdi mdi-pencil action"></span> &nbsp;
+                <span onClick={() => this.delete(row)} className="mdi mdi-delete action"></span>
             </Fragment>
         )
     }
 
     delete(row) {
         
+        let confirm = window.confirm('Are you sure you want to delete that transaction?')
+
+        if (!confirm)
+            return false
+            
         row.availableCash = this.state.availableCash
         row.totalEquity = this.state.totalEquity
         

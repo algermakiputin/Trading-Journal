@@ -21,7 +21,9 @@ class SellForm extends React.Component {
             net:0,
             fees:0,
             availableCash:0,
-            totalEquity:0
+            totalEquity:0,
+            remarks:'',
+            remainingShares:0
         }
          
     }
@@ -29,7 +31,7 @@ class SellForm extends React.Component {
     componentDidMount() { 
       
         this.setState({
-            shares: this.props.trade.total_shares, 
+            remainingShares: this.props.trade.total_shares, 
             stock_code: this.props.trade.stock_code,
             availableCash: this.props.availableCash,
             totalEquity: this.props.totalEquity
@@ -38,7 +40,10 @@ class SellForm extends React.Component {
  
 
     formSubmitHandle() {
- 
+        
+        if ( this.state.shares > this.state.remainingShares) 
+            return alert('Not enough shares to sell, ' + this.state.remainingShares + ' shares remaining')
+
         if ( this.state.shares && this.state.price && this.state.date ) {
  
             axios.post('/api/transactions/sell', this.state)
@@ -85,7 +90,7 @@ class SellForm extends React.Component {
 
             <React.Fragment>   
                 <Modal.Header closeButton>
-                <Modal.Title>Edit Transaction</Modal.Title>
+                <Modal.Title>Sell Transaction</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                         
@@ -105,11 +110,11 @@ class SellForm extends React.Component {
                                 readOnly
                                 defaultValue={this.props.trade.stock_code}
                             ></Form.Control>
-                        </Form.Group>
+                        </Form.Group> 
                         <Form.Group>
                             <Form.Label>Shares</Form.Label>
                             <Form.Control type="text" name="shares"
-                                defaultValue={this.props.trade.total_shares} 
+                                autoComplete="off" 
                                 onChange={ (event ) => { this.setState({shares: event.target.value }); this.netCalculatorSharesHandle(event) } }
                             ></Form.Control>
                         </Form.Group>
@@ -119,6 +124,15 @@ class SellForm extends React.Component {
                                 defaultValue={this.props.trade.price}
                                 onChange={ (event ) => { this.setState({price: event.target.value }); this.netCalculatorPriceHandle(event) } }
                             ></Form.Control>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Remarks(Optional)</Form.Label>
+                            <textarea
+                                className="form-control"
+                                autoComplete="off"
+                                defaultValue={this.props.trade.price}
+                                onChange={ (event ) => { this.setState({remarks: event.target.value }) } }
+                            ></textarea>
                         </Form.Group>
                         <Form.Group>
                             <table width="100%">
@@ -131,7 +145,7 @@ class SellForm extends React.Component {
                                 <tbody>
                                     <tr>
                                         <td><NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.fees } prefix={'₱'} /></td>
-                                        <td><NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.net } prefix={'₱'} /></td>
+                                        <td ><NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.net } prefix={'₱'} /></td>
                                     </tr>
                                 </tbody>
                             </table> 

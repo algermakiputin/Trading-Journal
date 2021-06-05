@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { BarChart, LabelList, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart } from 'recharts'
-
+import NumberMinify from '../../classes/NumberMinify'
 class TopLosersChart extends React.Component {
 
     constructor(props) {
@@ -16,6 +16,23 @@ class TopLosersChart extends React.Component {
     componentDidMount() {
 
         this.getTopGainersLosers()
+    }
+
+    label(props) {
+ 
+        const {x, y, value} = props;
+
+             return (
+             <text 
+                x={x} 
+                y={y} 
+                // dx={'88%'}
+                // dy={-8}  
+                fontWeight="bold"
+                fill={"fff"} 
+                orientation="right"
+                textAnchor="right">{NumberMinify.abbreviate(value,2,false,false)}</text>
+             )
     }
     
     async getTopGainersLosers() {
@@ -41,7 +58,7 @@ class TopLosersChart extends React.Component {
                 <div className='col'>  
                     <ResponsiveContainer width="100%" height={this.state.height}>
                         <BarChart 
-                            width={300} 
+                            width={50} 
                             height={300} 
                             data={this.state.data}
                             layout="vertical"
@@ -50,6 +67,7 @@ class TopLosersChart extends React.Component {
                             >
                                 <Tooltip 
                                     formatter={(num) => Number(num).toLocaleString()}
+                                    cursor={{fill: '#fff'}}
                                 />
                                 <XAxis maxBarSize={2} type="number" hide />
                                 <YAxis type="category" hide dataKey="stock_code" axisLine={false} dx={-10} tickLine={false} style={{ fill: "#285A64" }}/>
@@ -60,7 +78,7 @@ class TopLosersChart extends React.Component {
                                     barCategoryGap={0}
                                     orientation="left"
                                     maxBarSize={1} 
-                                    
+                                    // label={(props) => this.label(props)} 
                                 >
                                     <LabelList style={{opacity:0.7}} offset={0} dy={-20} fill="ffffff" dataKey="stock_code" position="insideLeft" />
                                 </Bar>

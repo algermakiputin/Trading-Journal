@@ -140,7 +140,7 @@ class TradesController extends Controller
         $topLosers = DB::table('trade_results')
                     ->join('trades', 'trades.id', '=', 'trade_results.trade_id')
                     ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount as Loss', 'trades.stock_code')
-                    ->where('trade_results.win', '=', '0')
+                    ->where('trade_results.win', '=', '0') 
                     ->orderBy('gain_loss_percentage', 'DESC')
                     ->limit(5)
                     ->get();

@@ -26,7 +26,8 @@ class TradeForm extends React.Component {
             net:0,
             fees: 0,
             netText:'0.00',
-            feesText:'0.00'
+            feesText:'0.00',
+            remarks:''
         }
 
         this.baseState = this.state;
@@ -42,10 +43,10 @@ class TradeForm extends React.Component {
             return alert("Not enough available cash")
             
         axios.post('/api/transactions/store', {
-                data: this.state,
-                availableCash: this.props.availableCash,
-                totalEquity: this.props.totalEquity
-            })
+                    data: this.state,
+                    availableCash: this.props.availableCash,
+                    totalEquity: this.props.totalEquity
+                })
                 .then( res => {
                      
                     this.setState( this.baseState )
@@ -158,7 +159,7 @@ class TradeForm extends React.Component {
             <div>
                 
                 <Modal.Header closeButton>
-                <Modal.Title>New Trade</Modal.Title>
+                <Modal.Title>New Transaction</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     
@@ -168,11 +169,11 @@ class TradeForm extends React.Component {
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Stock Code</th>
+                                    <th>Stock</th>
                                     <th>Price</th>
                                     <th>Shares</th>
                                     <th>Fees</th>
-                                    <th>Net</th>
+                                    <th>Net</th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -223,6 +224,17 @@ class TradeForm extends React.Component {
                                             value={ this.state.netText} 
                                             wrapperClassName="auto-width-wrapper"
                                         />
+                                    </td> 
+                                </tr> 
+                                <tr>
+                                    <td><label>Remarks(optional)</label></td>
+                                    <td colSpan="5"> 
+                                        <textarea 
+                                            className="form-control"
+                                            onChange={ (event) => this.setState({remarks: event.target.value})}
+                                            >
+
+                                        </textarea>
                                     </td>
                                 </tr>
                             </tbody>
