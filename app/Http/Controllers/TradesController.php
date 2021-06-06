@@ -18,6 +18,7 @@ class TradesController extends Controller
         $trades = DB::table('trades')
                     ->where('profile_id', '=', session('profile_id'))
                     ->where('trades.status', 0) 
+                    ->orderBy('id', 'DESC')
                     ->get();
    
         $trades = $this->group_trades( $trades );
@@ -124,23 +125,32 @@ class TradesController extends Controller
 
     public function getTopGainers() {
 
-        return DB::table('trade_results')
+        $trades = DB::table('trade_results')
                     ->join('trades', 'trades.id', '=', 'trade_results.trade_id')
-                    ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount as Gain', 'trades.stock_code')
+                    ->select(
+                            DB::raw('SUM(trade_results.gain_loss_percentage) as gain_loss_percentaige'), 
+                            DB::raw('SUM(trade_results.gain_loss_amount) as Gain'), 
+                            'trades.stock_code'
+                            )
                     ->where('trade_results.win', '=', '1')
                     ->where('trade_results.profile_id', '=', session('profile_id'))
                     ->orderBy('gain_loss_percentage', 'ASC')
+                    ->groupBy('trades.stock_code')
                     ->limit(5)
                     ->get();
-                            
+        return $trades;
     }
     
     public function getTopLosers() {
 
         $topLosers = DB::table('trade_results')
                     ->join('trades', 'trades.id', '=', 'trade_results.trade_id')
-                    ->select('trade_results.win', 'trade_results.gain_loss_percentage', 'trade_results.gain_loss_amount as Loss', 'trades.stock_code')
+                    ->select(
+                        DB::raw('SUM(trade_results.gain_loss_percentage) as gain_loss_percentage'),
+                        DB::raw('SUM(trade_results.gain_loss_amount)  as Loss'), 
+                        'trades.stock_code')
                     ->where('trade_results.win', '=', '0') 
+                    ->groupBy('trades.stock_code')
                     ->orderBy('gain_loss_percentage', 'DESC')
                     ->limit(5)
                     ->get();

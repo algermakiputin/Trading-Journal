@@ -39,7 +39,7 @@ class TopLosersChart extends React.Component {
 
         await axios.get('/api/getTopLosers')
                     .then( res => {
-                        
+                        console.log(res.data)
                         this.setState({
                             data: res.data,
                             height: this.state.height * res.data.length
@@ -57,9 +57,7 @@ class TopLosersChart extends React.Component {
             <div className='row'>
                 <div className='col'>  
                     <ResponsiveContainer width="100%" height={this.state.height}>
-                        <BarChart 
-                            width={50} 
-                            height={300} 
+                        <BarChart   
                             data={this.state.data}
                             layout="vertical"
                             barCategoryGap={1}

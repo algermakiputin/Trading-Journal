@@ -1,8 +1,8 @@
-import React from 'react'
-import ChartistGraph from 'react-chartist'
+import React from 'react' 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart } from 'recharts'
 import axios from 'axios'
 import { Fragment } from 'react'
+import NumberFormat from 'react-number-format'
 class EquityChart extends React.Component {
 
     constructor(props) {
@@ -118,7 +118,7 @@ class EquityChart extends React.Component {
                         tickFormatter={(num) => this.yTickFormat(num)}
                     />
                     <Tooltip 
-                      formatter={(num) => Number(num).toLocaleString()}
+                      formatter={(num) => <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={num}  />}
                     />
                       <Line 
                           dot={false} tick={{fontSize:'5px'}} type="monotone" dataKey="amount" stroke="#4fc3f7" strokeWidth={2.5} /> 
