@@ -51,7 +51,7 @@ class AccountPerformanceTable extends React.Component {
                     </tr>
                     <tr>
                         <td>Winning Percentage</td>
-                        <td className="text-right">{this.state.winningPercentage}%</td>
+                        <td className="text-right">{Number(this.state.winningPercentage).toLocaleString()}%</td>
                     </tr>
                     <tr>
                         <td>Average Gain</td>
