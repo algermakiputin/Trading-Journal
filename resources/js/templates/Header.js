@@ -2,6 +2,7 @@ import React from "react";
 import { Fragment } from "react";
 import logo from '../../../public/images/logo.png'
 import UserContext from '../UserContext'
+import { Link} from 'react-router-dom'
 
 class Header extends React.Component { 
 
@@ -11,12 +12,15 @@ class Header extends React.Component {
             <header className="topbar" data-navbarbg="skin5">
                 <nav className="navbar top-navbar navbar-expand-md navbar-dark">
                     <div className="navbar-header" data-logobg="skin5"> 
-                        <a className="navbar-brand" href="index.html">
-                        
+
+                        <Link 
+                            to='/dashboard' 
+                            className="navbar-brand"
+                            >
                             <b className="logo-text" style={{marginLeft:'10px'}}> 
                                 <img src={logo} width={34} /> Hero Journals
                             </b>
-                        </a>  
+                        </Link> 
                     </div> 
                     
                     <div style={{width:"100%",paddingRight:'20px'}}>

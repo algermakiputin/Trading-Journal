@@ -59,6 +59,6 @@ class LoginController extends Controller
         session([
             'profile_id' => $profile->id
         ]);
- 
+        
     }
 }

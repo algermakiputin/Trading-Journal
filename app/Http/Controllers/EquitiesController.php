@@ -17,13 +17,13 @@ class EquitiesController extends Controller
                         ->where('profile_id', '=', session('profile_id'))
                         ->limit(1)
                         ->first();
-        
-        if ( $equity ) {
-            
+                        
+        if ( $equity ) { 
             $equity->gainLossPercentage = $this->monthlyGainLoss()['percentage'];
             $equity->gainLossAmount = $this->monthlyGainLoss()['amount'];
         }
-        
+ 
+         
         return $equity;
     } 
 
@@ -51,11 +51,11 @@ class EquitiesController extends Controller
                         ->where('profile_id', '=', session('profile_id'))
                         ->where('date', '>=', $pastMonth) 
                         ->where('date', '<=', $today)
-                        ->first();
+                        ->first(); 
         
         if ( Equity::count() !== 1)
             $startingEquity = $this->getStartingEquity($equity->min);
-    
+         
         $endingEquity = $this->getEndingEquity($equity->max);
   
         return $this->gainLossCalculator( $startingEquity, $endingEquity );
@@ -75,7 +75,8 @@ class EquitiesController extends Controller
     }
 
     private function getEndingEquity($date) {
-
+        
+        $date = $date ? $date : date('Y-m-d');
         $equity = DB::table('equities')
                     ->select('total_equity as total')
                     ->where('profile_id', '=', session('profile_id'))
@@ -87,7 +88,7 @@ class EquitiesController extends Controller
     } 
 
     private function gainLossCalculator( $startingEquity,  $endingEquity) {
-      
+     
         $amount = $endingEquity - $startingEquity;  
         
         $percentage = 100;
@@ -114,37 +115,48 @@ class EquitiesController extends Controller
                             ->get();
 
         $data = $this->initDates("weeks", $lastHalfQuarter, $today, 'Y-m-d');
-
+        $total_equity = 0; 
+        $lastDate = "";
+        $equity = 0; 
         foreach ( $data as $key => $row ) {
 
             $start = (new \DateTime($key))->modify('-7 days')->format('Y-m-d');
 			$end = date("Y-m-d", strtotime($key));
-            
+             
             foreach ( $equities as $equity ) {
 
                 $date = strtotime( $equity->date );
 
-                if ( $date >= strtotime($start) && $date <= strtotime($end) ) 
-                    $data[$key] = $equity->total_equity;
-            
+                if ( $date >= strtotime($start) && $date <= strtotime($end) ) {
+                    $equity = $equity->total_equity;
+                    $data[$key] = $equity;
+                    $lastDate = $date;
+                }  
+                     
             }
+ 
         }
-
+ 
         return $data = $this->rechartsFormatData($data);
     }
 
     public function rechartsFormatData($data) {
-
+      
         $dataset = [];
-
+        $lastEquity = 0;
         if ( $data ) {
 
             foreach ( $data as $key => $row ) {
+
+                if ( $lastEquity && $row == 0) 
+                    $row = $lastEquity;
 
                 $dataset[] = array(
                     'date' => date('M j', strtotime($key)),
                     'amount' => $row
                 );
+
+                $lastEquity = $row;
             }
         }
 

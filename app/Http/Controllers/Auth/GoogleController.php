@@ -28,7 +28,7 @@ class GoogleController extends Controller
             if($finduser){
      
                 Auth::login($finduser);
-    
+                $this->setUserSession($finduser);
                 return redirect('/dashboard');
      
             }else{
@@ -62,6 +62,7 @@ class GoogleController extends Controller
         $user = Auth::user();
         $profile = Profile::where('user_id', $user->id)->first();
         
+       
         session([
             'profile_id' => $profile->id
         ]);

@@ -58,8 +58,7 @@ class BankController extends Controller
             }
         }
 
-        DB::beginTransaction();
-
+        DB::beginTransaction(); 
         try { 
 
             $bank = Bank::create([
