@@ -1,7 +1,10 @@
 import React from "react";
 import { Form, Table, Button, Modal, Alert } from "react-bootstrap";
 import axios from "axios"; 
+import Datetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
 import NumberFormat from 'react-number-format'
+import '../../global/global'
 
 class BankForm extends React.Component {
     
@@ -9,7 +12,7 @@ class BankForm extends React.Component {
         super(props)
         this.state = {
             show: false,
-            date: '',
+            date: global.server_date,
             action: 'deposit',
             amount: null,
             alert_danger: false
@@ -32,7 +35,8 @@ class BankForm extends React.Component {
             axios.post('api/bank/create', {
                     data: this.state,
                     totalEquity: this.props.totalEquity,
-                    availableCash: this.props.availableCash
+                    availableCash: this.props.availableCash,
+                    action: this.state.action
                 })
                     .then( res => {
                          
@@ -88,14 +92,19 @@ class BankForm extends React.Component {
                         <Form noValidate>
                             <Form.Group>
                                 <Form.Label>Date</Form.Label>
-                                <Form.Control type="date" 
-                                    onChange={ event=> { this.setState({date: event.target.value })} }
-                                />  
+                                <Datetime 
+                                    initialValue={new Date()}
+                                    timeFormat={false}
+                                    onChange={ event=> { this.setState({date: event.format('YYYY-MM-DD') }) } }
+                                    closeOnSelect
+                                />
+                                 
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Action</Form.Label>
                                 <Form.Control as="select" 
                                     defaultValue="deposit" 
+                                    onChange={ event=> { this.setState({action: event.target.value }) } }
                                 >
                                     <option value="deposit">Deposit</option>
                                     <option value="withdraw">Withdraw</option>

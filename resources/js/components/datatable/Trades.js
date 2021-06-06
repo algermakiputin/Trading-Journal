@@ -42,11 +42,12 @@ function Trades() {
 
         <div>
             <DataTable 
-                className=" v-middle"
+                className="v-middle"
                 columns={columns}
                 highlightOnHover
                 pagination
                 data={data}
+                
             >
 
             </DataTable>

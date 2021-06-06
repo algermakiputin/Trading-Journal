@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Equity extends Model
 {
     use HasFactory;
-    protected $fillable = ['total_equity', 'remaining_cash', 'action', 'action_reference_id','date'];
+    protected $fillable = ['total_equity', 'remaining_cash', 'action', 'action_reference_id','date','profile_id'];
 }

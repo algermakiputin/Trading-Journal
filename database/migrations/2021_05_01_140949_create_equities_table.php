@@ -17,10 +17,11 @@ class CreateEquitiesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('date'); 
-            $table->integer('total_equity');
-            $table->integer('remaining_cash');
+            $table->double('total_equity');
+            $table->double('remaining_cash');
             $table->string('action');
             $table->integer('action_reference_id');
+            $table->integer('profile_id')->index('profile_id');
         });
     }
 

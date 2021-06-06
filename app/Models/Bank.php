@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Bank extends Model
 {
     use HasFactory;
-    protected $fillable = ['date', 'action', 'amount'];
+    protected $fillable = ['date', 'action', 'amount','profile_id'];
 }
