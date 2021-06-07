@@ -17,7 +17,7 @@
 <body> 
 <div id="overlay"></div>
 <video autoplay muted loop id="home-background-video" style="">
-  <source src="{{ asset('videos/stock_market.mov') }}" type="video/mp4">
+  <source src="{{ asset('videos/stock_market.mp4') }}" type="video/mp4">
 </video>
 <div id="content-wrapper" class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 

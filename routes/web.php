@@ -22,7 +22,7 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('signup', [
     'as' => 'register',
     'uses' => '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm'
-]);
+])->name('signup');
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class,'handleGoogleCallback']);

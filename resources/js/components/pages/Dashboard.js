@@ -115,7 +115,7 @@ class Dashboard extends React.Component {
 
         return  (
             <Fragment>
-                <span><NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.gainLossAmount.toFixed(2)} prefix={'₱'} /></span> &nbsp;
+                <span><NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.gainLossAmount} prefix={'₱'} /></span> &nbsp;
                 <small className={color}>{this.state.gainLossPercentage}%</small>
             </Fragment>
         )
@@ -184,13 +184,13 @@ class Dashboard extends React.Component {
                                                     <i className="mdi mdi-chart-timeline"></i>
                                                 </div> Total Equity
                                                 <span className="ms-auto font-13">
-                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.totalEquity.toFixed(2)} prefix={'₱'} />
+                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.totalEquity} prefix={'₱'} />
                                                 </span>
                                             </li>
                                             <li className="feed-item">
                                                 <div className="feed-icon bg-success"><i className="mdi mdi-chart-pie"></i></div> Available Cash
                                                 <span className="ms-auto font-13">
-                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.availableCash.toFixed(2) } prefix={'₱'} />
+                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.availableCash } prefix={'₱'} />
                                                 </span>
                                             </li>  
                                             <li className="feed-item">
