@@ -1,16 +1,15 @@
 body{
     font-family: "Nunito Sans", sans-serif;
     font-weight: 600;
-    font-size: 1em;
-}
-
-.container {
-    max-width: 55em!important;
     font-size: 0.9rem;
 }
 
+.container {
+    max-width: 870px!important; 
+}
+
 .navbar {
-    padding: 0.6rem;
+    padding: 0.65rem 0;
     font-size: 1rem;
 }
 
@@ -54,8 +53,8 @@ body{
 }
 
 .navbar-brand {
-    font-size: 1.45rem;
-    font-weight: normal;
+    font-size: 1.45rem; 
+    font-weight: 500!important;
 }
 
 .divider hr {
@@ -71,4 +70,13 @@ body{
     padding: 10px;
     font-size: 0.9rem;
     opacity: 0.5;
+}
+
+.btn {
+    font-size: 1rem;
+}
+
+p {
+    font-weight: normal;
+    font-size: 1rem;
 }

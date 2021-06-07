@@ -19,33 +19,33 @@
 <video autoplay muted loop id="home-background-video" style="">
   <source src="{{ asset('videos/stock_market.mp4') }}" type="video/mp4">
 </video>
-<div id="content-wrapper" class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+<div id="content-wrapper" class="cover-container d-flex h-100 mx-auto flex-column">
 
       <header class="masthead mb-auto">
-        <div class="inner">
+        <div class="inner container">
           <h3 class="masthead-brand"> 
             <img src="{{ asset('images/logo.png')}}"  style="position:relative" width="33"/> Hero Journals
           </h3>
           <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="#">Home</a> 
-            <a class="nav-link" href="#">About</a>
-            <a class="nav-link" href="#">Donate</a>
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="{{ url('about') }}">About</a>
+            <a class="nav-link" href="{{ url('donate') }}">Donate</a>
+            <a class="nav-link" href="{{ url('contact') }}">Contact</a>
             <a href="{{ url('login') }}" class="btn btn-default" id="login-btn" href="#">Login</a>
           </nav>
         </div>
       </header>
     
-      <main role="main" class="inner cover text-center">
+      <main role="main" class="inner cover container text-center">
         <h1 class="cover-heading">Track and Manage Your Trades</h1>
-        <p class="lead">Hero journal is a free powerful tool that will level up your strategy and become the best trader version of yourself.</p>
+        <p class="lead">Hero journals is a free powerful tool that will boost your trading strategy and will aid you to become the best trader version of yourself.</p>
         <p class="lead">
           <a href="{{ url('/register') }}" class="btn btn-lg btn-primary">Sign Up Now</a>
         </p>
       </main>
 
       <footer class="mastfoot mt-auto">
-        <div class="inner text-center">
+        <div class="inner text-center container">
           <p>&copy; 2021 Hero Journals, Developed by <a href="https://algermakiputin.com">Alger Makiputin</a>.</p>
         </div>
       </footer>

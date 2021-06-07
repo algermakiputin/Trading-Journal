@@ -27,13 +27,16 @@ Route::get('signup', [
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class,'handleGoogleCallback']);
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('index');
 Route::get('/dashboard', [HomeController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard'); 
 Route::get('/logs', [HomeController::class,'index']); 
 Route::get('/analytics', [HomeController::class,'index']); 
 Route::get('/monthly-tracker', [HomeController::class,'index']); 
 Route::get('/bank-transactions', [HomeController::class,'index']); 
 
+Route::get('/about', [HomeController::class,'about'])->name('about'); 
+Route::get('/contact', [HomeController::class,'contact'])->name('contact'); 
+Route::get('/donate', [HomeController::class,'donate'])->name('donate'); 
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
 Route::patch('api/transactions/update', [TransactionsController::class, 'update']);
