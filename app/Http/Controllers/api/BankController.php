@@ -19,12 +19,14 @@ class BankController extends Controller
         $recordsPerPage = $request->recordsPerPage;
         $offset = $page * $recordsPerPage - $recordsPerPage;
         $totalRecords = Bank::count();
-        $transactions = Bank::orderBy('date', 'desc')
-                                    ->orderBy('id', 'desc')
-                                    ->get();
+        $transactions = Bank::offset($offset)
+                            ->limit($recordsPerPage)
+                            ->orderBy('date', 'desc')
+                            ->orderBy('id', 'desc')
+                            ->get();
 
         return array(
-            'total_records' => $totalRecords,
+            'totalRecords' => $totalRecords,
             'transactions' => $transactions
         );
     }

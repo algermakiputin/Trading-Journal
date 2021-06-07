@@ -57,7 +57,6 @@ class EquitiesController extends Controller
             $startingEquity = $this->getStartingEquity($equity->min);
          
         $endingEquity = $this->getEndingEquity($equity->max);
-  
         return $this->gainLossCalculator( $startingEquity, $endingEquity );
         
     }
