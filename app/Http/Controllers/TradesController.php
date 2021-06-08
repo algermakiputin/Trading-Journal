@@ -327,7 +327,7 @@ class TradesController extends Controller
         if ( $totalTrades && $winTrades)
             return $winTrades / $totalTrades;
 
-        return 1;
+        return 0;
     }
 
     public function getLossingPercentage($startingDate, $endingDate) {
@@ -338,7 +338,7 @@ class TradesController extends Controller
         if ( $totalTrades && $losses)
             return $losses / $totalTrades;
 
-        return 1;
+        return 0;
     }
 
     public function getWinLossRatio($startingDate, $endingDate) {

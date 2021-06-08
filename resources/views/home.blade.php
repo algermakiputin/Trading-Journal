@@ -24,7 +24,7 @@
       <header class="masthead mb-auto">
         <div class="inner container">
           <h3 class="masthead-brand"> 
-            <img src="{{ asset('images/logo.png')}}"  style="position:relative" width="33"/> Hero Journals
+            <img src="{{ asset('images/logo.png')}}"  width="180" style="position:relative"/> 
           </h3>
           <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" href="#">Home</a> 

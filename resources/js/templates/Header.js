@@ -18,7 +18,7 @@ class Header extends React.Component {
                             className="navbar-brand"
                             >
                             <b className="logo-text" style={{marginLeft:'10px'}}> 
-                                <img src={logo} width={34} /> Hero Journals
+                                <img src={logo} width={180} /> 
                             </b>
                         </Link> 
                     </div> 
@@ -35,7 +35,7 @@ class Header extends React.Component {
                                                             {value.name} <i className="mdi mdi-chevron-down"></i>
                                                         </a>
                                                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                                            <a className="dropdown-item" href="" onClick={(event) => value.logout()}>Sign Out</a> 
+                                                            <a className="dropdown-item" onClick={(event) => value.logout()}>Sign Out</a> 
                                                         </div>
                                                 </Fragment>
                                             )

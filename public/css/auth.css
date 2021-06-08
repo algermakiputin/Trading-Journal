@@ -5,11 +5,11 @@ body{
 }
 
 .container {
-    max-width: 870px!important; 
+    max-width: 855px!important; 
 }
 
 .navbar {
-    padding: 0.65rem 0;
+    padding: 0.50rem 0;
     font-size: 1rem;
 }
 
@@ -55,6 +55,7 @@ body{
 .navbar-brand {
     font-size: 1.45rem; 
     font-weight: 500!important;
+    margin-top: -3px;
 }
 
 .divider hr {
