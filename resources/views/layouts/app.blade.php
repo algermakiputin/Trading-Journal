@@ -35,24 +35,24 @@
                             <a class="nav-link" href="{{ route('index') }}">{{ __('Home') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('about') }}">{{ __('About') }}</a>
+                            <a class="nav-link {{ \Request::route()->getName() == 'about' ? 'active' : null }}" href="{{ route('about') }}">{{ __('About') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('donate') }}">{{ __('Donate') }}</a>
+                            <a class="nav-link {{ \Request::route()->getName() == 'donate' ? 'active' : null }}" href="{{ route('donate') }}">{{ __('Donate') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('contact') }}">{{ __('Contact') }}</a>
+                            <a class="nav-link {{ \Request::route()->getName() == 'contact' ? 'active' : null }}"  href="{{ route('contact') }}">{{ __('Contact') }}</a>
                         </li>
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link {{ \Request::route()->getName() == 'login' ? 'active' : null }}"  href="{{ url('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('signup') }}">{{ __('Sign Up') }}</a>
+                                    <a class="nav-link {{ \Request::route()->getName() == 'signup' ? 'active' : null }}"  href="{{ url('signup') }}">{{ __('Sign Up') }}</a>
                                 </li>
                             @endif
                         @else
@@ -87,6 +87,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer>
+            <div class="container">
+                <p class="text-left">&copy; 2021 Hero Journals. All Rights Reserved</p>
+            </div>
+        </footer>
     </div>
     <script src="{{ asset('js/login.js') }}"></script>
 </body>

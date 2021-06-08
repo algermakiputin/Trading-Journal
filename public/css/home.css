@@ -123,8 +123,8 @@ body {
   transform: translate(-50%, -50%); /* % of current element */
   background-color: rgba(65, 71, 85, .7);
   z-index: 1;
-  height: 100%;
-  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
 
 }
 #home-background-video {

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\ContactController;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -45,5 +48,30 @@ class HomeController extends Controller
     public function donate() {
 
         return view('donate');     
+    }
+
+    public function contactFormValidate(array $data) {
+
+        return Validator::make($data, [
+            'fname' => 'required|max:55',
+            'lname' => 'required|max:55',
+            'email' => 'required|email|max:99',
+            'subject' => 'required|max:99',
+            'message' => 'required|max:199'
+        ]);
+ 
+    }
+
+    public function contactFormSubmit(Request $request) {
+
+        $validate = $this->contactFormValidate($request->all());
+        if ( $validate->fails() ) {
+            return redirect('/contact')->withErrors($validate);
+        }
+        
+        Mail::to('algerzxc@gmail.com')
+                ->send(new ContactController($request->all()));
+        
+        return redirect('contact')->with('message', 1);
     }
 }

@@ -80,3 +80,34 @@ p {
     font-weight: normal;
     font-size: 1rem;
 }
+
+main {
+    min-height: 78vh;
+    margin-bottom: 20px;
+}
+footer {
+    background-color: #fff;
+    padding:2.5em 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+.navbar-expand-md .navbar-nav .nav-item {
+    padding: 0.25rem 0.5rem;
+}
+.navbar-expand-md .navbar-nav .nav-link {
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: .25rem solid transparent;
+}
+
+.navbar-expand-md .navbar-nav .nav-link.active {
+    color: #fff;
+    border-color: #fff;
+}
+
+.navbar-expand-md .navbar-nav .nav-link.active:hover {
+    border-bottom-color: rgba(255, 255, 255, .25);
+}
