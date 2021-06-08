@@ -2,31 +2,45 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-md-12">
             <br/>
             <h2>Help us do more</h2>
             <br/>
             <p>
-                Hero Journals is highly effective trading journal platform
+                Hero Journals is highly effective trading journal platform. Donating to Hero Journals means helping people enhance their trading strategy and become a profitable trader.
             </p>
             <p>
-                Donating to Hero Journals means helping people enhance their trading strategy and become a profitable trader.
+                
             </p>
             <p>
-                You also help us to develop new features for you to use and further improve your strategies to the fast changing market environment. 
+                Your $5 donation will help us to develop more innovative features for you to use and further improve your strategies to the fast changing market environment each month. 
             </p>
             <p>
-                To donate simply click the donate button below and enter your desired amount.
+                <strong>Make a $5 donation / month:</strong>
             </p>
-            <div>
-            <form action="https://www.paypal.com/donate" method="post" target="__blank">
-                <input type="hidden" name="hosted_button_id" value="WD3XSFYWQ2JZG" />
-                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-                <img alt="" border="0" src="https://www.paypal.com/en_PH/i/scr/pixel.gif" width="1" height="1" />
-            </form>
-
-            </div>
+            <div style="max-width: 260px;">
+            <div id="paypal-button-container-P-8DK38555DJ996594KMC7WOAQ"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=ARQrrFa-djHtgOoDfhNm3xWa5goGNRt_oDYmI53kjoQBtSOJY6DYGITwld4vWFysclYHLDDXOvZ978vb&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script> 
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'paypal'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          /* Creates the subscription */
+          plan_id: 'P-8DK38555DJ996594KMC7WOAQ'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID); // You can add optional success message for the subscriber here
+      }
+  }).render('#paypal-button-container-P-8DK38555DJ996594KMC7WOAQ'); // Renders the PayPal button
+</script>
         </div> 
     </div>
 </div>

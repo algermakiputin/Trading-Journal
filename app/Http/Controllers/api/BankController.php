@@ -21,6 +21,7 @@ class BankController extends Controller
         $totalRecords = Bank::count();
         $transactions = Bank::offset($offset)
                             ->limit($recordsPerPage)
+                            ->where('profile_id', session('profile_id'))
                             ->orderBy('date', 'desc')
                             ->orderBy('id', 'desc')
                             ->get();

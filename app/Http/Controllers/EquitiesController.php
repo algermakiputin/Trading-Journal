@@ -17,7 +17,7 @@ class EquitiesController extends Controller
                         ->where('profile_id', '=', session('profile_id'))
                         ->limit(1)
                         ->first();
-                        
+    
         if ( $equity ) { 
             $equity->gainLossPercentage = $this->monthlyGainLoss()['percentage'];
             $equity->gainLossAmount = $this->monthlyGainLoss()['amount'];
@@ -52,8 +52,8 @@ class EquitiesController extends Controller
                         ->where('date', '>=', $pastMonth) 
                         ->where('date', '<=', $today)
                         ->first(); 
-        
-        if ( Equity::count() !== 1)
+     
+        if ( Equity::where('profile_id', session('profile_id'))->count() !== 1)
             $startingEquity = $this->getStartingEquity($equity->min);
          
         $endingEquity = $this->getEndingEquity($equity->max);
@@ -87,7 +87,7 @@ class EquitiesController extends Controller
     } 
 
     private function gainLossCalculator( $startingEquity,  $endingEquity) {
-     
+      
         $amount = $endingEquity - $startingEquity;  
         
         $percentage = 100;

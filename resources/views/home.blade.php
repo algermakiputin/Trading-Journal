@@ -46,7 +46,7 @@
 
       <footer class="mastfoot mt-auto">
         <div class="inner text-center container">
-          <p>&copy; 2021 Hero Journals, Developed by <a href="https://algermakiputin.com">Alger Makiputin</a>.</p>
+          <p>&copy; 2021 Hero Journals, Developed by <a href="https://algermakiputin.dev">Alger Makiputin</a>.</p>
         </div>
       </footer>
     </div>

@@ -31,11 +31,11 @@ class Header extends React.Component {
                                         {
                                             (value) => (
                                                 <Fragment>
-                                                    <a className="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" id="navbarDropdown" data-toggle="dropdown">
+                                                    <a href="#!" className="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" id="navbarDropdown" data-toggle="dropdown">
                                                             {value.name} <i className="mdi mdi-chevron-down"></i>
                                                         </a>
                                                         <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                                            <a className="dropdown-item" onClick={(event) => value.logout()}>Sign Out</a> 
+                                                            <a className="dropdown-item" href="#!" onClick={(event) => {event.preventDefault();  value.logout()}}>Sign Out</a> 
                                                         </div>
                                                 </Fragment>
                                             )

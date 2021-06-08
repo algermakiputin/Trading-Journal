@@ -22,8 +22,7 @@ class EquityChart extends React.Component {
 
         axios.get('/api/equitycurve')
                 .then(res => {
-                    this.setState({ data: res.data })
-                    console.log(this.state.data)
+                    this.setState({ data: res.data }) 
                 })
                 .catch(err => {
                     console.log(err)

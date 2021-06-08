@@ -34,8 +34,9 @@ class Main extends React.Component {
 
     logout() { 
         axios.post('/logout')
-            .then( res => {
+            .then( res => { 
                 window.location.href = '/login'
+                
             })
     }
 
