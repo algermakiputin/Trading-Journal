@@ -30,6 +30,7 @@ class TransactionsController extends Controller
                                     ->limit($recordsPerPage)
                                     ->orderBy('date', 'desc')
                                     ->orderBy('id', 'desc')
+                                    ->where('profile_id', session('profile_id'))
                                     ->get();
         //calculate avg buy amount
         foreach ( $transactions as $transaction) {
