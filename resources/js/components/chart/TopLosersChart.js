@@ -1,7 +1,7 @@
-import React from 'react'
-import axios from 'axios'
+import React from 'react' 
 import { BarChart, LabelList, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart } from 'recharts'
 import NumberMinify from '../../classes/NumberMinify'
+import NumberFormat from 'react-number-format'
 class TopLosersChart extends React.Component {
 
     constructor(props) {
@@ -43,7 +43,7 @@ class TopLosersChart extends React.Component {
                             margin={{top:5}} 
                             >
                                 <Tooltip 
-                                    formatter={(num) => Number(num).toLocaleString()}
+                                    formatter={(num) => <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={num} />}
                                     cursor={{fill: '#fff'}}
                                 />
                                 <XAxis maxBarSize={2} type="number" hide />

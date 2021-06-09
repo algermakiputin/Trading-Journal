@@ -150,6 +150,7 @@ class TradesController extends Controller
                         DB::raw('SUM(trade_results.gain_loss_amount)  as Loss'), 
                         'trades.stock_code')
                     ->where('trade_results.win', '=', '0') 
+                    ->where('profile_id', session('profile_id'))
                     ->groupBy('trades.stock_code')
                     ->orderBy('gain_loss_percentage', 'DESC')
                     ->limit(5)
@@ -292,7 +293,7 @@ class TradesController extends Controller
     }
 
     public function getTotalTradesTaken($startingDate, $endingDate) {
-
+        
         return Trade::where('status', '=' , 1) 
                     ->where('profile_id', '=', session('profile_id'))
                     ->whereDate('created_at', '>=', $startingDate)

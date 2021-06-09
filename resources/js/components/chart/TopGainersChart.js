@@ -1,6 +1,6 @@
-import React from 'react'
-import axios from 'axios'
+import React from 'react' 
 import { BarChart, LabelList, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart } from 'recharts'
+import NumberFormat from 'react-number-format'
 
 class TopGainersChart extends React.Component {
 
@@ -37,7 +37,7 @@ class TopGainersChart extends React.Component {
                             margin={{top:5}} 
                             >
                                 <Tooltip 
-                                    formatter={(num) => Number(num).toLocaleString()}
+                                    formatter={(num) => <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={num} />}
                                     cursor={{fill: '#fff'}}
                                 />
                                 <XAxis type="number" hide />
@@ -48,8 +48,7 @@ class TopGainersChart extends React.Component {
                                     barSize={15}
                                     barCategoryGap={0}
                                     orientation="left"
-                                    maxBarSize={1} 
-                                    // label={(props) => this.label(props)} 
+                                    maxBarSize={1}  
                                     
                                 >
                                     <LabelList style={{opacity:0.7}} offset={0} dy={-20} fill="ffffff" dataKey="stock_code" position="insideLeft" />
