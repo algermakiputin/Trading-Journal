@@ -47,11 +47,14 @@ class SellForm extends React.Component {
         if ( this.state.shares && this.state.price && this.state.date ) {
  
             axios.post('/api/transactions/sell', this.state)
-                .then( res => {
-                    
+                .then( res => { 
                     this.props.closeHandle()
                     this.props.setEquity()
                     this.props.load_positions()
+                    this.props.setEquityCurve()
+                    this.props.setAccountPerformance()
+                    this.props.setTopGainers()
+                    this.props.setTopLosers()
                 })
                 .catch( err => {
                     console.log(err)

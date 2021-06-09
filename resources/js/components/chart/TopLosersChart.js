@@ -6,17 +6,9 @@ class TopLosersChart extends React.Component {
 
     constructor(props) {
 
-        super(props)
-        this.state = {
-            data: null,
-            height:50
-        }
+        super(props) 
     }
-
-    componentDidMount() {
-
-        this.getTopGainersLosers()
-    }
+ 
 
     label(props) {
  
@@ -35,20 +27,7 @@ class TopLosersChart extends React.Component {
              )
     }
     
-    async getTopGainersLosers() {
-
-        await axios.get('/api/getTopLosers')
-                    .then( res => {
-                        console.log(res.data)
-                        this.setState({
-                            data: res.data,
-                            height: this.state.height * res.data.length
-                        })
-                    })
-                    .catch( err => {
-                        console.log(err)
-                    })
-    }
+    
     
     
     render() {
@@ -56,9 +35,9 @@ class TopLosersChart extends React.Component {
         return (
             <div className='row'>
                 <div className='col'>  
-                    <ResponsiveContainer width="100%" height={this.state.height}>
+                    <ResponsiveContainer width="100%" height={this.props.height}>
                         <BarChart   
-                            data={this.state.data}
+                            data={this.props.data}
                             layout="vertical"
                             barCategoryGap={1}
                             margin={{top:5}} 

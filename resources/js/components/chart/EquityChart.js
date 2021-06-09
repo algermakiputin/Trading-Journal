@@ -7,28 +7,9 @@ class EquityChart extends React.Component {
 
     constructor(props) {
 
-        super(props)
-        this.state = {
-            data:null
-        }
+        super(props) 
     }
-
-    componentDidMount() {
-
-        this.setData();
-    }
-
-    setData() {
-
-        axios.get('/api/equitycurve')
-                .then(res => {
-                    this.setState({ data: res.data }) 
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-
-    }
+ 
 
     yTickFormat(val) {
 
@@ -103,7 +84,7 @@ class EquityChart extends React.Component {
             <Fragment>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart 
-                        data={this.state.data} 
+                        data={this.props.equityCurve} 
                     >
                     <CartesianGrid stroke="#000000" strokeOpacity="0.1" strokeDasharray="3 3" verticalFill={['#fff', '#f4f4f5']} fillOpacity={0.2}/> 
                     <XAxis tickFormatter={this.xAxisLabelFormat} tickLine={false}  axisLine={false}  dataKey="date" opacity={0.65} tick={{fontSize:'0.9rem', color:'#000'}} dy={10} />

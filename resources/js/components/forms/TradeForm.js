@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Form, Table, Button, Modal, Alert } from "react-bootstrap"
 import axios from "axios"
 import Transactions from '../../classes/Transactions'
@@ -29,7 +29,7 @@ class TradeForm extends React.Component {
             feesText:'0.00',
             remarks:''
         }
-
+        
         this.baseState = this.state;
         this.input = React.createRef()
  
@@ -37,9 +37,8 @@ class TradeForm extends React.Component {
    
     handleFormSubmit() { 
         
-        this.validateForm()
-
-        if ( this.state.net > this.props.availableCash ) 
+        this.validateForm() 
+        if ( parseFloat(this.state.net) > parseFloat(this.props.availableCash) ) 
             return alert("Not enough available cash")
             
         axios.post('/api/transactions/store', {

@@ -6,17 +6,8 @@ class TopGainersChart extends React.Component {
 
     constructor(props) {
 
-        super(props)
-        this.state = {
-            data: null,
-            height:50
-        }
-    }
-
-    componentDidMount() {
-
-        this.getTopGainersLosers()
-    }
+        super(props) 
+    } 
 
     label(props) {
         const {x, y, value} = props;
@@ -31,29 +22,16 @@ class TopGainersChart extends React.Component {
                 fill={"#181818"}
                 textAnchor="middle">{value}</text>
              )
-    }
-    
-    async getTopGainersLosers() {
-
-        await axios.get('/api/getTopGainers')
-                    .then( res => {
-                         
-                        this.setState({data: res.data, height: this.state.height * res.data.length})
-                    })
-                    .catch( err => {
-                        console.log(err)
-                    })
-    }
-    
+    } 
     
     render() {
 
         return (
             <div className='row'>
                 <div className='col'>  
-                    <ResponsiveContainer width="100%" height={this.state.height} >
+                    <ResponsiveContainer width="100%" height={this.props.height} >
                         <BarChart  
-                            data={this.state.data}
+                            data={this.props.data}
                             layout="vertical"
                             barCategoryGap={1}
                             margin={{top:5}} 

@@ -26,7 +26,13 @@ class Dashboard extends React.Component {
             show: false,
             positions:null,
             showSellModal: false,
-            toSell: []
+            toSell: [],
+            equityCurve:null,
+            accountPerformance:[],
+            topLossers:[],
+            topWinners:[],
+            winBarHeight:50,
+            lossBarHeight:50
         }
 
         this.setEquity()
@@ -36,8 +42,19 @@ class Dashboard extends React.Component {
         this.load_positions = this.load_positions.bind(this)
         this.setEquity = this.setEquity.bind(this)
         this.handleModal = this.handleModal.bind(this)
-        this.closeSellModal = this.closeSellModal.bind(this)
+        this.closeSellModal = this.closeSellModal.bind(this) 
+        this.setEquityCurve = this.setEquityCurve.bind(this)
+        this.setAccountPerformance = this.setAccountPerformance.bind(this)
+        this.setTopLossers = this.setTopLossers.bind(this)
+        this.setTopGainers = this.setTopGainers.bind(this)
     }  
+
+    componentDidMount() {
+        this.setEquityCurve()
+        this.setAccountPerformance()
+        this.setTopLossers()
+        this.setTopGainers()
+    }
 
     handleSellModal(trade) { 
         this.setState({toSell: trade})
@@ -47,6 +64,19 @@ class Dashboard extends React.Component {
     closeSellModal() {
 
         this.setState({showSellModal: !this.state.showSellModal})
+    }
+
+    async setAccountPerformance() {
+
+        await axios.get('/api/getAccountPerformanceSummary')
+                    .then(res => { 
+                        this.setState({
+                            accountPerformance:res.data
+                        }) 
+                    })
+                    .catch( err => {
+                        console.log(err)
+                    })
     }
 
     async setEquity() {
@@ -66,6 +96,16 @@ class Dashboard extends React.Component {
                 .catch( err => {
                     console.log(err)
                 })
+    }
+
+    setEquityCurve() {
+        axios.get('/api/equitycurve')
+                    .then(res => {
+                        this.setState({ equityCurve: res.data }) 
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
     }
 
     handleModal() {
@@ -120,7 +160,35 @@ class Dashboard extends React.Component {
             </Fragment>
         )
     }
- 
+
+    async setTopLossers() {
+
+        await axios.get('/api/getTopLosers')
+                    .then( res => { 
+                        this.setState({
+                            topLossers: res.data,
+                            lossBarHeight: this.state.lossBarHeight * res.data.length
+                        })
+                    })
+                    .catch( err => {
+                        console.log(err)
+                    })
+    }
+
+    async setTopGainers() {
+
+        await axios.get('/api/getTopGainers')
+                    .then( res => { 
+                        this.setState({
+                            topGainers: res.data, 
+                            winBarHeight: this.state.winBarHeight * res.data.length
+                        })
+                    })
+                    .catch( err => {
+                        console.log(err)
+                    })
+    }
+  
     render() {      
         return (
             
@@ -145,6 +213,7 @@ class Dashboard extends React.Component {
                                         handleModal={this.handleModal}
                                         load_positions={this.load_positions}
                                         reloadEquity={this.setEquity}
+                    
                                     /> 
                                 </Modal>
                             </div>
@@ -165,7 +234,10 @@ class Dashboard extends React.Component {
                                     <div className="row"> 
                                         <div className="col-lg-12">
                                             <div className="campaign ct-charts">
-                                                <EquityChart />
+                                                <EquityChart 
+                                                    equityCurve={this.state.equityCurve}
+                                                    setEquityCurve={this.setEquityCurve}
+                                                />
                                             </div>
                                         </div> 
                                     </div>
@@ -175,8 +247,8 @@ class Dashboard extends React.Component {
                         <div className="col-md-4">
                             <div className="card">
                                 <div className="card-body equity-card">
-                                    <h4 className="card-title">Account Summary (PHP)</h4>
-                                    <h5 className="card-subtitle">Summary for the last 12s months</h5>
+                                    <h4 className="card-title">Account Summary(PHP)</h4>
+                                    <h5 className="card-subtitle">Account summary for the last 12 months</h5>
                                     <div className="feed-widget">
                                         <ul className="list-style-none feed-body m-0 p-b-20">
                                             <li className="feed-item">
@@ -184,13 +256,13 @@ class Dashboard extends React.Component {
                                                     <i className="mdi mdi-chart-timeline"></i>
                                                 </div> Total Equity
                                                 <span className="ms-auto font-13">
-                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.totalEquity} prefix={'₱'} />
+                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={this.state.totalEquity}/>
                                                 </span>
                                             </li>
                                             <li className="feed-item">
                                                 <div className="feed-icon bg-success"><i className="mdi mdi-chart-pie"></i></div> Available Cash
                                                 <span className="ms-auto font-13">
-                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.availableCash } prefix={'₱'} />
+                                                    <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={ this.state.availableCash }  />
                                                 </span>
                                             </li>  
                                             <li className="feed-item">
@@ -206,6 +278,7 @@ class Dashboard extends React.Component {
                                                 setEquity={this.setEquity}
                                                 availableCash={this.state.availableCash}
                                                 totalEquity={this.state.totalEquity}
+                                                setEquityCurve={this.setEquityCurve}
                                             />   
                                         </div>
                                     </div> 
@@ -238,6 +311,10 @@ class Dashboard extends React.Component {
                                             totalEquity={this.state.totalEquity}
                                             setEquity={this.setEquity}
                                             load_positions={this.load_positions}
+                                            setEquityCurve={this.setEquityCurve}
+                                            setAccountPerformance={this.setAccountPerformance}
+                                            setTopGainers={this.setTopGainers}
+                                            setTopLossers={this.setTopLossers}
                                             />
                                     </Modal>
                                    
@@ -253,7 +330,10 @@ class Dashboard extends React.Component {
                                         <h4 className="card-title">Account Performance</h4>
                                         <h5 className="card-subtitle">Summary of my trade metrics</h5>
                                        
-                                        <AccountPerformanceTable />
+                                        <AccountPerformanceTable 
+                                            accountPerformance={this.state.accountPerformance}
+                                            setAccountPerformance={this.setAccountPerformance}
+                                        />
                                     </div> 
                                 </div>
                             </div>
@@ -267,7 +347,10 @@ class Dashboard extends React.Component {
 
                                     </div> 
                                     <div style={{height:'235px'}}>
-                                        <TopGainersChart />
+                                        <TopGainersChart 
+                                            height={this.state.winBarHeight}
+                                            data={this.state.topGainers}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -281,7 +364,10 @@ class Dashboard extends React.Component {
                                         
                                     </div> 
                                     <div style={{height:'235px'}}>
-                                        <TopLosersChart />
+                                        <TopLosersChart
+                                            height={this.state.lossBarHeight}
+                                            data={this.state.topLossers}
+                                        />
                                     </div>
                                 </div>
                             </div>
