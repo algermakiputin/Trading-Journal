@@ -30,6 +30,7 @@ body {
   background-color: #333;
   font-size: 1rem;
   line-height: 28px;
+  overflow: hidden;
 }
 
 body {

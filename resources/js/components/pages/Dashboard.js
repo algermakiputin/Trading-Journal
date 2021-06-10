@@ -30,9 +30,9 @@ class Dashboard extends React.Component {
             equityCurve:null,
             accountPerformance:[],
             topLossers:[],
-            topWinners:[],
+            topGainers:[],
             winBarHeight:50,
-            lossBarHeight:50
+            lossBarHeight:50,
         }
 
         this.setEquity()
@@ -167,7 +167,7 @@ class Dashboard extends React.Component {
                     .then( res => { 
                         this.setState({
                             topLossers: res.data,
-                            lossBarHeight: this.state.lossBarHeight * res.data.length
+                            lossBarHeight: 50 * res.data.length
                         })
                     })
                     .catch( err => {
@@ -181,7 +181,7 @@ class Dashboard extends React.Component {
                     .then( res => { 
                         this.setState({
                             topGainers: res.data, 
-                            winBarHeight: this.state.winBarHeight * res.data.length
+                            winBarHeight: 50 * res.data.length
                         })
                     })
                     .catch( err => {

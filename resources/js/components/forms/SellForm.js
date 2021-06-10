@@ -54,7 +54,7 @@ class SellForm extends React.Component {
                     this.props.setEquityCurve()
                     this.props.setAccountPerformance()
                     this.props.setTopGainers()
-                    this.props.setTopLosers()
+                    this.props.setTopLossers()
                 })
                 .catch( err => {
                     console.log(err)

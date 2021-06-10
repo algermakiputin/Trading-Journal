@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $this->middleware('auth'); 
+        $this->middleware('auth')->except('verify'); 
         return view('welcome');
     }
 
