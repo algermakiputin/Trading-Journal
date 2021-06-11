@@ -46,7 +46,7 @@ class SellForm extends React.Component {
  
 
     formSubmitHandle() {
-          
+         
         if ( this.state.shares && this.state.price && this.state.date ) {
  
             axios.patch('/api/transactions/update', this.state)
@@ -79,7 +79,7 @@ class SellForm extends React.Component {
             fees = Transactions.sell( price , shares );
             net = (price * shares ) - fees;
         }
-        
+        console.log(net)
         this.setState({fees: fees, net: net,price:price });
  
     }
@@ -98,7 +98,7 @@ class SellForm extends React.Component {
             fees = Transactions.sell( price , shares );
             net = (price * shares ) - fees;
         }
-       
+        
         this.setState({fees: fees, net: net,shares: shares});  
     }
 

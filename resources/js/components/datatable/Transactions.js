@@ -139,13 +139,13 @@ class Transaction extends React.Component {
                     console.log(err)
                 })
                 
-    }
- 
+    } 
+    
     render() {
 
         return (
             
-            <React.Fragment>
+            <React.Fragment> 
                 <DatatableHelper 
                     columns={this.state.columns}
                     data={this.state.data} 

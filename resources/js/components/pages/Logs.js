@@ -24,8 +24,12 @@ class Logs extends React.Component {
                 {key: 'gain_loss_percentage', title: 'Gain/Loss (%)'} 
             ],
             data:[], 
-            totalRecords: 0
+            transactionsData: [],
+            totalRecords: 0 
         } 
+        this.transactions = React.createRef()
+        this.bank = React.createRef()
+ 
     }
 
     componentDidMount() {
@@ -56,14 +60,17 @@ class Logs extends React.Component {
     }
 
     eraseAllLogs() {
-
+ 
         let confirm = window.confirm('This will delete all your trades and bank transactions, are you sure you want to erase all logs?')
         
         if (confirm) {
             axios.delete('eraseAllLogs')
                 .then(res => {
-                    if (res.data == 1)
-                        this.forceUpdate();
+                    if (res.data == 1) {
+                        this.transactions.current.setData()
+                        this.bank.current.setData()
+                        this.getClosedTrades()
+                    } 
 
                 })
                 .catch(err => {
@@ -71,6 +78,7 @@ class Logs extends React.Component {
                 })
         }
     }
+ 
     render() {
 
         return (
@@ -101,13 +109,16 @@ class Logs extends React.Component {
                                             </div>
                                         </Tab>
                                         <Tab eventKey="transactions" title="Trade Transactions">
-                                            <Transactions />
+                                            <Transactions
+                                                ref={this.transactions}
+                                            />
                                         </Tab> 
                                         <Tab eventKey="bank" title="Bank Transactions">
-                                            <BankDatatable />
+                                            <BankDatatable 
+                                                ref={this.bank}
+                                            />
                                         </Tab> 
-                                    </Tabs>
-                                    
+                                    </Tabs> 
 
                                 </div>
                             </div>

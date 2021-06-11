@@ -303,18 +303,16 @@ class TransactionsController extends Controller
  
     public function update(Request $request) 
     {
-        
-      
+         
         $trade_id = $request->trade_id; 
         $trade = Trade::find($trade_id);
         $transaction = Transaction::find($request->transaction_id);
         $totalEquity = $request->totalEquity;
         $availableCash = $request->availableCash;
-       
+        $request->net = $this->strToNum($request->net);
+        $win = 0;
         // if ( $trade->status == 1)
-        //     return "Cannot update closed trades";
-            
-        
+        //     return "Cannot update closed trades"; 
 
         try {
 
@@ -333,15 +331,19 @@ class TransactionsController extends Controller
             
             if ( $transaction->type == "sell") { 
                 
-                $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
+                return "Cannot edit this sell transaction";
+                // $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
+           
+                // $oldNet = $transaction->net;
+                // $newNet = $request->net;
+                // $net = $oldNet - $buyNetAmount; 
+                // // $netPL = $newNet - $buyNetAmount; 
+                // dd($net);
+                // $availableCash += $net; 
+                // $totalEquity += $net; 
+             
+                // dd($totalEquity);
                 
-                $oldNet = $transaction->net;
-                $newNet = $request->net;
-                $net = $oldNet - $newNet; 
-                $netPL = $newNet - $buyNetAmount;
-  
-                $availableCash -= $net;
-                $totalEquity -= $netPL;
             } 
  
             Transaction::where('id','=', $request->transaction_id)
@@ -374,7 +376,7 @@ class TransactionsController extends Controller
                             'sold' => $request->shares, 
                             'status' => $status
                         ]);
-            }
+            } 
 
             DB::commit();
             return 1;
