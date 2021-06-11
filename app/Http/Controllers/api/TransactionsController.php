@@ -343,9 +343,7 @@ class TransactionsController extends Controller
                 $availableCash -= $net;
                 $totalEquity -= $netPL;
             } 
-
-           
-
+ 
             Transaction::where('id','=', $request->transaction_id)
                         ->update([
                             'price' => $request->price,
@@ -398,6 +396,7 @@ class TransactionsController extends Controller
             $totalEquity = $request->totalEquity;
             $availableCash = $request->availableCash;
             $trade = Trade::find($request->trade_id);
+            $request->net = $this->strToNum($request->net);
 
             if ( $request->type == "long") { 
 
@@ -413,7 +412,7 @@ class TransactionsController extends Controller
                         ]);
                 TradeResult::where('id', '=', $request->trade_id)->delete(); 
                 $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
-                $sellNetAmount = floatval(preg_replace('/[^\d.]/', '', $request->net));; 
+                $sellNetAmount = $request->net; 
                 
                 $netPL = $sellNetAmount - $buyNetAmount;
               
@@ -440,6 +439,11 @@ class TransactionsController extends Controller
         } 
         
 
+    }
+
+    public function strToNum($str) {
+
+        return floatval(preg_replace('/[^\d.]/', '', $str));
     }
 
     public function fetch_all() {
