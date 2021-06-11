@@ -54,6 +54,23 @@ class Logs extends React.Component {
                     console.log(err)
                 })
     }
+
+    eraseAllLogs() {
+
+        let confirm = window.confirm('This will delete all your trades and bank transactions, are you sure you want to erase all logs?')
+        
+        if (confirm) {
+            axios.delete('eraseAllLogs')
+                .then(res => {
+                    if (res.data == 1)
+                        this.forceUpdate();
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }
     render() {
 
         return (
@@ -70,6 +87,7 @@ class Logs extends React.Component {
                         <div className="col-lg-12">
                             <div className="card">
                                 <div className="card-body" >
+                                    <button onClick={() => this.eraseAllLogs()} style={{float:'right',marginTop:'16px'}} className="btn btn-danger pull-right">Erase all logs</button>
                                     <Tabs defaultActiveKey="closed-trades" id="uncontrolled-tab-example">
                                         <Tab eventKey="closed-trades" title="Closed Trades">
                                             <div className='tab-content'> 

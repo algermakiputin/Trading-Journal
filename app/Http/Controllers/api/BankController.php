@@ -99,9 +99,9 @@ class BankController extends Controller
         $remainingCash = $equity->remaining_cash;
         $totalEquity = $equity->total_equity;
         $amount = $request->amount;
-
+        
         if ($remainingCash < $amount)
-            return "Cannot delete this bank transaction";
+            return "Opps! Remaining balance will be zero if you delete this bank transactions.";
 
         Bank::where('id', $request->id)->delete();
         Equity::create([

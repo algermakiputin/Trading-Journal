@@ -52,15 +52,16 @@ class TradesController extends Controller
         $ave_price = 0;
         $total_cost = 0;
         $total_shares = 0;  
-  
+   
         foreach ( $trades as $trade ) {
            
             $total_shares += $trade->shares - $trade->sold; 
             $fees = $this->calculateBuyingFees($total_shares, $trade->purchase_price);
-            $total_cost += $trade->shares * $trade->purchase_price + $fees; //Need to get fees of transaction $trade->fees; 
          
+            $total_cost += ($total_shares * $trade->purchase_price) + $fees; //Need to get fees of transaction $trade->fees; 
+            
         }
- 
+       
         $ave_price = ($total_cost / $total_shares);
        
         return array(
@@ -240,7 +241,7 @@ class TradesController extends Controller
             'winningPercentage' => $winningPercentage,
             'averageWins' => $averageWins,
             'averageLosses' => $averageLosses,
-            'winLossRatio' => $winLossRatio,
+            'winLossRatio' => number_format($winLossRatio,2),
             'adjustedWinLossRatio' => number_format($appt,2)
         );
 

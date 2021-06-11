@@ -39,7 +39,7 @@ class BankForm extends React.Component {
                         action: this.state.action
                     })
                     .then( res => {
-                         
+                        
                         if ( res.data == 1) { 
                             this.setState(this.defaultState)
                             this.props.setEquity()

@@ -125,9 +125,9 @@ class Dashboard extends React.Component {
                 return <tr key={trade.stock_code + index }>
                     <td> {trade.stock_code }</td>
                     <td> <span className='badge badge-success'>Long</span> </td>
-                    <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.ave_price} prefix={'₱'} /></td>
+                    <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.ave_price} /></td>
                     <td> {trade.total_shares }</td>
-                    <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={trade.total_cost} prefix={'₱'} /> </td>
+                    <td> <NumberFormat decimalScale={4} thousandSeparator={true} displayType='text' value={parseFloat(trade.total_cost).toFixed(2)} /> </td>
                     <td> 
                         <div className="dropdown show">
                         <i className="fa fa-cog dropdown-toggle" href="#" role="button" id="portfolioActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

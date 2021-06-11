@@ -46,7 +46,7 @@ class SellForm extends React.Component {
  
 
     formSubmitHandle() {
-         
+          
         if ( this.state.shares && this.state.price && this.state.date ) {
  
             axios.patch('/api/transactions/update', this.state)
@@ -55,8 +55,6 @@ class SellForm extends React.Component {
                     if (res.data == "1") {
                         this.props.closeHandle()
                         this.props.setData()
-                    }else {
-                        alert(res.data)
                     }
                 })
                 .catch( err => {
@@ -71,10 +69,18 @@ class SellForm extends React.Component {
   
         let price = event.target.value;
         let shares = this.state.shares;
-
-        let fees = Transactions.sell( price , shares );
-        let net = (price * shares ) - fees;
-        this.setState({fees: fees, net: net });
+        let fees = 0;
+        let net = 0;
+       
+        if (this.props.trade.type == 'long') {
+            fees = Transactions.buy( price , shares );
+            net = (price * shares ) + fees;
+        }else {
+            fees = Transactions.sell( price , shares );
+            net = (price * shares ) - fees;
+        }
+        
+        this.setState({fees: fees, net: net,price:price });
  
     }
 
@@ -82,11 +88,18 @@ class SellForm extends React.Component {
 
         let shares = event.target.value;
         let price = this.state.price;
-
-        let fees = Transactions.sell( price , shares );
-        let net = (price * shares ) - fees;
+        let fees = 0;
+        let net = 0;
         
-        this.setState({fees: fees, net: net });
+        if (this.props.trade.type == 'long') {
+            fees = Transactions.buy( price , shares );
+            net = (price * shares ) + fees;
+        }else {
+            fees = Transactions.sell( price , shares );
+            net = (price * shares ) - fees;
+        }
+       
+        this.setState({fees: fees, net: net,shares: shares});  
     }
 
  
@@ -121,14 +134,14 @@ class SellForm extends React.Component {
                             <Form.Label>Shares</Form.Label>
                             <Form.Control type="text" name="shares"
                                 defaultValue={this.props.trade.shares} 
-                                onChange={ (event ) => { this.setState({shares: event.target.value }); this.netCalculatorSharesHandle(event) } }
+                                onChange={ (event ) => {  this.netCalculatorSharesHandle(event) } }
                             ></Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Price</Form.Label>
                             <Form.Control type="text" autoComplete="off"
                                 defaultValue={this.props.trade.price}
-                                onChange={ (event ) => { this.setState({price: event.target.value }); this.netCalculatorPriceHandle(event) } }
+                                onChange={ (event ) => {  this.netCalculatorPriceHandle(event) } }
                             ></Form.Control>
                         </Form.Group>
                         <Form.Group>

@@ -48,6 +48,10 @@ class BankDatatable extends React.Component {
                     }
                 })
                 .then(res => {
+                    
+                    if (res.data != 1) 
+                        return alert(res.data)
+                        
                     alert('Bank transaction deleted successfully')
                     this.setData()
                 })

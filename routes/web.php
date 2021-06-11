@@ -42,6 +42,7 @@ Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
 Route::patch('api/transactions/update', [TransactionsController::class, 'update']);
 Route::delete('api/transactions/destroy', [TransactionsController::class, 'destroy']);
+Route::delete('eraseAllLogs', [TransactionsController::class, 'eraseAllLogs']);
 Route::get('api/transactions/datatable', [TransactionsController::class, 'datatable']);
 Route::get('positions', [ TradesController::class, 'positions']);
 Route::get('api/getTopGainers', [ TradesController::class, 'getTopGainers']);

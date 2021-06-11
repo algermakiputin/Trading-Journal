@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\Trade;
 use App\Models\Equity;
 use App\Models\TradeResult;
+use App\Models\Bank;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\TradesController;
 
@@ -35,6 +36,7 @@ class TransactionsController extends Controller
         //calculate avg buy amount
         foreach ( $transactions as $transaction) {
 
+            $transaction->net = number_format($transaction->net,2);
             $total = $transaction->price * $transaction->shares + $transaction->fees; 
         }
 
@@ -301,22 +303,48 @@ class TransactionsController extends Controller
  
     public function update(Request $request) 
     {
-          
+        
+      
         $trade_id = $request->trade_id; 
         $trade = Trade::find($trade_id);
         $transaction = Transaction::find($request->transaction_id);
         $totalEquity = $request->totalEquity;
-        $availableCash = $request->availableCash + $transaction->net - $request->net;
-        
-        if ( $trade->status == 1)
-            return "Not enough shares accumulated";
+        $availableCash = $request->availableCash;
+       
+        // if ( $trade->status == 1)
+        //     return "Cannot update closed trades";
             
-        if ( $availableCash < $request->net)
-            return "Not enough cash";
+        
 
         try {
 
             DB::beginTransaction();  
+            
+
+            if ($transaction->type == 'long')  {
+
+                $availableCash += $transaction->net;
+                if ( floatval($availableCash) < floatval($request->net))
+                    return "Not enough cash";
+
+                $availableCash -= $request->net;
+            }   
+                
+            
+            if ( $transaction->type == "sell") { 
+                
+                $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
+                
+                $oldNet = $transaction->net;
+                $newNet = $request->net;
+                $net = $oldNet - $newNet; 
+                $netPL = $newNet - $buyNetAmount;
+  
+                $availableCash -= $net;
+                $totalEquity -= $netPL;
+            } 
+
+           
 
             Transaction::where('id','=', $request->transaction_id)
                         ->update([
@@ -325,7 +353,6 @@ class TransactionsController extends Controller
                             'net' => $request->net,
                             'fees' => $request->fees
                         ]);
-
             Equity::create([
                         'date' => $request->date,
                         'total_equity' => $totalEquity,
@@ -365,18 +392,18 @@ class TransactionsController extends Controller
     public function destroy(Request $request)
     {
         
-        try {
-            
+        try { 
             DB::beginTransaction(); 
             Transaction::where('id', '=', $request->id)->delete();  
             $totalEquity = $request->totalEquity;
             $availableCash = $request->availableCash;
             $trade = Trade::find($request->trade_id);
+
             if ( $request->type == "long") { 
 
                 Trade::where('id', '=', $request->trade_id)->delete();
                 $availableCash += $request->net;
-                
+              
             }else if ( $request->type == "sell") {
 
                 Trade::where('id', '=', $request->trade_id) 
@@ -386,11 +413,13 @@ class TransactionsController extends Controller
                         ]);
                 TradeResult::where('id', '=', $request->trade_id)->delete(); 
                 $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
-                $sellNetAmount = $request->net;
-                $netPL = $sellNetAmount - $buyNetAmount;
+                $sellNetAmount = floatval(preg_replace('/[^\d.]/', '', $request->net));; 
                 
-                $totalEquity -= $netPL;
-                $availableCash -= $buyNetAmount;
+                $netPL = $sellNetAmount - $buyNetAmount;
+              
+                $totalEquity -= $sellNetAmount - $buyNetAmount; 
+                $availableCash -= $sellNetAmount; 
+        
             }
 
             Equity::create([
@@ -416,5 +445,24 @@ class TransactionsController extends Controller
     public function fetch_all() {
 
         return null;
+    }
+
+    public function eraseAllLogs() {
+     
+        try { 
+            DB::beginTransaction(); 
+            Equity::where('profile_id', session('profile_id'))->delete();
+            Transaction::where('profile_id', session('profile_id'))->delete();
+            Trade::where('profile_id', session('profile_id'))->delete();
+            TradeResult::where('profile_id', session('profile_id'))->delete();
+            Bank::where('profile_id', session('profile_id'))->delete();
+            DB::commit();
+            return 1;
+        } catch (\Exception $e) { 
+            DB::rollback(); 
+            throw $e;
+            return 0;
+        }
+        
     }
 }
