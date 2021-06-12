@@ -61,7 +61,7 @@ class TradesController extends Controller
             $total_cost += ($total_shares * $trade->purchase_price) + $fees; //Need to get fees of transaction $trade->fees; 
             
         }
-       
+    
         $ave_price = ($total_cost / $total_shares);
        
         return array(

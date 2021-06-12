@@ -52,10 +52,11 @@ class EquitiesController extends Controller
                         ->where('date', '>=', $pastMonth) 
                         ->where('date', '<=', $today)
                         ->first(); 
-     
+        
         if ( Equity::where('profile_id', session('profile_id'))->count() !== 1)
             $startingEquity = $this->getStartingEquity($equity->min);
          
+        
         $endingEquity = $this->getEndingEquity($equity->max);
         return $this->gainLossCalculator( $startingEquity, $endingEquity );
         
@@ -63,14 +64,17 @@ class EquitiesController extends Controller
 
     private function getStartingEquity($date) {
 
-        $equity =  DB::table('equities')
-                    ->select('total_equity as total')
-                    ->where('profile_id', '=', session('profile_id'))
-                    ->where('date', '>=', $date)
-                    ->orderBy('id', 'ASC')
-                    ->first(); 
+        $equity =  DB::table('equities');
+        $equity->select('total_equity as total');
+        $equity->where('profile_id', '=', session('profile_id'));
         
-        return $equity->total ?? 0;
+        if ($date)
+            $equity->where('date', '>=', $date);
+
+        $equity->orderBy('id', 'ASC'); 
+        $row = $equity->first(); 
+   
+        return $row->total ?? 0;
     }
 
     private function getEndingEquity($date) {
@@ -82,7 +86,7 @@ class EquitiesController extends Controller
                     ->where('date', '<=', $date)
                     ->orderBy('id', 'DESC')
                     ->first();
-
+       
         return $equity->total ?? 0;
     } 
 

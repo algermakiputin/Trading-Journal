@@ -52,9 +52,11 @@ class SellForm extends React.Component {
             axios.patch('/api/transactions/update', this.state)
                 .then( res => {
                      
-                    if (res.data == "1") {
+                    if (res.data == 1) {
                         this.props.closeHandle()
                         this.props.setData()
+                    }else {
+                        alert(res.data)
                     }
                 })
                 .catch( err => {
