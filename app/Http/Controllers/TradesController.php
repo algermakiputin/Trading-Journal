@@ -51,19 +51,19 @@ class TradesController extends Controller
 
         $ave_price = 0;
         $total_cost = 0;
-        $total_shares = 0;  
-   
+        $total_shares = 0;   
+    
         foreach ( $trades as $trade ) {
            
             $total_shares += $trade->shares - $trade->sold; 
-            $fees = $this->calculateBuyingFees($total_shares, $trade->purchase_price);
-         
-            $total_cost += ($total_shares * $trade->purchase_price) + $fees; //Need to get fees of transaction $trade->fees; 
+            $fees = $this->calculateBuyingFees($trade->shares, $trade->purchase_price);
             
-        }
-    
+            $total_cost += ($trade->shares * $trade->purchase_price) + $fees; //Need to get fees of transaction $trade->fees; 
+           
+        } 
+
         $ave_price = ($total_cost / $total_shares);
-       
+        
         return array(
             'ave_price' => $ave_price,
             'total_cost' => $total_cost,
@@ -139,6 +139,10 @@ class TradesController extends Controller
                     ->groupBy('trades.stock_code')
                     ->limit(5)
                     ->get();
+        foreach ($trades as $trade ) {
+            $trade->Gain = floatval($trade->Gain);
+        }
+
         return $trades;
     }
     
@@ -159,7 +163,7 @@ class TradesController extends Controller
 
         foreach ( $topLosers as $loser) {
 
-            $loser->Loss = $loser->Loss * -1;
+            $loser->Loss = floatval($loser->Loss) * -1;
         }
 
         return $topLosers;
@@ -253,8 +257,8 @@ class TradesController extends Controller
         $winnningProbability = $this->getWinningPercentage($startingDate, $endingDate);
         $averageWinAmount = $this->getAverageWinAmount($startingDate, $endingDate);
         $averageLossAmount = $this->getAverageLossAmount($startingDate, $endingDate);
-     
-        return ( $winnningProbability * $averageWinAmount) - ( $lossingProbability * $averageLossAmount );
+        
+        return   ($winnningProbability * $averageWinAmount) + ($lossingProbability * $averageLossAmount);
     }
 
     public function getAverageWinAmount($startingDate, $endingDate) {

@@ -17,13 +17,12 @@ class EquitiesController extends Controller
                         ->where('profile_id', '=', session('profile_id'))
                         ->limit(1)
                         ->first();
-    
+        
         if ( $equity ) { 
             $equity->gainLossPercentage = $this->monthlyGainLoss()['percentage'];
             $equity->gainLossAmount = $this->monthlyGainLoss()['amount'];
         }
- 
-         
+    
         return $equity;
     } 
 
@@ -31,7 +30,7 @@ class EquitiesController extends Controller
 
         $startingEquity = $this->getStartingEquity($startingDate);
         $endingEquity = $this->getEndingEquity($endingDate);
-
+      
         return $this->gainLossCalculator($startingEquity, $endingEquity);
     }
 
@@ -52,29 +51,26 @@ class EquitiesController extends Controller
                         ->where('date', '>=', $pastMonth) 
                         ->where('date', '<=', $today)
                         ->first(); 
-        
+ 
         if ( Equity::where('profile_id', session('profile_id'))->count() !== 1)
             $startingEquity = $this->getStartingEquity($equity->min);
          
-        
+   
         $endingEquity = $this->getEndingEquity($equity->max);
         return $this->gainLossCalculator( $startingEquity, $endingEquity );
         
     }
 
-    private function getStartingEquity($date) {
-
-        $equity =  DB::table('equities');
-        $equity->select('total_equity as total');
-        $equity->where('profile_id', '=', session('profile_id'));
-        
-        if ($date)
-            $equity->where('date', '>=', $date);
-
-        $equity->orderBy('id', 'ASC'); 
-        $row = $equity->first(); 
-   
-        return $row->total ?? 0;
+    private function getStartingEquity($date) { 
+            
+        $equity =  DB::table('equities')
+                        ->select('total_equity as total')
+                        ->where('profile_id', '=', session('profile_id'))
+                        ->where('date', '>=', $date)
+                        ->orderBy('id', 'ASC')
+                        ->first();
+       
+        return $equity->total ?? 0;
     }
 
     private function getEndingEquity($date) {
@@ -91,7 +87,7 @@ class EquitiesController extends Controller
     } 
 
     private function gainLossCalculator( $startingEquity,  $endingEquity) {
-      
+     
         $amount = $endingEquity - $startingEquity;  
         
         $percentage = 100;
@@ -99,8 +95,7 @@ class EquitiesController extends Controller
         if ( $startingEquity != 0)
             $percentage = ( ($endingEquity - $startingEquity ) / $startingEquity) * 100;
         
-        $percentage = number_format($percentage,2); 
-      
+        $percentage = number_format($percentage,2);  
             
         return array(
             'percentage' => $percentage,
@@ -132,7 +127,7 @@ class EquitiesController extends Controller
 
                 if ( $date >= strtotime($start) && $date <= strtotime($end) ) {
                     $equity = $equity->total_equity;
-                    $data[$key] = $equity;
+                    $data[$key] = floatval($equity);
                     $lastDate = $date;
                 }  
                      

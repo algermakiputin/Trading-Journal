@@ -132,7 +132,8 @@ class Transaction extends React.Component {
                     if (res.data == 1) {
                         this.setData()
                         alert("Transaction deleted successfully")
-                    }
+                    }else 
+                        alert(res.data)
                         
                 }) 
                 .catch(err => {

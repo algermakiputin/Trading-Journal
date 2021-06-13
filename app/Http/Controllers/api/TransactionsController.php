@@ -109,7 +109,7 @@ class TransactionsController extends Controller
  
     public function sell(Request $request) {
         
-        $shares = $request->shares; 
+        $shares = intval($request->shares); 
         $trades = Trade::orderBy('id', 'DESC')
                         ->where([
                             'stock_code' => $request->stock_code,
@@ -119,53 +119,61 @@ class TransactionsController extends Controller
         
             
         foreach ( $trades as $trade ) { 
-            
+           
             // If shares to sell is greather than the trade shares
             if ( $shares > $trade->shares) {
                  
-                $this->storeSell($request, $trade);
+                $this->storeSell($request, $trade, $shares);
                 $shares -= $trade->shares; 
                 
             // Else if shares is lesser or equal to current trade shares, no need to update other trades
             // and exit the loop
             }else if ( $shares <= $trade->shares ) {
               
-                $this->storeSell($request, $trade); 
+                $this->storeSell($request, $trade, $shares); 
                 return;
                 
             } 
         }  
     }
 
-    public function updateTotalEquity($sellNetAmount, $buyNetAmount, $net, $totalEquity) {
+    public function updateTotalEquity($sellNetAmount, $buyNetAmount, $totalEquity) {
 
-        if ( $sellNetAmount < $buyNetAmount) 
-            return $totalEquity = $totalEquity + ( $net - $buyNetAmount );
+        return $totalEquity += $sellNetAmount - $buyNetAmount;
+        // dd($sellNetAmount - $buyNetAmount);
+
+        // if ( $sellNetAmount < $buyNetAmount) 
+        //     $totalEquity = $totalEquity + ( $sellNetAmount - $buyNetAmount );
         
-        return $totalEquity = $totalEquity - ( $buyNetAmount - $net );
+        // $totalEquity = $totalEquity - ( $buyNetAmount - $sellNetAmount );
+
+        // dd($totalEquity);
         
     }
 
-    public function storeSell($request, $trade) 
+    public function storeSell($request, $trade, $shares) 
     {
         
         try {
             DB::beginTransaction(); 
-
-            $totalSold = $trade->sold + $request->shares; 
-            $shares = $request->shares;
-
+            
+            $totalSold = intval($trade->sold + $shares);  
+            $remainingShares = $trade->shares - $trade->sold;
+            $totalShares = $shares;
             if ( $totalSold > $trade->shares) { 
+                
                 $totalSold = $trade->shares;
-                $shares = $totalSold - $trade->shares;
+                $totalShares =  $remainingShares; 
+                
             } 
-             
-            $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price); 
-            $sellNetAmount = $request->net;
-            $availableCash = $request->availableCash + $request->net; 
+            
+            $buyNetAmount = $this->calculateNetBuyingAmount($totalShares, $trade->purchase_price); 
+            $sellNetAmount = $this->calculateNetSellingAmount($totalShares, $request->price);
+            $fees = $this->calculateSellingFees($totalShares, $request->price);
+            $availableCash = $request->availableCash + $sellNetAmount; 
             $status = 0;
-            $totalEquity = $this->updateTotalEquity( $sellNetAmount, $buyNetAmount, $request->net, $request->totalEquity );
-         
+            $totalEquity = $this->updateTotalEquity( $sellNetAmount, $buyNetAmount, $request->totalEquity );
+            
             if ( $totalSold == $trade->shares )
                 $status = 1;
 
@@ -181,9 +189,9 @@ class TransactionsController extends Controller
                 'date' => $request->date,
                 'stock_code' => $request->stock_code,
                 'price' => $request->price,
-                'shares' => $shares,
-                'fees' => $request->fees,
-                'net' => $request->net,
+                'shares' => $totalShares,
+                'fees' => $fees,
+                'net' => $sellNetAmount,
                 'trade_id' => $trade->id, 
                 'type' => 'sell',
                 'profile_id' => session('profile_id'),
@@ -295,9 +303,9 @@ class TransactionsController extends Controller
         return $netBuyAmount = ( $shares * $price ) + $this->calculateBuyingFees($shares, $price);
     } 
 
-    public function calculateNetSellingAmount( $shares, $price ) 
+    public function calculateNetSellingAmount( float $shares, float $price ) 
     { 
-        return $netBuyAmount = ( $shares * $price ) + $this->calculateBuyingFees($shares, $price);
+        return ( $shares * $price ) - $this->calculateSellingFees($shares, $price);
     } 
 
  
@@ -399,9 +407,10 @@ class TransactionsController extends Controller
             $availableCash = $request->availableCash;
             $trade = Trade::find($request->trade_id);
             $request->net = $this->strToNum($request->net);
-
+ 
             if ( $request->type == "long") { 
-
+                if ($trade->sold > 0)
+                    return 'Not enough shares or already sold';
                 Trade::where('id', '=', $request->trade_id)->delete();
                 $availableCash += $request->net;
               
@@ -412,12 +421,10 @@ class TransactionsController extends Controller
                             'status' => 0,
                             'sold' => DB::raw('sold -' . $request->shares)
                         ]);
-                TradeResult::where('id', '=', $request->trade_id)->delete(); 
+                TradeResult::where('trade_id', '=', $request->trade_id)->delete(); 
                 $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
                 $sellNetAmount = $request->net; 
-                
                 $netPL = $sellNetAmount - $buyNetAmount;
-              
                 $totalEquity -= $sellNetAmount - $buyNetAmount; 
                 $availableCash -= $sellNetAmount; 
         

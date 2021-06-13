@@ -265,7 +265,7 @@ class Dashboard extends React.Component {
                                                     <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={parseFloat(this.state.availableCash).toFixed(2)}  />
                                                 </span>
                                             </li>  
-                                            <li className="feed-item">
+                                            <li className="feed-item" title="Net Profit / Loss for the last 30 days">
                                                 <div className="feed-icon bg-warning"><i className="mdi mdi-chart-line"></i></div>Gain / Loss
                                                 <span className="ms-auto font-13">
                                                     {this.formatGainLoss()}
