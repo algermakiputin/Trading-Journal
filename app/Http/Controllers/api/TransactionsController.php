@@ -109,126 +109,115 @@ class TransactionsController extends Controller
  
     public function sell(Request $request) {
         
-        $shares = intval($request->shares); 
-        $trades = Trade::orderBy('id', 'DESC')
-                        ->where([
-                            'stock_code' => $request->stock_code,
-                            'status' => 0
-                        ]) 
-                        ->get();
-        
-            
-        foreach ( $trades as $trade ) { 
-           
-            // If shares to sell is greather than the trade shares
-            if ( $shares > $trade->shares) {
-                 
-                $this->storeSell($request, $trade, $shares);
-                $shares -= $trade->shares; 
-                
-            // Else if shares is lesser or equal to current trade shares, no need to update other trades
-            // and exit the loop
-            }else if ( $shares <= $trade->shares ) {
-              
-                $this->storeSell($request, $trade, $shares); 
-                return;
-                
-            } 
-        }  
-    }
-
-    public function updateTotalEquity($sellNetAmount, $buyNetAmount, $totalEquity) {
-
-        return $totalEquity += $sellNetAmount - $buyNetAmount;
-        // dd($sellNetAmount - $buyNetAmount);
-
-        // if ( $sellNetAmount < $buyNetAmount) 
-        //     $totalEquity = $totalEquity + ( $sellNetAmount - $buyNetAmount );
-        
-        // $totalEquity = $totalEquity - ( $buyNetAmount - $sellNetAmount );
-
-        // dd($totalEquity);
-        
-    }
-
-    public function storeSell($request, $trade, $shares) 
-    {
-        
         try {
             DB::beginTransaction(); 
-            
-            $totalSold = intval($trade->sold + $shares);  
-            $remainingShares = $trade->shares - $trade->sold;
-            $totalShares = $shares;
-            if ( $totalSold > $trade->shares) { 
+            $shares = intval($request->shares); 
+            $trades = Trade::orderBy('id', 'DESC')
+                            ->where([
+                                'stock_code' => $request->stock_code,
+                                'status' => 0
+                            ]) 
+                            ->get();
+            $availableCash = floatval($request->availableCash);
+            $totalEquity = floatval($request->totalEquity);
                 
-                $totalSold = $trade->shares;
-                $totalShares =  $remainingShares; 
+            foreach ( $trades as $trade ) { 
                 
-            } 
+                if ($shares) {
+                    $transaction = $this->storeSell($request, $trade, $shares);
+                    $availableCash += $transaction['netSell'];
+                    $totalEquity += $transaction['netPL'];
+                    $shares -= $trade->shares; 
+                }
             
-            $buyNetAmount = $this->calculateNetBuyingAmount($totalShares, $trade->purchase_price); 
-            $sellNetAmount = $this->calculateNetSellingAmount($totalShares, $request->price);
-            $fees = $this->calculateSellingFees($totalShares, $request->price);
-            $availableCash = $request->availableCash + $sellNetAmount; 
-            $status = 0;
-            $totalEquity = $this->updateTotalEquity( $sellNetAmount, $buyNetAmount, $request->totalEquity );
-            
-            if ( $totalSold == $trade->shares )
-                $status = 1;
-
-            Trade::where('id', $trade->id)
-                    ->update([
-                        'status' => $status,
-                        'sold' => $totalSold,
-                        'sell_date' => $request->date,
-                        'profile_id' => session('profile_id')
-                    ]);
-
-            $transaction = Transaction::create([
-                'date' => $request->date,
-                'stock_code' => $request->stock_code,
-                'price' => $request->price,
-                'shares' => $totalShares,
-                'fees' => $fees,
-                'net' => $sellNetAmount,
-                'trade_id' => $trade->id, 
-                'type' => 'sell',
-                'profile_id' => session('profile_id'),
-                'remarks' => $request->remarks
-            ]); 
-
+            }  
+    
             Equity::create([
                 'date' => $request->date,
                 'total_equity' => $totalEquity,
                 'remaining_cash' => $availableCash,
                 'action' => 'sell',
-                'action_reference_id' => $trade->id,
+                'action_reference_id' => 0,
                 'profile_id' => session('profile_id')
             ]);
 
-            //Update Trade Result ( Win or Loss )
-            if ( $status == 1) {
-
-                $result = $this->getResult($trade->id);
-                $win = $result['gainLossAmount'] > 0 ? 1 : 0;
-
-                TradeResult::create([
-                    'win' => $win,
-                    'gain_loss_percentage' => $result['gainLossPercentage'],
-                    'gain_loss_amount' => $result['gainLossAmount'],
-                    'trade_id' => $trade->id,
-                    'profile_id' => session('profile_id')
-                ]);
-            }
-                
-            DB::commit();
- 
+            DB::commit(); 
         } catch (\Exception $e) {
             //throw $th;
             DB::rollback(); 
             throw $e;
         }
+    }
+
+    public function getNetPL($sellNetAmount, $buyNetAmount) {
+
+        return $sellNetAmount - $buyNetAmount; 
+        
+    }
+
+    public function storeSell($request, $trade, $shares) 
+    { 
+        $totalSold = intval($trade->sold + $shares);  
+        $remainingShares = $trade->shares - $trade->sold;
+        $totalShares = $shares;
+        if ( $totalSold > $trade->shares) { 
+            
+            $totalSold = $trade->shares;
+            $totalShares =  $remainingShares; 
+            
+        } 
+        
+        $buyNetAmount = $this->calculateNetBuyingAmount($totalShares, $trade->purchase_price); 
+        $sellNetAmount = $this->calculateNetSellingAmount($totalShares, $request->price);
+        $fees = $this->calculateSellingFees($totalShares, $request->price); 
+        $status = 0;
+        $netPL = $this->getNetPL($sellNetAmount, $buyNetAmount);
+        
+        if ( $totalSold == $trade->shares )
+            $status = 1;
+
+        Trade::where('id', $trade->id)
+                ->update([
+                    'status' => $status,
+                    'sold' => $totalSold,
+                    'sell_date' => $request->date,
+                    'profile_id' => session('profile_id')
+                ]);
+
+        $transaction = Transaction::create([
+            'date' => $request->date,
+            'stock_code' => $request->stock_code,
+            'price' => $request->price,
+            'shares' => $totalShares,
+            'fees' => $fees,
+            'net' => $sellNetAmount,
+            'trade_id' => $trade->id, 
+            'type' => 'sell',
+            'profile_id' => session('profile_id'),
+            'remarks' => $request->remarks
+        ]); 
+
+        //Update Trade Result ( Win or Loss )
+        if ( $status == 1) {
+
+            $result = $this->getResult($trade->id);
+            $win = $result['gainLossAmount'] > 0 ? 1 : 0;
+
+            TradeResult::create([
+                'win' => $win,
+                'gain_loss_percentage' => $result['gainLossPercentage'],
+                'gain_loss_amount' => $result['gainLossAmount'],
+                'trade_id' => $trade->id,
+                'profile_id' => session('profile_id')
+            ]);
+        } 
+        
+        return [
+            'netPL' => $netPL,
+            'netSell' => $sellNetAmount
+        ];
+ 
+        
     } 
 
     public function getResult( $trade_id ) 

@@ -142,7 +142,7 @@ class Dashboard extends React.Component {
         }else {
             
             position = <tr>
-                <td colSpan="4">No Open Position. To add new trade, Click the New Trade button above.</td>
+                <td colSpan="6">No Open Position. To add new trade, Click the New Trade button above.</td>
             </tr>
         }  
         
@@ -248,7 +248,7 @@ class Dashboard extends React.Component {
                             <div className="card">
                                 <div className="card-body equity-card">
                                     <h4 className="card-title">Account Summary(PHP)</h4>
-                                    <h5 className="card-subtitle">Account summary for the last 12 months</h5>
+                                    <h5 className="card-subtitle">Performance for the past 30 days </h5>
                                     <div className="feed-widget">
                                         <ul className="list-style-none feed-body m-0 p-b-20">
                                             <li className="feed-item">

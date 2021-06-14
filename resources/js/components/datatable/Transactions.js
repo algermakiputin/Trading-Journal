@@ -21,7 +21,7 @@ class Transaction extends React.Component {
                 {key: 'shares', title: 'Shares'},
                 {key: 'fees', title: 'Fees', cell: (row) => this.formatNumber(row.fees, 2)},
                 {key: 'net', title: 'Net', cell: (row) => this.formatNumber(row.net, 2)},
-                {key: 'remarks', title: 'Remarks'},
+                {key: 'remarks', title: 'Remarks',width:'25%'},
                 {key: 'actions', title: 'Actions', cell: (row) => this.buttons(row) }
             ],
             data: [],

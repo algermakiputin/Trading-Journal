@@ -135,7 +135,7 @@ class TradesController extends Controller
                             )
                     ->where('trade_results.win', '=', '1')
                     ->where('trade_results.profile_id', '=', session('profile_id'))
-                    ->orderBy('gain_loss_percentage', 'ASC')
+                    ->orderBy('gain_loss_amount', 'DESC')
                     ->groupBy('trades.stock_code')
                     ->limit(5)
                     ->get();
@@ -157,7 +157,7 @@ class TradesController extends Controller
                     ->where('trade_results.win', '=', '0') 
                     ->where('trade_results.profile_id', session('profile_id'))
                     ->groupBy('trades.stock_code')
-                    ->orderBy('gain_loss_percentage', 'DESC')
+                    ->orderBy('gain_loss_amount', 'ASC')
                     ->limit(5)
                     ->get();
 
@@ -415,7 +415,7 @@ class TradesController extends Controller
             'netPL' => number_format($netPL['amount'],2),
             'averageGain' => $averageGain . '%',
             'averageLoss' => $averageLoss . '%',
-            'winLossRatio' => $winLossRatio
+            'winLossRatio' => number_format($winLossRatio,2)
         );
     }
 

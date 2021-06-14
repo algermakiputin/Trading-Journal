@@ -88,7 +88,7 @@ class DatatableHelper extends React.Component {
                     <thead>
                         <tr>
                             {this.props.columns.map((value,index) => {
-                                return <th key={index}> {value.title} </th>
+                                return <th key={index} width={value.width} > {value.title} </th>
                             })}
                         </tr>
                     </thead>

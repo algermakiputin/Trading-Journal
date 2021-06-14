@@ -62,7 +62,8 @@ class EquitiesController extends Controller
     }
 
     private function getStartingEquity($date) { 
-            
+        
+        $date = $date ? $date : date('Y-m-d', strtotime('-30 days'));
         $equity =  DB::table('equities')
                         ->select('total_equity as total')
                         ->where('profile_id', '=', session('profile_id'))
