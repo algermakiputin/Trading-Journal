@@ -585,7 +585,10 @@ class TradesController extends Controller
             }
         }
 
-        return $wins / $totalTrades;
+        if ( $wins && $totalTrades)
+            return $wins / $totalTrades;
+        
+        return 1;
     }
 
     public function averageLoss($trades) {
