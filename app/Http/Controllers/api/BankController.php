@@ -33,27 +33,23 @@ class BankController extends Controller
     }
 
     public function store(Request $request) {
-   
+       
         $date = $request['data']['date'];
         $amount = $request['data']['amount'];
         $action = $request['data']['action'];
         $totalEquity = $amount;
-        $remainingCash = $amount;
-        $equity = Equity::where('date', '<=', $date) 
-                        ->where('profile_id', '=', session('profile_id'))
-                        ->orderBy('id', 'DESC')
-                        ->first();
+        $remainingCash = $amount; 
     
         if ( $equity && $request->action == "deposit" ) {
-            $totalEquity += $equity->total_equity;
-            $remainingCash += $equity->remaining_cash;
+            $totalEquity += $request->totalEquity;
+            $remainingCash += $request->availableCash;
 
         }else if ( $equity && $request->action =="withdraw") { 
             
             $availableCash = $equity->remaining_cash; 
             if ( $availableCash > $amount ) { 
-                $totalEquity = $equity->total_equity - $amount;
-                $remainingCash = $equity->remaining_cash - $amount;
+                $totalEquity = $request->totalEquity - $amount;
+                $remainingCash = $request->availableCash - $amount;
             
             }else {
                 echo "not enough cash";
