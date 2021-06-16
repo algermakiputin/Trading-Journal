@@ -26,7 +26,7 @@ class TransactionsController extends Controller
         $recordsPerPage = $request->recordsPerPage;
         $offset = $page * $recordsPerPage - $recordsPerPage;
     
-        $totalRecords = Transaction::count();
+        $totalRecords = Transaction::where('profile_id', session('profile_id'))->count();
         $transactions = Transaction::offset($offset)
                                     ->limit($recordsPerPage)
                                     ->orderBy('date', 'desc')

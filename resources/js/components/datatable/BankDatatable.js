@@ -44,7 +44,8 @@ class BankDatatable extends React.Component {
             axios.delete('/api/bank/destroy', {
                     params: {
                         id: row.id,
-                        amount: row.amount
+                        amount: row.amount,
+                        action:row.action
                     }
                 })
                 .then(res => {
