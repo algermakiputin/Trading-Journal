@@ -5,9 +5,11 @@ use App\Http\Controllers\api\TransactionsController;
 use App\Http\Controllers\TradesController;
 use App\Http\Controllers\api\BankController;
 use App\Http\Controllers\EquitiesController;
+use App\Http\Controllers\PagesController; 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\RegisterController; 
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +35,7 @@ Route::get('/logs', [HomeController::class,'index']);
 Route::get('/analytics', [HomeController::class,'index']); 
 Route::get('/monthly-tracker', [HomeController::class,'index']); 
 Route::get('/bank-transactions', [HomeController::class,'index']); 
-
+Route::get('/sitemap.xml', [PagesController::class,'sitemap']);
 Route::get('/about', [HomeController::class,'about'])->name('about'); 
 Route::get('/contact', [HomeController::class,'contact'])->name('contact'); 
 Route::get('/donate', [HomeController::class,'donate'])->name('donate'); 
