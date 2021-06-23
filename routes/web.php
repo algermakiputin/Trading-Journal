@@ -40,6 +40,7 @@ Route::get('/about', [HomeController::class,'about'])->name('about');
 Route::get('/contact', [HomeController::class,'contact'])->name('contact'); 
 Route::get('/donate', [HomeController::class,'donate'])->name('donate'); 
 Route::post('/contact/submit', [HomeController::class,'contactFormSubmit'])->name('contactSubmit'); 
+Route::post('/feedback/submit', [HomeController::class,'feedbackFormSubmit'])->name('feedbackSubmit');
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
 Route::patch('api/transactions/update', [TransactionsController::class, 'update']);

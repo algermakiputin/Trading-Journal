@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FeedbackController;
 use Mail;
 
 class HomeController extends Controller
@@ -73,5 +74,21 @@ class HomeController extends Controller
                 ->send(new ContactController($request->all()));
         
         return redirect('contact')->with('message', 1);
+    }
+
+    public function feedbackFormSubmit(Request $request) {
+
+        $data = [
+            'name' => Auth()->user()->name,
+            'email' => Auth()->user()->email,
+            'rating' => $request->rating,
+            'feedback' => $request->feedback,
+            'details' => $request->details
+        ];
+
+        return Mail::to('algerzxc@gmail.com')
+            ->send(new FeedbackController($data));
+
+        
     }
 }

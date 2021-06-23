@@ -16,6 +16,7 @@ class ContactController extends Mailable
     public function __construct($form) { 
         $this->form = $form;
     }
+
     public function build() {
         return $this->subject('New Hero Journals Contact Form Submission')
                     ->from('algerzxc@gmail.com')
