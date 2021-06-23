@@ -17,7 +17,6 @@ class ContactController extends Mailable
         $this->form = $form;
     }
     public function build() {
-
         return $this->subject('New Hero Journals Contact Form Submission')
                     ->from('algerzxc@gmail.com')
                     ->view('email.contact')->with([
