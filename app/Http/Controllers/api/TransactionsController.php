@@ -115,7 +115,8 @@ class TransactionsController extends Controller
             $trades = Trade::orderBy('id', 'DESC')
                             ->where([
                                 'stock_code' => $request->stock_code,
-                                'status' => 0
+                                'status' => 0,
+                                'profile_id' => session('profile_id')
                             ]) 
                             ->get();
             $availableCash = floatval($request->availableCash);
@@ -158,7 +159,8 @@ class TransactionsController extends Controller
     public function storeSell($request, $trade, $shares) 
     { 
         $totalSold = intval($trade->sold + $shares);  
-        $remainingShares = $trade->shares - $trade->sold;
+        $remainingShares = intval($trade->shares) - intval($trade->sold);
+      
         $totalShares = $shares;
         if ( $totalSold > $trade->shares) { 
             
