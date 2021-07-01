@@ -251,7 +251,7 @@ class TradeForm extends React.Component {
                 <Button variant="secondary" onClick={() => {this.props.handleModal()}}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={ () => {this.handleFormSubmit()}}>
+                <Button disabled={this.state.isLoading ? true : false} variant="primary" onClick={ () => {this.handleFormSubmit()}}>
                     { this.state.isLoading ? 'Loading...' : 'Submit'}
                 </Button>
                 </Modal.Footer> 

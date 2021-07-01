@@ -23,7 +23,8 @@ class SellForm extends React.Component {
             availableCash:0,
             totalEquity:0,
             remarks:'',
-            remainingShares:0
+            remainingShares:0,
+            loading:false
         }
          
     }
@@ -45,7 +46,7 @@ class SellForm extends React.Component {
             return alert('Not enough shares to sell, ' + this.state.remainingShares + ' shares remaining')
 
         if ( this.state.shares && this.state.price && this.state.date ) {
- 
+            this.setState({loading:true})
             axios.post('/api/transactions/sell', this.state)
                 .then( res => { 
                     this.props.closeHandle()
@@ -55,6 +56,7 @@ class SellForm extends React.Component {
                     this.props.setAccountPerformance()
                     this.props.setTopGainers()
                     this.props.setTopLossers()
+                    this.setState({loading:false})
                 })
                 .catch( err => {
                     console.log(err)
@@ -159,8 +161,8 @@ class SellForm extends React.Component {
                 <Button variant="secondary" onClick={() => {this.props.closeHandle()}}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={() => {this.formSubmitHandle()}}>
-                    Submit
+                <Button disabled={this.state.loading ? true : false } variant="primary" onClick={() => {this.formSubmitHandle()}}>
+                    {this.state.loading ? 'Loading...' : 'Submit'}
                 </Button>
                 </Modal.Footer>
               
