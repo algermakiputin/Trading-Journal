@@ -554,8 +554,8 @@ class TradesController extends Controller
     public function largestGain($trade) {
       
         if ( $trade ) { 
-            $gains = array_column($trade,'gain_loss_percentage');
-            return max($gains);
+            $gains = max(array_column($trade,'gain_loss_percentage'));
+            return $gains > 0 ? $gains : 0;
         }
 
         
@@ -565,8 +565,8 @@ class TradesController extends Controller
 
         if ( $trade ) {
 
-            $gains = array_column($trade,'gain_loss_percentage');
-            return min($gains);
+            $loss = min(array_column($trade,'gain_loss_percentage'));
+            return $loss < 0 ? $loss : 0;
         }
 
         return 0;
@@ -578,7 +578,7 @@ class TradesController extends Controller
         $totalTrades = 0; 
         foreach ( $trades as $trade ) {
 
-            if ( $trade->win ) {
+            if ( $trade->win > 0) {
 
                 $wins += $trade->gain_loss_percentage;
                 $totalTrades++;
@@ -588,7 +588,7 @@ class TradesController extends Controller
         if ( $wins && $totalTrades)
             return $wins / $totalTrades;
         
-        return 1;
+        return 0;
     }
 
     public function averageLoss($trades) {
@@ -612,7 +612,7 @@ class TradesController extends Controller
             
         } 
 
-        return 1;
+        return 0;
     }
 
     //This function will accept 2 parameters starting date and ending date and will return monthly trades
