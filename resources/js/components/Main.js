@@ -19,13 +19,17 @@ class Main extends React.Component {
     constructor(props) {
         super(props) 
         
+        this.state = {
+            showMobileSidebar:false
+        }
+
         this.user = {
             name: global.user_name,
             email: global.user_email,
             logout: this.logout
         }
 
-        
+        this.toggleSidebar = this.toggleSidebar.bind(this)
     } 
 
     componentDidMount() {
@@ -40,6 +44,10 @@ class Main extends React.Component {
             })
     }
 
+    toggleSidebar() {
+        this.setState({showMobileSidebar:!this.state.showMobileSidebar})
+    }
+
     render() { 
      
         return ( 
@@ -47,7 +55,10 @@ class Main extends React.Component {
                 <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
             data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
                     <BrowserRouter>
-                        <Header />
+                        <Header 
+                            show={this.state.showMobileSidebar}
+                            toggleSidebar={this.toggleSidebar}
+                        />
                         <Switch>
                             <Route exact path="/dashboard">
                                 <Dashboard />
@@ -62,7 +73,10 @@ class Main extends React.Component {
                                 <Logs />
                             </Route>
                         </Switch>
-                        <Sidebar />
+                        <Sidebar
+                            show={this.state.showMobileSidebar}
+                            toggleSidebar={this.toggleSidebar}
+                        />
                     </BrowserRouter> 
                 </div>  
             </UserContext.Provider>

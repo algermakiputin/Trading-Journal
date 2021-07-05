@@ -20,11 +20,15 @@ class Header extends React.Component {
 
     handleOpen() {
         this.setState({show:true})
-    }
+    } 
     render() {
 
         return ( 
             <header className="topbar" data-navbarbg="skin5">
+                <button className="navbar-toggler" onClick={() => {this.props.toggleSidebar();this.handleSidebar()}} type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className={'mdi mdi-menu ' + (this.props.show ? 'd-none' : '')}></span>
+                    <span className={'mdi mdi-close ' + (this.props.show ? '' : 'd-none') } id="close-nav"></span>
+                </button>
                 <nav className="navbar top-navbar navbar-expand-md navbar-dark">
                     <div className="navbar-header" data-logobg="skin5"> 
 

@@ -16,7 +16,7 @@ class Sidebar extends React.Component {
     render() {
 
         return (
-            <aside className="left-sidebar" data-sidebarbg="skin6"> 
+            <aside className={'left-sidebar ' + (this.props.show ? 'open' : '')} data-sidebarbg="skin6"> 
                 <div className="scroll-sidebar"> 
                     <nav className="sidebar-nav">
                         <ul id="sidebarnav"> 
@@ -44,13 +44,20 @@ class Sidebar extends React.Component {
                             </li>
                         
                             <li className="sidebar-item">
-                                <Link to='/dashboard' className='sidebar-link waves-effect waves-dark sidebar-link'> <i className="mdi mdi-view-dashboard"></i><span
-                                        className="hide-menu">Dashboard</span> </Link>
+                                <Link 
+                                    onClick={() => this.props.toggleSidebar()}
+                                    to='/dashboard' 
+                                    className='sidebar-link waves-effect waves-dark sidebar-link'
+                                > 
+                                    <i className="mdi mdi-view-dashboard"></i>
+                                    <span className="hide-menu">Dashboard</span> 
+                                </Link>
                             </li> 
                              
                             <li className="sidebar-item"> 
                                     <Link 
                                         to='/logs' 
+                                        onClick={() => this.props.toggleSidebar()}
                                         className="sidebar-link waves-effect waves-dark sidebar-link"
                                         >
                                         <i className="mdi mdi-history"></i>
@@ -58,9 +65,16 @@ class Sidebar extends React.Component {
                                     </Link>
                             </li>
                            
-                            <li className="sidebar-item"> <Link to='/monthly-tracker' className="sidebar-link waves-effect waves-dark sidebar-link"
-                                    href="#" aria-expanded="false"><i className="mdi mdi-calendar"></i><span
-                                        className="hide-menu">Monthly Tracker</span></Link>
+                            <li className="sidebar-item"> 
+                                <Link 
+                                    onClick={() => this.props.toggleSidebar()}
+                                    to='/monthly-tracker' 
+                                    className="sidebar-link waves-effect waves-dark sidebar-link"
+                                   
+                                    >
+                                        <i className="mdi mdi-calendar"></i>
+                                        <span className="hide-menu">Monthly Tracker</span>
+                                </Link>
                             </li>
                             <li className="sidebar-item"> 
                                 <a   

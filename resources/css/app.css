@@ -195,3 +195,83 @@ table tr th {
 .form-check-inline label {
     font-weight: normal;
 }
+
+.navbar-toggler {
+    float: right;
+    color:#fff;
+    line-height: 51px;
+    font-size: 26px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+  }
+
+@media only screen and (max-width:480px) {
+    .left-sidebar { 
+        transform: translateX(-250px);
+        transition: transform 0.3s;
+    }
+    #sidebarnav li { 
+        transform: translateX(-250px);
+        transition: transform 0.3s;
+    }
+
+    .left-sidebar.open {
+        transform: translateX(0);
+    }
+    .left-sidebar.open #sidebarnav li {
+        transform: translateX(0);
+    }
+
+    .navbar-brand img {
+        margin-top: -5px;
+    }
+    #main-wrapper[data-layout=vertical][data-sidebartype=full] .page-wrapper{
+        margin-left: 0;
+    }
+
+    .topbar .top-navbar .navbar-nav {
+        display: none;
+    }
+
+    .xAxis .recharts-cartesian-axis-tick:nth-child(2n) {
+        display: none;
+    }
+
+    #transactions .card-body .nav-tabs {
+        display: block;
+        width: 100%;
+    }
+
+    #transactions .card-body .nav-tabs a {
+        display: inline-block;
+        width: 33.33%;
+        text-align: center;
+        overflow: hidden;
+        padding-left: 0;
+        padding-right: 0;
+        text-overflow: ellipsis; 
+        white-space: nowrap;
+    }
+    /* #transactions .card-body .nav-tabs a:nth-child(1) {
+        font-size: 0;
+    }
+    #transactions .card-body .nav-tabs a:nth-child(1)::after {
+        content: 'Trades';
+        font-size: 0.9rem;
+    }
+
+    #transactions .card-body .nav-tabs a:nth-child(2) {
+        font-size: 0;
+    }
+    #transactions .card-body .nav-tabs a:nth-child(2)::after {
+        content: 'Transactios...';
+        font-size: 0.9rem;
+    } */
+
+    #transactions .btn-danger.pull-right {
+        float: none!important;
+        display: block;
+    }
+}

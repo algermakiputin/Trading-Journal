@@ -82,7 +82,7 @@ class Logs extends React.Component {
     render() {
 
         return (
-            <div className="page-wrapper">   
+            <div className="page-wrapper" id="transactions">   
                 <div className="page-breadcrumb">
                     <div className="row align-items-center">
                         <div className="col-5">
@@ -108,7 +108,7 @@ class Logs extends React.Component {
                                                /> 
                                             </div>
                                         </Tab>
-                                        <Tab eventKey="transactions" title="Trade Transactions">
+                                        <Tab eventKey="transactions" title="Transactions">
                                             <Transactions
                                                 ref={this.transactions}
                                             />
