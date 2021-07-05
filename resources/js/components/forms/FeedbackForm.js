@@ -98,7 +98,7 @@ class FeedbackFrom extends React.Component {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => this.handleModal() }>
+                    <Button variant="secondary" onClick={() => this.handleClose(false) }>
                         Close
                     </Button>
                     <Button variant="primary" onClick={ () => {this.handleFormSubmit()}}>
