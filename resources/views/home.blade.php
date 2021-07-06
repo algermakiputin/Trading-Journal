@@ -27,19 +27,23 @@
           <h3 class="masthead-brand"> 
             <img src="{{ asset('images/logo.png')}}"  width="180" style="position:relative"/> 
           </h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Home</a> 
-            <a class="nav-link" href="{{ url('about') }}">About</a>
-            <a class="nav-link" href="{{ url('donate') }}">Donate</a>
-            <a class="nav-link" href="{{ url('contact') }}">Contact</a>
-            <a href="{{ url('login') }}" class="btn btn-default" id="login-btn" href="#">Login</a>
-          </nav>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <nav class="nav nav-masthead justify-content-center">
+              <a class="nav-link active" href="#">Home</a> 
+              <a class="nav-link" href="{{ url('about') }}">About</a>
+              <a class="nav-link" href="{{ url('donate') }}">Donate</a>
+              <a class="nav-link" href="{{ url('contact') }}">Contact</a>
+              <a href="{{ url('login') }}" class="btn btn-default" id="login-btn" href="#">Login</a>
+            </nav>
+          <span class="close-nav"><svg class="Modal__StyledCloseIcon-sc-15463cw-0 dAUyWS" viewBox="0 0 41 40"><path fill-rule="evenodd" d="M24.968 20l15.786 15.786L36.54 40 20.754 24.214 4.968 40 .754 35.786 16.54 20 .754 4.214 4.968 0l15.786 15.786L36.54 0l4.214 4.214L24.968 20z"></path></svg><span>
         </div>
       </header>
     
       <main role="main" class="inner cover container text-center">
-        <h1 class="cover-heading">Track and Manage Your Trades</h1>
-        <p class="lead">Hero journals is a free powerful tool that will boost your trading strategy and will aid you to become the best trader version of yourself.</p>
+        <h1 class="cover-heading">Track and Analyze Your Trades</h1>
+        <p class="lead">Hero journals is a free powerful tool that will boost your trading strategy and will help you to become a stronger trader.</p>
         <p class="lead">
           <a href="{{ url('/signup') }}" class="btn btn-lg btn-primary">Sign Up Now</a>
         </p>
@@ -50,6 +54,24 @@
           <p>&copy; 2021 Hero Journals, Developed by <a href="https://algermakiputin.dev">Alger Makiputin</a>.</p>
         </div>
       </footer>
+      <script>
+        window.onload = function() {
+          var navbar = document.getElementsByClassName('nav-masthead')[0];
+          var close_btn = document.getElementsByClassName('close-nav')[0];
+          var navbar_toggler = document.getElementsByClassName('navbar-toggler')[0];
+          
+          navbar_toggler.addEventListener('click', function() { 
+            navbar.classList.add('open');
+            close_btn.classList.add('open');
+          })
+
+          close_btn.addEventListener('click', function() {
+            navbar.classList.remove('open');
+            close_btn.classList.remove('open');
+          })
+
+        }
+      </script>
     </div>
 </body>
 </html>
