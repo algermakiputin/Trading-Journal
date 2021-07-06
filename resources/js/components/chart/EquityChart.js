@@ -92,7 +92,7 @@ class EquityChart extends React.Component {
                       <YAxis 
                           orientation="left" 
                           stroke="black" 
-                          tickMargin={10} 
+                          tickMargin={0} 
                           tickLine={false}  
                           axisLine={false} 
                           opacity={0.65} 

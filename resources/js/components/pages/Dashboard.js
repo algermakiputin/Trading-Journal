@@ -228,7 +228,7 @@ class Dashboard extends React.Component {
                                     <div className="d-md-flex align-items-center">
                                         <div>
                                             <h4 className="card-title">Equity Curve</h4>
-                                            <h5 className="card-subtitle">Overview of the last 12 Months </h5>
+                                            <h5 className="card-subtitle">Overview of the last 90 days </h5>
                                         </div> 
                                     </div>
                                     <div className="row"> 

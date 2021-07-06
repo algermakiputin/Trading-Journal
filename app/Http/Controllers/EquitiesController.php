@@ -106,7 +106,7 @@ class EquitiesController extends Controller
 
     public function getEquityCurve() {
 
-        $lastHalfQuarter = new \DateTime( date('Y-m-d', strtotime('-30 weeks')) );
+        $lastHalfQuarter = new \DateTime( date('Y-m-d', strtotime('-13 weeks')) );
 		$today = new \DateTime( date('Y-m-d') );
         $equities = Equity::where('profile_id', '=', session('profile_id'))
                             ->where('date', '>=', $lastHalfQuarter->format('Y-m-d'))
