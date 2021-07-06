@@ -78,7 +78,7 @@ class Sidebar extends React.Component {
                             </li>
                             <li className="sidebar-item"> 
                                 <a   
-                                    onClick={(event) => this.feedbackForm.current.handleModal(event)}
+                                    onClick={(event) => {this.feedbackForm.current.handleModal(event);this.props.toggleSidebar()}}
                                     className="sidebar-link waves-effect waves-dark sidebar-link"
                                     aria-expanded="false"><i className="mdi mdi-calendar"></i><span
                                     className="hide-menu">Feedback</span>

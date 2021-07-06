@@ -242,6 +242,9 @@ table tr th {
     #transactions .card-body .nav-tabs {
         display: block;
         width: 100%;
+        margin-bottom: -5px;
+        border-bottom: 0;
+      
     }
 
     #transactions .card-body .nav-tabs a {
@@ -253,25 +256,26 @@ table tr th {
         padding-right: 0;
         text-overflow: ellipsis; 
         white-space: nowrap;
-    }
-    /* #transactions .card-body .nav-tabs a:nth-child(1) {
-        font-size: 0;
-    }
-    #transactions .card-body .nav-tabs a:nth-child(1)::after {
-        content: 'Trades';
-        font-size: 0.9rem;
-    }
+        padding: 5px;
+    } 
 
-    #transactions .card-body .nav-tabs a:nth-child(2) {
-        font-size: 0;
+    #transactions .card-body .nav-tabs a.active {
+        border-bottom: solid 1px #333;
     }
-    #transactions .card-body .nav-tabs a:nth-child(2)::after {
-        content: 'Transactios...';
-        font-size: 0.9rem;
-    } */
 
     #transactions .btn-danger.pull-right {
         float: none!important;
         display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        top: -64px;
+    }
+
+    table {
+        display: block;
+        -ms-touch-action: auto;
+        touch-action: auto;
+        overflow-x: scroll;
     }
 }
