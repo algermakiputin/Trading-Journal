@@ -88,7 +88,7 @@ class EquitiesController extends Controller
     } 
 
     private function gainLossCalculator( $startingEquity,  $endingEquity) {
-     
+        
         $amount = $endingEquity - $startingEquity;  
         
         $percentage = 100;
@@ -108,10 +108,18 @@ class EquitiesController extends Controller
 
         $lastHalfQuarter = new \DateTime( date('Y-m-d', strtotime('-13 weeks')) );
 		$today = new \DateTime( date('Y-m-d') );
-        $equities = Equity::where('profile_id', '=', session('profile_id'))
+        $equitiesQuery = Equity::where('profile_id', '=', session('profile_id'))
                             ->where('date', '>=', $lastHalfQuarter->format('Y-m-d'))
-                            ->where('date', '<=', $today->format('Y-m-d'))
-                            ->get();
+                            ->where('date', '<=', $today->format('Y-m-d'));
+        $equities = $equitiesQuery->get();
+        $balance = 0;
+
+        if (!$equitiesQuery->count()) {
+            $balance = Equity::where('profile_id', '=', session('profile_id'))
+                                ->orderBy('id', 'DESC')
+                                ->first();
+            $balance = $balance->total_equity;
+        }
 
         $data = $this->initDates("weeks", $lastHalfQuarter, $today, 'Y-m-d');
         $total_equity = 0; 
@@ -122,16 +130,23 @@ class EquitiesController extends Controller
             $start = (new \DateTime($key))->modify('-7 days')->format('Y-m-d');
 			$end = date("Y-m-d", strtotime($key));
              
-            foreach ( $equities as $equity ) {
+            if ($equitiesQuery->count()) {
 
-                $date = strtotime( $equity->date );
+                foreach ( $equities as $equity ) {
 
-                if ( $date >= strtotime($start) && $date <= strtotime($end) ) {
-                    $equity = $equity->total_equity;
-                    $data[$key] = floatval($equity);
-                    $lastDate = $date;
-                }  
-                     
+                    $date = strtotime( $equity->date );
+    
+                    if ( $date >= strtotime($start) && $date <= strtotime($end) ) {
+                        $equity = $equity->total_equity;
+                        $data[$key] = floatval($equity);
+                        $lastDate = $date;
+                    }  
+                         
+                }
+            }else {
+
+                $equity = $balance;
+                $data[$key] = floatval($equity); 
             }
  
         }

@@ -288,7 +288,7 @@ class TransactionsController extends Controller
       
     }
 
-    public function calculateNetBuyingAmount( $shares, $price ) 
+    public function calculateNetBuyingAmount( int $shares, $price ) 
     {
 
         return $netBuyAmount = ( $shares * $price ) + $this->calculateBuyingFees($shares, $price);

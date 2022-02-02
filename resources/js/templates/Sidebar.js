@@ -99,6 +99,14 @@ class Sidebar extends React.Component {
                                     }
                                 </UserContext.Consumer>
                             </li>  
+                            {/* <li className="sidebar-item"> 
+                                <a   
+                                    onClick={(event) => {this.feedbackForm.current.handleModal(event);this.props.toggleSidebar()}}
+                                    className="btn btn-danger"
+                                    aria-expanded="false"><i className="mdi mdi-calendar"></i><span
+                                    className="hide-menu">Feedback</span>
+                                </a>
+                            </li> */}
                         </ul> 
                     </nav> 
                 </div>  

@@ -44,8 +44,9 @@ class Header extends React.Component {
                     <div style={{width:"100%",paddingRight:'20px'}}>
                         <ul className="navbar-nav float-end"> 
                             <li className="nav-item">
-                                <button style={{marginTop:'14px'}} onClick={() => this.handleOpen()} className="btn btn-primary"><i className="mdi mdi-facebook"></i> Join our Community</button>&nbsp;
+                                <button style={{marginTop:'14px', borderRadius:'15px'}} onClick={() => this.handleOpen()} className="btn btn-primary"><i className="mdi mdi-facebook"></i> Join our Community</button>&nbsp;
                             </li>
+     
                             <li className="nav-item dropdown"> 
                                 <div className="dropdown ">
                                     <UserContext.Consumer>
@@ -77,7 +78,7 @@ class Header extends React.Component {
                     <Modal.Footer>
                     <a href="https://www.facebook.com/groups/4085551641521353" target="__blank" className="btn btn-primary" style={{color:'#fff'}}>
                         <i className="mdi mdi-link"></i> Join Now
-                    </a>
+                    </a> 
                     <Button variant="secondary" onClick={() => this.handleClose()}>
                         Close
                     </Button> 

@@ -17,7 +17,7 @@
                 Your $5 donation will help us to develop more innovative features for you to use and further improve your strategies to the fast changing market environment each month. 
             </p>
             <p>
-                <strong>Make a $5 donation / month:</strong>
+                <strong>Make a $5 donation / month or donate any amount through this GCASH NUMBER: 09560887535</strong>
             </p>
             <div style="max-width: 260px;">
             <div id="paypal-button-container-P-8DK38555DJ996594KMC7WOAQ"></div>

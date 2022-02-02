@@ -215,6 +215,8 @@ main h1 {
 .close-nav {
   display: none;
 }
+
+ 
 @media only screen and (max-width:768px) {
 
   /* .nav-masthead {

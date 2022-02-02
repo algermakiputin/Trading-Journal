@@ -12,6 +12,7 @@ import Logs from '../components/pages/Logs'
 import axios from 'axios'
 import UserContext from '../UserContext'
 import '../global/global'
+import Binance from '../components/modals/Binance';
 
 axios.defaults.headers.common['X-CSRF-TOKEN'] = global.csrf_token
 class Main extends React.Component {
@@ -78,7 +79,9 @@ class Main extends React.Component {
                             toggleSidebar={this.toggleSidebar}
                         />
                     </BrowserRouter> 
+                    <Binance />
                 </div>  
+                
             </UserContext.Provider>
         );
     }

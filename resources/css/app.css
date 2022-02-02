@@ -281,3 +281,16 @@ table tr th {
         overflow-x: scroll;
     }
 }
+:root {
+    --yellow: #ebb42e;
+    --size: 10vmin; /* WIP needs propogating throughout so can change size here */
+  }
+@media only screen and (min-width:780px) {
+    .navbar-toggler {
+        display: none!important;
+    }
+}
+
+
+
+  
