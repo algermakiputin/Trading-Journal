@@ -15,7 +15,8 @@ class BankDatatable extends React.Component {
                 {key:'amount', title:'Amount', cell: (row) => this.formatNumber(row.amount,2)},
                 {key:'action', title:'Actions', cell:(row) => this.deleteAction(row)}  
             ],
-            data: []
+            data: [],
+            totalRecords:0
         }
     }
 
@@ -43,10 +44,15 @@ class BankDatatable extends React.Component {
             axios.delete('/api/bank/destroy', {
                     params: {
                         id: row.id,
-                        amount: row.amount
+                        amount: row.amount,
+                        action:row.action
                     }
                 })
                 .then(res => {
+                    
+                    if (res.data != 1) 
+                        return alert(res.data)
+                        
                     alert('Bank transaction deleted successfully')
                     this.setData()
                 })
@@ -56,12 +62,18 @@ class BankDatatable extends React.Component {
         }
     }
 
-    setData() {
+    setData(page = 0) {
 
-        axios.get('/api/bank/datatable')
+        let currentPage = page ? page : 1
+        axios.get('/api/bank/datatable', {
+                    params: {
+                        recordsPerPage: 10,
+                        page: currentPage
+                    }
+                })
                 .then(res => {
-                    this.setState({data: res.data.transactions})
-                    console.log(res.data.data)
+                    this.setState({data: res.data.transactions, totalRecords: res.data.totalRecords})
+                   
                 })
                 .catch(err => {
                     console.log(err)
@@ -75,8 +87,9 @@ class BankDatatable extends React.Component {
                 <DatatableHelper 
                     columns={this.state.columns}
                     data={this.state.data}
-                    onChangePage={(page) => { console.log(page) }} 
+                    onChangePage={(page) => { this.setData(page) }} 
                     pagination
+                    totalRecords={this.state.totalRecords}
                     
                 /> 
             </Fragment>

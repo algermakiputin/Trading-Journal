@@ -1,22 +1,13 @@
-import React from 'react'
-import axios from 'axios'
+import React from 'react' 
 import { BarChart, LabelList, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart } from 'recharts'
+import NumberFormat from 'react-number-format'
 
 class TopGainersChart extends React.Component {
 
     constructor(props) {
 
-        super(props)
-        this.state = {
-            data: null,
-            height:50
-        }
-    }
-
-    componentDidMount() {
-
-        this.getTopGainersLosers()
-    }
+        super(props) 
+    } 
 
     label(props) {
         const {x, y, value} = props;
@@ -31,35 +22,22 @@ class TopGainersChart extends React.Component {
                 fill={"#181818"}
                 textAnchor="middle">{value}</text>
              )
-    }
-    
-    async getTopGainersLosers() {
-
-        await axios.get('/api/getTopGainers')
-                    .then( res => {
-                         
-                        this.setState({data: res.data, height: this.state.height * res.data.length})
-                    })
-                    .catch( err => {
-                        console.log(err)
-                    })
-    }
-    
+    } 
     
     render() {
 
         return (
             <div className='row'>
                 <div className='col'>  
-                    <ResponsiveContainer width="100%" height={this.state.height} >
+                    <ResponsiveContainer width="100%" height={this.props.height} >
                         <BarChart  
-                            data={this.state.data}
+                            data={this.props.data}
                             layout="vertical"
                             barCategoryGap={1}
                             margin={{top:5}} 
                             >
                                 <Tooltip 
-                                    formatter={(num) => Number(num).toLocaleString()}
+                                    formatter={(num) => <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={num} />}
                                     cursor={{fill: '#fff'}}
                                 />
                                 <XAxis type="number" hide />
@@ -70,8 +48,7 @@ class TopGainersChart extends React.Component {
                                     barSize={15}
                                     barCategoryGap={0}
                                     orientation="left"
-                                    maxBarSize={1} 
-                                    // label={(props) => this.label(props)} 
+                                    maxBarSize={1}  
                                     
                                 >
                                     <LabelList style={{opacity:0.7}} offset={0} dy={-20} fill="ffffff" dataKey="stock_code" position="insideLeft" />

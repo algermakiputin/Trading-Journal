@@ -1,22 +1,22 @@
-import React from "react";
-import profile_pict from '../profile.jpg';
+import React from "react"
+import profile_pict from '../profile.jpg'
 import { Link} from 'react-router-dom'
 import '../global/global'
-import axios from "axios";
-import UserContext from "../UserContext";
-import { Fragment } from "react";
+import UserContext from "../UserContext"
+import { Fragment } from "react"
+import FeedbackFrom from "../components/forms/FeedbackForm"
 
 class Sidebar extends React.Component {
 
     constructor(props) {
         super(props)
-        this.logoutForm = React.createRef()
+        this.feedbackForm = React.createRef()
     } 
 
     render() {
 
         return (
-            <aside className="left-sidebar" data-sidebarbg="skin6"> 
+            <aside className={'left-sidebar ' + (this.props.show ? 'open' : '')} data-sidebarbg="skin6"> 
                 <div className="scroll-sidebar"> 
                     <nav className="sidebar-nav">
                         <ul id="sidebarnav"> 
@@ -27,7 +27,6 @@ class Sidebar extends React.Component {
                                     <div className="user-content hide-menu m-l-10">
                                         <a href="#" className="" id="Userdd" role="button"
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            
                                             
                                             <UserContext.Consumer>
                                                 {
@@ -45,13 +44,20 @@ class Sidebar extends React.Component {
                             </li>
                         
                             <li className="sidebar-item">
-                                <Link to='/dashboard' className='sidebar-link waves-effect waves-dark sidebar-link'> <i className="mdi mdi-view-dashboard"></i><span
-                                        className="hide-menu">Dashboard</span> </Link>
+                                <Link 
+                                    onClick={() => this.props.toggleSidebar()}
+                                    to='/dashboard' 
+                                    className='sidebar-link waves-effect waves-dark sidebar-link'
+                                > 
+                                    <i className="mdi mdi-view-dashboard"></i>
+                                    <span className="hide-menu">Dashboard</span> 
+                                </Link>
                             </li> 
                              
                             <li className="sidebar-item"> 
                                     <Link 
                                         to='/logs' 
+                                        onClick={() => this.props.toggleSidebar()}
                                         className="sidebar-link waves-effect waves-dark sidebar-link"
                                         >
                                         <i className="mdi mdi-history"></i>
@@ -59,11 +65,25 @@ class Sidebar extends React.Component {
                                     </Link>
                             </li>
                            
-                            <li className="sidebar-item"> <Link to='/monthly-tracker' className="sidebar-link waves-effect waves-dark sidebar-link"
-                                    href="#" aria-expanded="false"><i className="mdi mdi-calendar"></i><span
-                                        className="hide-menu">Monthly Tracker</span></Link>
+                            <li className="sidebar-item"> 
+                                <Link 
+                                    onClick={() => this.props.toggleSidebar()}
+                                    to='/monthly-tracker' 
+                                    className="sidebar-link waves-effect waves-dark sidebar-link"
+                                   
+                                    >
+                                        <i className="mdi mdi-calendar"></i>
+                                        <span className="hide-menu">Monthly Tracker</span>
+                                </Link>
                             </li>
-                          
+                            <li className="sidebar-item"> 
+                                <a   
+                                    onClick={(event) => {this.feedbackForm.current.handleModal(event);this.props.toggleSidebar()}}
+                                    className="sidebar-link waves-effect waves-dark sidebar-link"
+                                    aria-expanded="false"><i className="mdi mdi-calendar"></i><span
+                                    className="hide-menu">Feedback</span>
+                                </a>
+                            </li>
                             <li className="sidebar-item"> 
                                 <UserContext.Consumer>
                                     {
@@ -78,11 +98,19 @@ class Sidebar extends React.Component {
                                         )
                                     }
                                 </UserContext.Consumer>
-                            </li> 
-    
+                            </li>  
+                            {/* <li className="sidebar-item"> 
+                                <a   
+                                    onClick={(event) => {this.feedbackForm.current.handleModal(event);this.props.toggleSidebar()}}
+                                    className="btn btn-danger"
+                                    aria-expanded="false"><i className="mdi mdi-calendar"></i><span
+                                    className="hide-menu">Feedback</span>
+                                </a>
+                            </li> */}
                         </ul> 
                     </nav> 
-                </div> 
+                </div>  
+                <FeedbackFrom ref={this.feedbackForm} />
             </aside>
         )
     }

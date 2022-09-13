@@ -1,16 +1,15 @@
 body{
     font-family: "Nunito Sans", sans-serif;
     font-weight: 600;
-    font-size: 1em;
-}
-
-.container {
-    max-width: 55em!important;
     font-size: 0.9rem;
 }
 
+.container {
+    max-width: 855px!important; 
+}
+
 .navbar {
-    padding: 0.6rem;
+    /* padding: 0.50rem 0; */
     font-size: 1rem;
 }
 
@@ -54,8 +53,9 @@ body{
 }
 
 .navbar-brand {
-    font-size: 1.45rem;
-    font-weight: normal;
+    font-size: 1.45rem; 
+    font-weight: 500!important;
+    margin-top: -3px;
 }
 
 .divider hr {
@@ -71,4 +71,44 @@ body{
     padding: 10px;
     font-size: 0.9rem;
     opacity: 0.5;
+}
+
+.btn {
+    font-size: 1rem;
+}
+
+p {
+    font-weight: normal;
+    font-size: 1rem;
+}
+
+main {
+    min-height: 78vh;
+    margin-bottom: 20px;
+}
+footer {
+    background-color: #fff;
+    padding:2.5em 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+.navbar-expand-md .navbar-nav .nav-item {
+    padding: 0.25rem 0.5rem;
+}
+.navbar-expand-md .navbar-nav .nav-link {
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: .25rem solid transparent;
+}
+
+.navbar-expand-md .navbar-nav .nav-link.active {
+    color: #fff;
+    border-color: #fff;
+}
+
+.navbar-expand-md .navbar-nav .nav-link.active:hover {
+    border-bottom-color: rgba(255, 255, 255, .25);
 }

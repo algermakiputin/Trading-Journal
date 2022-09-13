@@ -21,7 +21,7 @@ class Transaction extends React.Component {
                 {key: 'shares', title: 'Shares'},
                 {key: 'fees', title: 'Fees', cell: (row) => this.formatNumber(row.fees, 2)},
                 {key: 'net', title: 'Net', cell: (row) => this.formatNumber(row.net, 2)},
-                {key: 'remarks', title: 'Remarks'},
+                {key: 'remarks', title: 'Remarks',width:'25%'},
                 {key: 'actions', title: 'Actions', cell: (row) => this.buttons(row) }
             ],
             data: [],
@@ -132,20 +132,21 @@ class Transaction extends React.Component {
                     if (res.data == 1) {
                         this.setData()
                         alert("Transaction deleted successfully")
-                    }
+                    }else 
+                        alert(res.data)
                         
                 }) 
                 .catch(err => {
                     console.log(err)
                 })
                 
-    }
- 
+    } 
+    
     render() {
 
         return (
             
-            <React.Fragment>
+            <React.Fragment> 
                 <DatatableHelper 
                     columns={this.state.columns}
                     data={this.state.data} 

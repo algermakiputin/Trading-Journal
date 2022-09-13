@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\Trade;
 use App\Models\Equity;
 use App\Models\TradeResult;
+use App\Models\Bank;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\TradesController;
 
@@ -25,15 +26,17 @@ class TransactionsController extends Controller
         $recordsPerPage = $request->recordsPerPage;
         $offset = $page * $recordsPerPage - $recordsPerPage;
     
-        $totalRecords = Transaction::count();
+        $totalRecords = Transaction::where('profile_id', session('profile_id'))->count();
         $transactions = Transaction::offset($offset)
                                     ->limit($recordsPerPage)
                                     ->orderBy('date', 'desc')
                                     ->orderBy('id', 'desc')
+                                    ->where('profile_id', session('profile_id'))
                                     ->get();
         //calculate avg buy amount
         foreach ( $transactions as $transaction) {
 
+            $transaction->net = number_format($transaction->net,2);
             $total = $transaction->price * $transaction->shares + $transaction->fees; 
         }
 
@@ -106,118 +109,117 @@ class TransactionsController extends Controller
  
     public function sell(Request $request) {
         
-        $shares = $request->shares; 
-        $trades = Trade::orderBy('id', 'DESC')
-                        ->where([
-                            'stock_code' => $request->stock_code,
-                            'status' => 0
-                        ]) 
-                        ->get();
-        
-            
-        foreach ( $trades as $trade ) { 
-            
-            // If shares to sell is greather than the trade shares
-            if ( $shares > $trade->shares) {
-                 
-                $this->storeSell($request, $trade);
-                $shares -= $trade->shares; 
-                
-            // Else if shares is lesser or equal to current trade shares, no need to update other trades
-            // and exit the loop
-            }else if ( $shares <= $trade->shares ) {
-              
-                $this->storeSell($request, $trade); 
-                return;
-                
-            } 
-        }  
-    }
-
-    public function updateTotalEquity($sellNetAmount, $buyNetAmount, $net, $totalEquity) {
-
-        if ( $sellNetAmount < $buyNetAmount) 
-            return $totalEquity = $totalEquity + ( $net - $buyNetAmount );
-        
-        return $totalEquity = $totalEquity - ( $buyNetAmount - $net );
-        
-    }
-
-    public function storeSell($request, $trade) 
-    {
-        
         try {
             DB::beginTransaction(); 
-
-            $totalSold = $trade->sold + $request->shares; 
-            $shares = $request->shares;
-
-            if ( $totalSold > $trade->shares) { 
-                $totalSold = $trade->shares;
-                $shares = $totalSold - $trade->shares;
-            } 
-             
-            $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price); 
-            $sellNetAmount = $request->net;
-            $availableCash = $request->availableCash + $request->net; 
-            $status = 0;
-            $totalEquity = $this->updateTotalEquity( $sellNetAmount, $buyNetAmount, $request->net, $request->totalEquity );
-         
-            if ( $totalSold == $trade->shares )
-                $status = 1;
-
-            Trade::where('id', $trade->id)
-                    ->update([
-                        'status' => $status,
-                        'sold' => $totalSold,
-                        'sell_date' => $request->date,
-                        'profile_id' => session('profile_id')
-                    ]);
-
-            $transaction = Transaction::create([
-                'date' => $request->date,
-                'stock_code' => $request->stock_code,
-                'price' => $request->price,
-                'shares' => $shares,
-                'fees' => $request->fees,
-                'net' => $request->net,
-                'trade_id' => $trade->id, 
-                'type' => 'sell',
-                'profile_id' => session('profile_id'),
-                'remarks' => $request->remarks
-            ]); 
-
+            $shares = intval($request->shares); 
+            $trades = Trade::orderBy('id', 'DESC')
+                            ->where([
+                                'stock_code' => $request->stock_code,
+                                'status' => 0,
+                                'profile_id' => session('profile_id')
+                            ]) 
+                            ->get();
+            $availableCash = floatval($request->availableCash);
+            $totalEquity = floatval($request->totalEquity);
+                
+            foreach ( $trades as $trade ) { 
+                
+                if ($shares) {
+                    $transaction = $this->storeSell($request, $trade, $shares);
+                    $availableCash += $transaction['netSell'];
+                    $totalEquity += $transaction['netPL'];
+                    $shares -= $trade->shares; 
+                }
+            
+            }  
+    
             Equity::create([
                 'date' => $request->date,
                 'total_equity' => $totalEquity,
                 'remaining_cash' => $availableCash,
                 'action' => 'sell',
-                'action_reference_id' => $trade->id,
+                'action_reference_id' => 0,
                 'profile_id' => session('profile_id')
             ]);
 
-            //Update Trade Result ( Win or Loss )
-            if ( $status == 1) {
-
-                $result = $this->getResult($trade->id);
-                $win = $result['gainLossAmount'] > 0 ? 1 : 0;
-
-                TradeResult::create([
-                    'win' => $win,
-                    'gain_loss_percentage' => $result['gainLossPercentage'],
-                    'gain_loss_amount' => $result['gainLossAmount'],
-                    'trade_id' => $trade->id,
-                    'profile_id' => session('profile_id')
-                ]);
-            }
-                
-            DB::commit();
- 
+            DB::commit(); 
         } catch (\Exception $e) {
             //throw $th;
             DB::rollback(); 
             throw $e;
         }
+    }
+
+    public function getNetPL($sellNetAmount, $buyNetAmount) {
+
+        return $sellNetAmount - $buyNetAmount; 
+        
+    }
+
+    public function storeSell($request, $trade, $shares) 
+    { 
+        $totalSold = intval($trade->sold + $shares);  
+        $remainingShares = intval($trade->shares) - intval($trade->sold);
+      
+        $totalShares = $shares;
+        if ( $totalSold > $trade->shares) { 
+            
+            $totalSold = $trade->shares;
+            $totalShares =  $remainingShares; 
+            
+        } 
+        
+        $buyNetAmount = $this->calculateNetBuyingAmount($totalShares, $trade->purchase_price); 
+        $sellNetAmount = $this->calculateNetSellingAmount($totalShares, $request->price);
+        $fees = $this->calculateSellingFees($totalShares, $request->price); 
+        $status = 0;
+        $netPL = $this->getNetPL($sellNetAmount, $buyNetAmount);
+        
+        if ( $totalSold == $trade->shares )
+            $status = 1;
+
+        Trade::where('id', $trade->id)
+                ->update([
+                    'status' => $status,
+                    'sold' => $totalSold,
+                    'sell_date' => $request->date,
+                    'profile_id' => session('profile_id')
+                ]);
+
+        $transaction = Transaction::create([
+            'date' => $request->date,
+            'stock_code' => $request->stock_code,
+            'price' => $request->price,
+            'shares' => $totalShares,
+            'fees' => $fees,
+            'net' => $sellNetAmount,
+            'trade_id' => $trade->id, 
+            'type' => 'sell',
+            'profile_id' => session('profile_id'),
+            'remarks' => $request->remarks
+        ]); 
+
+        //Update Trade Result ( Win or Loss )
+        if ( $status == 1) {
+
+            $result = $this->getResult($trade->id);
+            $win = $result['gainLossAmount'] > 0 ? 1 : 0;
+
+            TradeResult::create([
+                'win' => $win,
+                'gain_loss_percentage' => $result['gainLossPercentage'],
+                'gain_loss_amount' => $result['gainLossAmount'],
+                'trade_id' => $trade->id,
+                'profile_id' => session('profile_id')
+            ]);
+        } 
+        
+        return [
+            'netPL' => $netPL,
+            'netSell' => $sellNetAmount
+        ];
+ 
+        
     } 
 
     public function getResult( $trade_id ) 
@@ -286,37 +288,63 @@ class TransactionsController extends Controller
       
     }
 
-    public function calculateNetBuyingAmount( $shares, $price ) 
+    public function calculateNetBuyingAmount( int $shares, $price ) 
     {
 
         return $netBuyAmount = ( $shares * $price ) + $this->calculateBuyingFees($shares, $price);
     } 
 
-    public function calculateNetSellingAmount( $shares, $price ) 
+    public function calculateNetSellingAmount( float $shares, float $price ) 
     { 
-        return $netBuyAmount = ( $shares * $price ) + $this->calculateBuyingFees($shares, $price);
+        return ( $shares * $price ) - $this->calculateSellingFees($shares, $price);
     } 
 
  
     public function update(Request $request) 
     {
-          
+         
         $trade_id = $request->trade_id; 
         $trade = Trade::find($trade_id);
         $transaction = Transaction::find($request->transaction_id);
         $totalEquity = $request->totalEquity;
-        $availableCash = $request->availableCash + $transaction->net - $request->net;
-        
-        if ( $trade->status == 1)
-            return "Not enough shares accumulated";
-            
-        if ( $availableCash < $request->net)
-            return "Not enough cash";
+        $availableCash = $request->availableCash;
+        $request->net = $this->strToNum($request->net);
+        $win = 0;
+        // if ( $trade->status == 1)
+        //     return "Cannot update closed trades"; 
 
         try {
 
             DB::beginTransaction();  
+            
 
+            if ($transaction->type == 'long')  {
+
+                $availableCash += $transaction->net;
+                if ( floatval($availableCash) < floatval($request->net))
+                    return "Not enough cash";
+
+                $availableCash -= $request->net;
+            }   
+                
+            
+            if ( $transaction->type == "sell") { 
+                
+                return "Cannot edit this sell transaction";
+                // $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
+           
+                // $oldNet = $transaction->net;
+                // $newNet = $request->net;
+                // $net = $oldNet - $buyNetAmount; 
+                // // $netPL = $newNet - $buyNetAmount; 
+                // dd($net);
+                // $availableCash += $net; 
+                // $totalEquity += $net; 
+             
+                // dd($totalEquity);
+                
+            } 
+ 
             Transaction::where('id','=', $request->transaction_id)
                         ->update([
                             'price' => $request->price,
@@ -324,7 +352,6 @@ class TransactionsController extends Controller
                             'net' => $request->net,
                             'fees' => $request->fees
                         ]);
-
             Equity::create([
                         'date' => $request->date,
                         'total_equity' => $totalEquity,
@@ -348,7 +375,7 @@ class TransactionsController extends Controller
                             'sold' => $request->shares, 
                             'status' => $status
                         ]);
-            }
+            } 
 
             DB::commit();
             return 1;
@@ -364,18 +391,20 @@ class TransactionsController extends Controller
     public function destroy(Request $request)
     {
         
-        try {
-            
+        try { 
             DB::beginTransaction(); 
             Transaction::where('id', '=', $request->id)->delete();  
             $totalEquity = $request->totalEquity;
             $availableCash = $request->availableCash;
             $trade = Trade::find($request->trade_id);
+            $request->net = $this->strToNum($request->net);
+ 
             if ( $request->type == "long") { 
-
+                if ($trade->sold > 0)
+                    return 'Not enough shares or already sold';
                 Trade::where('id', '=', $request->trade_id)->delete();
                 $availableCash += $request->net;
-                
+              
             }else if ( $request->type == "sell") {
 
                 Trade::where('id', '=', $request->trade_id) 
@@ -383,13 +412,13 @@ class TransactionsController extends Controller
                             'status' => 0,
                             'sold' => DB::raw('sold -' . $request->shares)
                         ]);
-                TradeResult::where('id', '=', $request->trade_id)->delete(); 
+                TradeResult::where('trade_id', '=', $request->trade_id)->delete(); 
                 $buyNetAmount = $this->calculateNetBuyingAmount($request->shares, $trade->purchase_price);
-                $sellNetAmount = $request->net;
+                $sellNetAmount = $request->net; 
                 $netPL = $sellNetAmount - $buyNetAmount;
-                
-                $totalEquity -= $netPL;
-                $availableCash -= $buyNetAmount;
+                $totalEquity -= $sellNetAmount - $buyNetAmount; 
+                $availableCash -= $sellNetAmount; 
+        
             }
 
             Equity::create([
@@ -412,8 +441,32 @@ class TransactionsController extends Controller
 
     }
 
+    public function strToNum($str) {
+
+        return floatval(preg_replace('/[^\d.]/', '', $str));
+    }
+
     public function fetch_all() {
 
         return null;
+    }
+
+    public function eraseAllLogs() {
+     
+        try { 
+            DB::beginTransaction(); 
+            Equity::where('profile_id', session('profile_id'))->delete();
+            Transaction::where('profile_id', session('profile_id'))->delete();
+            Trade::where('profile_id', session('profile_id'))->delete();
+            TradeResult::where('profile_id', session('profile_id'))->delete();
+            Bank::where('profile_id', session('profile_id'))->delete();
+            DB::commit();
+            return 1;
+        } catch (\Exception $e) { 
+            DB::rollback(); 
+            throw $e;
+            return 0;
+        }
+        
     }
 }

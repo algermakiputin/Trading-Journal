@@ -24,8 +24,12 @@ class Logs extends React.Component {
                 {key: 'gain_loss_percentage', title: 'Gain/Loss (%)'} 
             ],
             data:[], 
-            totalRecords: 0
+            transactionsData: [],
+            totalRecords: 0 
         } 
+        this.transactions = React.createRef()
+        this.bank = React.createRef()
+ 
     }
 
     componentDidMount() {
@@ -54,10 +58,31 @@ class Logs extends React.Component {
                     console.log(err)
                 })
     }
+
+    eraseAllLogs() {
+ 
+        let confirm = window.confirm('This will delete all your trades and bank transactions, are you sure you want to erase all logs?')
+        
+        if (confirm) {
+            axios.delete('eraseAllLogs')
+                .then(res => {
+                    if (res.data == 1) {
+                        this.transactions.current.setData()
+                        this.bank.current.setData()
+                        this.getClosedTrades()
+                    } 
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }
+ 
     render() {
 
         return (
-            <div className="page-wrapper">   
+            <div className="page-wrapper" id="transactions">   
                 <div className="page-breadcrumb">
                     <div className="row align-items-center">
                         <div className="col-5">
@@ -70,6 +95,7 @@ class Logs extends React.Component {
                         <div className="col-lg-12">
                             <div className="card">
                                 <div className="card-body" >
+                                    <button onClick={() => this.eraseAllLogs()} style={{float:'right',marginTop:'16px'}} className="btn btn-danger pull-right">Erase all logs</button>
                                     <Tabs defaultActiveKey="closed-trades" id="uncontrolled-tab-example">
                                         <Tab eventKey="closed-trades" title="Closed Trades">
                                             <div className='tab-content'> 
@@ -82,14 +108,17 @@ class Logs extends React.Component {
                                                /> 
                                             </div>
                                         </Tab>
-                                        <Tab eventKey="transactions" title="Trade Transactions">
-                                            <Transactions />
+                                        <Tab eventKey="transactions" title="Transactions">
+                                            <Transactions
+                                                ref={this.transactions}
+                                            />
                                         </Tab> 
                                         <Tab eventKey="bank" title="Bank Transactions">
-                                            <BankDatatable />
+                                            <BankDatatable 
+                                                ref={this.bank}
+                                            />
                                         </Tab> 
-                                    </Tabs>
-                                    
+                                    </Tabs> 
 
                                 </div>
                             </div>

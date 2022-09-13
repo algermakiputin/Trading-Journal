@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Form, Table, Button, Modal, Alert } from "react-bootstrap"
 import axios from "axios"
 import Transactions from '../../classes/Transactions'
@@ -27,9 +27,10 @@ class TradeForm extends React.Component {
             fees: 0,
             netText:'0.00',
             feesText:'0.00',
-            remarks:''
+            remarks:'',
+            isLoading:false
         }
-
+        
         this.baseState = this.state;
         this.input = React.createRef()
  
@@ -37,11 +38,11 @@ class TradeForm extends React.Component {
    
     handleFormSubmit() { 
         
-        this.validateForm()
-
-        if ( this.state.net > this.props.availableCash ) 
+        this.validateForm() 
+        if ( parseFloat(this.state.net) > parseFloat(this.props.availableCash) ) 
             return alert("Not enough available cash")
-            
+        
+        this.toggleButtonLoading()
         axios.post('/api/transactions/store', {
                     data: this.state,
                     availableCash: this.props.availableCash,
@@ -53,12 +54,17 @@ class TradeForm extends React.Component {
                     this.props.load_positions()
                     this.props.reloadEquity()
                     this.props.handleModal()
-                  
+                    this.toggleButtonLoading()
                 })
                 .catch( err => {
                     console.log( err)
                 })
 
+    }
+
+    toggleButtonLoading() {
+
+        this.setState({isLoading:!this.state.isLoading})
     }
 
     validateForm() {
@@ -170,8 +176,8 @@ class TradeForm extends React.Component {
                                 <tr>
                                     <th>Date</th>
                                     <th>Stock</th>
-                                    <th>Price</th>
                                     <th>Shares</th>
+                                    <th>Price</th> 
                                     <th>Fees</th>
                                     <th>Net</th> 
                                 </tr>
@@ -195,6 +201,13 @@ class TradeForm extends React.Component {
                                         autoComplete="off"></Form.Control> 
                                     </td>
                                     <td>
+                                        <Form.Control type="number" name="shares" min="0"
+                                        onChange={ event => { this.setState({ shares: event.target.value}); this.net_calculator_shares_handle(event) } } 
+                                        value={ this.state.shares }
+                                        autoComplete="off"
+                                        required></Form.Control> 
+                                    </td>
+                                    <td>
                                         <NumberFormat 
                                             thousandSeparator={true}
                                             defaultValue={null} 
@@ -203,14 +216,7 @@ class TradeForm extends React.Component {
                                             className='form-control'
                                         /> 
                    
-                                    </td>
-                                    <td>
-                                        <Form.Control type="number" name="shares" min="0"
-                                        onChange={ event => { this.setState({ shares: event.target.value}); this.net_calculator_shares_handle(event) } } 
-                                        value={ this.state.shares }
-                                        autoComplete="off"
-                                        required></Form.Control> 
-                                    </td>
+                                    </td> 
                                     <td>
                                         <AutowidthInput 
                                             readOnly
@@ -245,8 +251,8 @@ class TradeForm extends React.Component {
                 <Button variant="secondary" onClick={() => {this.props.handleModal()}}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={ () => {this.handleFormSubmit()}}>
-                    Submit
+                <Button disabled={this.state.isLoading ? true : false} variant="primary" onClick={ () => {this.handleFormSubmit()}}>
+                    { this.state.isLoading ? 'Loading...' : 'Submit'}
                 </Button>
                 </Modal.Footer> 
             </div>

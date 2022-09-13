@@ -5,9 +5,11 @@ use App\Http\Controllers\api\TransactionsController;
 use App\Http\Controllers\TradesController;
 use App\Http\Controllers\api\BankController;
 use App\Http\Controllers\EquitiesController;
+use App\Http\Controllers\PagesController; 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\RegisterController; 
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,22 +24,28 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('signup', [
     'as' => 'register',
     'uses' => '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm'
-]);
+])->name('signup');
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [GoogleController::class,'handleGoogleCallback']);
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('index');
 Route::get('/dashboard', [HomeController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard'); 
 Route::get('/logs', [HomeController::class,'index']); 
 Route::get('/analytics', [HomeController::class,'index']); 
 Route::get('/monthly-tracker', [HomeController::class,'index']); 
 Route::get('/bank-transactions', [HomeController::class,'index']); 
-
+Route::get('/sitemap.xml', [PagesController::class,'sitemap']);
+Route::get('/about', [HomeController::class,'about'])->name('about'); 
+Route::get('/contact', [HomeController::class,'contact'])->name('contact'); 
+Route::get('/donate', [HomeController::class,'donate'])->name('donate'); 
+Route::post('/contact/submit', [HomeController::class,'contactFormSubmit'])->name('contactSubmit'); 
+Route::post('/feedback/submit', [HomeController::class,'feedbackFormSubmit'])->name('feedbackSubmit');
 Route::get('api/transactions', [TransactionsController::class, 'fetch_all']);
 Route::post('api/transactions/store', [TransactionsController::class, 'store']);
 Route::patch('api/transactions/update', [TransactionsController::class, 'update']);
 Route::delete('api/transactions/destroy', [TransactionsController::class, 'destroy']);
+Route::delete('eraseAllLogs', [TransactionsController::class, 'eraseAllLogs']);
 Route::get('api/transactions/datatable', [TransactionsController::class, 'datatable']);
 Route::get('positions', [ TradesController::class, 'positions']);
 Route::get('api/getTopGainers', [ TradesController::class, 'getTopGainers']);

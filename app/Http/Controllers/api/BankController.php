@@ -18,39 +18,38 @@ class BankController extends Controller
         $page = $request->page; 
         $recordsPerPage = $request->recordsPerPage;
         $offset = $page * $recordsPerPage - $recordsPerPage;
-        $totalRecords = Bank::count();
-        $transactions = Bank::orderBy('date', 'desc')
-                                    ->orderBy('id', 'desc')
-                                    ->get();
+        $totalRecords = Bank::where('profile_id', session('profile_id'))->count();
+        $transactions = Bank::offset($offset)
+                            ->limit($recordsPerPage)
+                            ->where('profile_id', session('profile_id'))
+                            ->orderBy('date', 'desc')
+                            ->orderBy('id', 'desc')
+                            ->get();
 
         return array(
-            'total_records' => $totalRecords,
+            'totalRecords' => $totalRecords,
             'transactions' => $transactions
         );
     }
 
     public function store(Request $request) {
-   
+       
         $date = $request['data']['date'];
-        $amount = $request['data']['amount'];
+        $amount = floatval($request['data']['amount']);
         $action = $request['data']['action'];
         $totalEquity = $amount;
-        $remainingCash = $amount;
-        $equity = Equity::where('date', '<=', $date) 
-                        ->where('profile_id', '=', session('profile_id'))
-                        ->orderBy('id', 'DESC')
-                        ->first();
+        $remainingCash = $amount; 
     
-        if ( $equity && $request->action == "deposit" ) {
-            $totalEquity += $equity->total_equity;
-            $remainingCash += $equity->remaining_cash;
+        if ( $request->totalEquity && $request->action == "deposit" ) {
+            $totalEquity += $request->totalEquity;
+            $remainingCash += $request->availableCash;
 
-        }else if ( $equity && $request->action =="withdraw") { 
+        }else if ( $request->totalEquity && $request->action =="withdraw") { 
             
-            $availableCash = $equity->remaining_cash; 
-            if ( $availableCash > $amount ) { 
-                $totalEquity = $equity->total_equity - $amount;
-                $remainingCash = $equity->remaining_cash - $amount;
+            $availableCash = $request->availableCash;  
+            if ( $availableCash >= $amount ) { 
+                $totalEquity = $request->totalEquity - $amount;
+                $remainingCash = $request->availableCash - $amount;
             
             }else {
                 echo "not enough cash";
@@ -95,19 +94,40 @@ class BankController extends Controller
         $equity = $equitiesController->getEquities();
         $remainingCash = $equity->remaining_cash;
         $totalEquity = $equity->total_equity;
-        $amount = $request->amount;
+        $amount = floatval($request->amount);  
+        if ( $request->action == "deposit") { 
+            if ($remainingCash < $amount)
+                return "Opps! Remaining balance will be zero if you delete this bank transactions.";
+            $totalEquity -= $amount;
+            $remainingCash -= $amount;
 
-        if ($remainingCash < $amount)
-            return "Cannot delete this bank transaction";
+        }else {
+            $totalEquity += $amount;
+            $remainingCash += $amount;
+        }
+        
+         
+        try { 
+            DB::beginTransaction();
+            Bank::where('id', $request->id)->delete();
+            Equity::create([
+                'date' => date('Y-m-d'),
+                'total_equity' => $totalEquity,
+                'remaining_cash' => $remainingCash,
+                'action' => 'delete',
+                'action_reference_id' => $request->id,
+                'profile_id' => session('profile_id')
+            ]);
 
-        Bank::where('id', $request->id)->delete();
-        Equity::create([
-            'date' => date('Y-m-d'),
-            'total_equity' => $totalEquity - $amount,
-            'remaining_cash' => $remainingCash - $amount,
-            'action' => 'delete',
-            'action_reference_id' => $request->id,
-            'profile_id' => session('profile_id')
-        ]);
+            DB::commit();
+            return 1;
+        } catch (\Exception $e) {
+            
+            DB::rollBack();
+            throw $e;
+            return 0;
+        }
+             
+        
     }
 }

@@ -51,18 +51,19 @@ class TradesController extends Controller
 
         $ave_price = 0;
         $total_cost = 0;
-        $total_shares = 0;  
-  
+        $total_shares = 0;   
+    
         foreach ( $trades as $trade ) {
            
             $total_shares += $trade->shares - $trade->sold; 
-            $fees = $this->calculateBuyingFees($total_shares, $trade->purchase_price);
-            $total_cost += $trade->shares * $trade->purchase_price + $fees; //Need to get fees of transaction $trade->fees; 
-         
-        }
- 
+            $fees = $this->calculateBuyingFees($trade->shares, $trade->purchase_price);
+            
+            $total_cost += ($trade->shares * $trade->purchase_price) + $fees; //Need to get fees of transaction $trade->fees; 
+           
+        } 
+
         $ave_price = ($total_cost / $total_shares);
-       
+        
         return array(
             'ave_price' => $ave_price,
             'total_cost' => $total_cost,
@@ -134,10 +135,14 @@ class TradesController extends Controller
                             )
                     ->where('trade_results.win', '=', '1')
                     ->where('trade_results.profile_id', '=', session('profile_id'))
-                    ->orderBy('gain_loss_percentage', 'ASC')
+                    ->orderBy('gain_loss_amount', 'DESC')
                     ->groupBy('trades.stock_code')
                     ->limit(5)
                     ->get();
+        foreach ($trades as $trade ) {
+            $trade->Gain = floatval($trade->Gain);
+        }
+
         return $trades;
     }
     
@@ -150,14 +155,15 @@ class TradesController extends Controller
                         DB::raw('SUM(trade_results.gain_loss_amount)  as Loss'), 
                         'trades.stock_code')
                     ->where('trade_results.win', '=', '0') 
+                    ->where('trade_results.profile_id', session('profile_id'))
                     ->groupBy('trades.stock_code')
-                    ->orderBy('gain_loss_percentage', 'DESC')
+                    ->orderBy('gain_loss_amount', 'ASC')
                     ->limit(5)
                     ->get();
 
         foreach ( $topLosers as $loser) {
 
-            $loser->Loss = $loser->Loss * -1;
+            $loser->Loss = floatval($loser->Loss) * -1;
         }
 
         return $topLosers;
@@ -239,7 +245,7 @@ class TradesController extends Controller
             'winningPercentage' => $winningPercentage,
             'averageWins' => $averageWins,
             'averageLosses' => $averageLosses,
-            'winLossRatio' => $winLossRatio,
+            'winLossRatio' => number_format($winLossRatio,2),
             'adjustedWinLossRatio' => number_format($appt,2)
         );
 
@@ -251,8 +257,8 @@ class TradesController extends Controller
         $winnningProbability = $this->getWinningPercentage($startingDate, $endingDate);
         $averageWinAmount = $this->getAverageWinAmount($startingDate, $endingDate);
         $averageLossAmount = $this->getAverageLossAmount($startingDate, $endingDate);
-     
-        return ( $winnningProbability * $averageWinAmount) - ( $lossingProbability * $averageLossAmount );
+        
+        return   ($winnningProbability * $averageWinAmount) + ($lossingProbability * $averageLossAmount);
     }
 
     public function getAverageWinAmount($startingDate, $endingDate) {
@@ -292,7 +298,7 @@ class TradesController extends Controller
     }
 
     public function getTotalTradesTaken($startingDate, $endingDate) {
-
+        
         return Trade::where('status', '=' , 1) 
                     ->where('profile_id', '=', session('profile_id'))
                     ->whereDate('created_at', '>=', $startingDate)
@@ -327,7 +333,7 @@ class TradesController extends Controller
         if ( $totalTrades && $winTrades)
             return $winTrades / $totalTrades;
 
-        return 1;
+        return 0;
     }
 
     public function getLossingPercentage($startingDate, $endingDate) {
@@ -338,7 +344,7 @@ class TradesController extends Controller
         if ( $totalTrades && $losses)
             return $losses / $totalTrades;
 
-        return 1;
+        return 0;
     }
 
     public function getWinLossRatio($startingDate, $endingDate) {
@@ -409,7 +415,7 @@ class TradesController extends Controller
             'netPL' => number_format($netPL['amount'],2),
             'averageGain' => $averageGain . '%',
             'averageLoss' => $averageLoss . '%',
-            'winLossRatio' => $winLossRatio
+            'winLossRatio' => number_format($winLossRatio,2)
         );
     }
 
@@ -456,7 +462,7 @@ class TradesController extends Controller
 
             }
 
-            $data[$start->format('F, Y')] = $summary;
+            $data[$start->format('M Y')] = $summary;
         }
 
         return array_reverse($data);
@@ -548,8 +554,8 @@ class TradesController extends Controller
     public function largestGain($trade) {
       
         if ( $trade ) { 
-            $gains = array_column($trade,'gain_loss_percentage');
-            return max($gains);
+            $gains = max(array_column($trade,'gain_loss_percentage'));
+            return $gains > 0 ? $gains : 0;
         }
 
         
@@ -559,8 +565,8 @@ class TradesController extends Controller
 
         if ( $trade ) {
 
-            $gains = array_column($trade,'gain_loss_percentage');
-            return min($gains);
+            $loss = min(array_column($trade,'gain_loss_percentage'));
+            return $loss < 0 ? $loss : 0;
         }
 
         return 0;
@@ -572,14 +578,17 @@ class TradesController extends Controller
         $totalTrades = 0; 
         foreach ( $trades as $trade ) {
 
-            if ( $trade->win ) {
+            if ( $trade->win > 0) {
 
                 $wins += $trade->gain_loss_percentage;
                 $totalTrades++;
             }
         }
 
-        return $wins / $totalTrades;
+        if ( $wins && $totalTrades)
+            return $wins / $totalTrades;
+        
+        return 0;
     }
 
     public function averageLoss($trades) {
@@ -603,7 +612,7 @@ class TradesController extends Controller
             
         } 
 
-        return 1;
+        return 0;
     }
 
     //This function will accept 2 parameters starting date and ending date and will return monthly trades

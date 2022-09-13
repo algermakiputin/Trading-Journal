@@ -11,4 +11,16 @@ function google_login(url) {
         }
     },
     500)
+} 
+
+window.onload = function() {
+    let navbar_toggler = document.getElementsByClassName('navbar-toggler')[0];
+    navbar_toggler.addEventListener('click', function() {
+        let navbar = document.getElementById("navbarSupportedContent");
+        if (navbar.classList.contains('show')) {
+            navbar.classList.remove('show');
+        }else {
+            navbar.classList.add('show');
+        }
+    }, false);
 }

@@ -85,7 +85,7 @@ class MonthlyTracker extends React.Component {
                 </div> 
                 <div className="container-fluid">  
                     <div className="row">
-                        <div className="col">
+                        <div className="col-md-3">
                             <div className="card">
                                 <div className="card-body">
                                     <div className="summary-widget">
@@ -97,7 +97,7 @@ class MonthlyTracker extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col">
+                        <div className="col-md-3">
                             <div className="card">
                                 <div className="card-body">
                                     <div className="summary-widget">
@@ -109,7 +109,7 @@ class MonthlyTracker extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col">
+                        <div className="col-md-3">
                             <div className="card">
                                 <div className="card-body">
                                     <div className="summary-widget">
@@ -121,7 +121,7 @@ class MonthlyTracker extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col">
+                        <div className="col-md-3">
                             <div className="card">
                                 <div className="card-body">
                                     <div className="summary-widget">
@@ -140,7 +140,7 @@ class MonthlyTracker extends React.Component {
                             <div className="card">
                                 <div className="card-body" > 
                                     
-                                    <table className="table table-bordered table-striped table-hover">
+                                    <table className="table table-responsive table-bordered table-striped table-hover">
                                         <thead>
                                             <tr>
                                                 <th>Month</th>

@@ -7,29 +7,9 @@ class EquityChart extends React.Component {
 
     constructor(props) {
 
-        super(props)
-        this.state = {
-            data:null
-        }
+        super(props) 
     }
-
-    componentDidMount() {
-
-        this.setData();
-    }
-
-    setData() {
-
-        axios.get('/api/equitycurve')
-                .then(res => {
-                    this.setState({ data: res.data })
-                    console.log(this.state.data)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-
-    }
+ 
 
     yTickFormat(val) {
 
@@ -101,29 +81,31 @@ class EquityChart extends React.Component {
     render() {
 
         return (
-            <Fragment>
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart 
-                        data={this.state.data} 
-                    >
-                    <CartesianGrid stroke="#000000" strokeOpacity="0.1" strokeDasharray="3 3" verticalFill={['#fff', '#f4f4f5']} fillOpacity={0.2}/> 
-                    <XAxis tickFormatter={this.xAxisLabelFormat} tickLine={false}  axisLine={false}  dataKey="date" opacity={0.65} tick={{fontSize:'0.9rem', color:'#000'}} dy={10} />
-                    <YAxis 
-                        orientation="left" 
-                        stroke="black" 
-                        tickMargin={10} 
-                        tickLine={false}  
-                        axisLine={false} 
-                        opacity={0.65} 
-                        tickFormatter={(num) => this.yTickFormat(num)}
-                    />
-                    <Tooltip 
-                      formatter={(num) => <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={num}  />}
-                    />
-                      <Line 
-                          dot={false} tick={{fontSize:'5px'}} type="monotone" dataKey="amount" stroke="#4fc3f7" strokeWidth={2.5} /> 
-                    </LineChart>
-                </ResponsiveContainer>
+            <Fragment> 
+                <ResponsiveContainer width="100%" height="100%" minWidth="300px">
+                   
+                      <LineChart 
+                          data={this.props.equityCurve} 
+                      >
+                      <CartesianGrid stroke="#000000" strokeOpacity="0.1" strokeDasharray="3 3" verticalFill={['#fff', '#f4f4f5']} fillOpacity={0.2}/> 
+                      <XAxis tickFormatter={this.xAxisLabelFormat} tickLine={false}  axisLine={false}  dataKey="date" opacity={0.65} tick={{fontSize:'0.9rem', color:'#000'}} dy={10} />
+                      <YAxis 
+                          orientation="left" 
+                          stroke="black" 
+                          tickMargin={0} 
+                          tickLine={false}  
+                          axisLine={false} 
+                          opacity={0.65} 
+                          tickFormatter={(num) => this.yTickFormat(num)}
+                      />
+                      <Tooltip 
+                        formatter={(num) => <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={num}  />}
+                      />
+                        <Line 
+                            dot={false} tick={{fontSize:'5px'}} type="monotone" dataKey="amount" stroke="#4fc3f7" strokeWidth={2.5} /> 
+                      </LineChart>
+             
+                </ResponsiveContainer> 
             </Fragment>
         )
     }

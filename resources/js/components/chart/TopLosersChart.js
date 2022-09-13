@@ -1,22 +1,14 @@
-import React from 'react'
-import axios from 'axios'
+import React from 'react' 
 import { BarChart, LabelList, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart } from 'recharts'
 import NumberMinify from '../../classes/NumberMinify'
+import NumberFormat from 'react-number-format'
 class TopLosersChart extends React.Component {
 
     constructor(props) {
 
-        super(props)
-        this.state = {
-            data: null,
-            height:50
-        }
+        super(props) 
     }
-
-    componentDidMount() {
-
-        this.getTopGainersLosers()
-    }
+ 
 
     label(props) {
  
@@ -35,20 +27,7 @@ class TopLosersChart extends React.Component {
              )
     }
     
-    async getTopGainersLosers() {
-
-        await axios.get('/api/getTopLosers')
-                    .then( res => {
-                        console.log(res.data)
-                        this.setState({
-                            data: res.data,
-                            height: this.state.height * res.data.length
-                        })
-                    })
-                    .catch( err => {
-                        console.log(err)
-                    })
-    }
+    
     
     
     render() {
@@ -56,15 +35,15 @@ class TopLosersChart extends React.Component {
         return (
             <div className='row'>
                 <div className='col'>  
-                    <ResponsiveContainer width="100%" height={this.state.height}>
+                    <ResponsiveContainer width="100%" height={this.props.height}>
                         <BarChart   
-                            data={this.state.data}
+                            data={this.props.data}
                             layout="vertical"
                             barCategoryGap={1}
                             margin={{top:5}} 
                             >
                                 <Tooltip 
-                                    formatter={(num) => Number(num).toLocaleString()}
+                                    formatter={(num) => <NumberFormat decimalScale={2} thousandSeparator={true} displayType='text' value={num} />}
                                     cursor={{fill: '#fff'}}
                                 />
                                 <XAxis maxBarSize={2} type="number" hide />

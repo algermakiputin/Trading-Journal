@@ -133,6 +133,8 @@ table tr th {
     margin: 10px 0;
 }
 
+
+
 .summary-widget span {
     font-size: 0.80rem;
     opacity: 0.7;
@@ -191,3 +193,104 @@ table tr th {
     border-radius: 2px;
     transition: border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
 }
+
+.form-check-inline label {
+    font-weight: normal;
+}
+
+.navbar-toggler {
+    float: right;
+    color:#fff;
+    line-height: 51px;
+    font-size: 26px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+  }
+
+@media only screen and (max-width:480px) {
+    .left-sidebar { 
+        transform: translateX(-250px);
+        transition: transform 0.3s;
+    }
+    #sidebarnav li { 
+        transform: translateX(-250px);
+        transition: transform 0.3s;
+    }
+
+    .left-sidebar.open {
+        transform: translateX(0);
+    }
+    .left-sidebar.open #sidebarnav li {
+        transform: translateX(0);
+    }
+
+    .navbar-brand img {
+        margin-top: -5px;
+    }
+    #main-wrapper[data-layout=vertical][data-sidebartype=full] .page-wrapper{
+        margin-left: 0;
+    }
+
+    .topbar .top-navbar .navbar-nav {
+        display: none;
+    }
+
+    .xAxis .recharts-cartesian-axis-tick:nth-child(2n) {
+        display: none;
+    }
+
+    #transactions .card-body .nav-tabs {
+        display: block;
+        width: 100%;
+        margin-bottom: -5px;
+        border-bottom: 0;
+      
+    }
+
+    #transactions .card-body .nav-tabs a {
+        display: inline-block;
+        width: 33.33%;
+        text-align: center;
+        overflow: hidden;
+        padding-left: 0;
+        padding-right: 0;
+        text-overflow: ellipsis; 
+        white-space: nowrap;
+        padding: 5px;
+    } 
+
+    #transactions .card-body .nav-tabs a.active {
+        border-bottom: solid 1px #333;
+    }
+
+    #transactions .btn-danger.pull-right {
+        float: none!important;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        top: -64px;
+    }
+
+    table {
+        display: block;
+        -ms-touch-action: auto;
+        touch-action: auto;
+        overflow-x: scroll;
+    }
+}
+:root {
+    --yellow: #ebb42e;
+    --size: 10vmin; /* WIP needs propogating throughout so can change size here */
+  }
+@media only screen and (min-width:780px) {
+    .navbar-toggler {
+        display: none!important;
+    }
+}
+
+
+
+  

@@ -15,7 +15,8 @@ class BankForm extends React.Component {
             date: global.server_date,
             action: 'deposit',
             amount: null,
-            alert_danger: false
+            alert_danger: false,
+            loading:false
         }
 
         this.defaultState = this.state;
@@ -31,20 +32,23 @@ class BankForm extends React.Component {
         if ( this.state.date && this.state.action && this.state.amount ) {
 
             this.setState({alert_danger:false})
-
+            this.setState({loading: true})
             axios.post('api/bank/create', {
-                    data: this.state,
-                    totalEquity: this.props.totalEquity,
-                    availableCash: this.props.availableCash,
-                    action: this.state.action
-                })
+                        data: this.state,
+                        totalEquity: this.props.totalEquity,
+                        availableCash: this.props.availableCash,
+                        action: this.state.action
+                    })
                     .then( res => {
-                         
-                        if ( res.data == 1) {
-
+                        
+                        if ( res.data == 1) { 
                             this.setState(this.defaultState)
                             this.props.setEquity()
-                        }
+                            this.props.setEquityCurve() 
+                            
+                        } 
+
+                        this.setState({loading:false})
 
                     })
                     .catch ( err => {
@@ -125,7 +129,7 @@ class BankForm extends React.Component {
                         <Button variant="secondary" onClick={ ()=> { this.toggleModal() }}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={ () => { this.handleFormSubmit() }}>Submit</Button>
+                        <Button disabled={this.state.loading ? true : false} variant="primary" onClick={ () => { this.handleFormSubmit() }}>{this.state.loading ? 'Loading...' : 'Submit'}</Button>
                     </Modal.Footer>
                 </Modal>
             </div>
