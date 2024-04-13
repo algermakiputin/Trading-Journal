@@ -175,8 +175,7 @@ class Dashboard extends React.Component {
                     })
     }
 
-    async setTopGainers() {
-
+    async setTopGainers() { 
         await axios.get('/api/getTopGainers')
                     .then( res => { 
                         this.setState({
@@ -190,8 +189,7 @@ class Dashboard extends React.Component {
     }
   
     render() {      
-        return (
-            
+        return ( 
             <div className="page-wrapper">   
                 <div className="page-breadcrumb">
                     <div className="row align-items-center">

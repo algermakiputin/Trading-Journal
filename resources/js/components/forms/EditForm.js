@@ -9,12 +9,9 @@ import '../../global/global'
 
 
 
-class SellForm extends React.Component {
-
-    
+class SellForm extends React.Component { 
     constructor(props) {
-        super(props) 
-         
+        super(props)  
         this.state = {
             shares: 0,
             price:0,
@@ -47,11 +44,9 @@ class SellForm extends React.Component {
 
     formSubmitHandle() {
          
-        if ( this.state.shares && this.state.price && this.state.date ) {
- 
+        if ( this.state.shares && this.state.price && this.state.date ) { 
             axios.patch('/api/transactions/update', this.state)
-                .then( res => {
-                     
+                .then( res => { 
                     if (res.data == 1) {
                         this.props.closeHandle()
                         this.props.setData()
